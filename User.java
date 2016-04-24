@@ -14,6 +14,8 @@ public class User
    private Calendar events;
    private Calendar schedule;
    private ArrayList<Club> clubs;
+   private ArrayList<String> messages;
+   private boolean hasMsg;
 
    public User(String name, String phoneNum, String empl, String email)
    {
@@ -21,6 +23,9 @@ public class User
       this.phoneNum = phoneNum;
       this.empl = empl;
       this.email = email;
+      clubs = new ArrayList<Club>();
+      messages = new ArrayList<String>();
+      hasMsg = false;
    }
 
    /**
@@ -67,7 +72,7 @@ public class User
     */
    private void sendMsg(String msg, User member)
    {
-
+      member.addMsg(msg);
    }
 
    /**
@@ -76,5 +81,11 @@ public class User
    private void syncSchedule()
    {
 
+   }
+
+   private void addMsg(String msg)
+   {
+      messages.add(msg);
+      hasMsg = true;
    }
 }
