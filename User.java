@@ -27,7 +27,7 @@ public class User
     * Method to leave a club.
     * @param club The club that will be affected.
     */
-   private boolean leaveClub(Club club)
+   private void leaveClub(Club club)
    {
       clubs.remove(club);
    }
@@ -35,11 +35,10 @@ public class User
    /**
     * Method to request to join a club.
     * @param club The club that the user is requesting to join.
-    * @return Return if successful.
     */
-   private boolean requestJoin(Club club)
+   private void requestJoin(Club club)
    {
-      return true;
+      club.addRequest(this);
    }
 
    /**

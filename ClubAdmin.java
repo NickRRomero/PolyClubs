@@ -24,9 +24,9 @@ public class ClubAdmin extends User
     * @param descr The description of the event.
     * @return Returns the created Event.
     */
-   private Event createEvent(String start, String end, String loc, String descr)
+   private void createEvent(Club club, String start, String end, String loc, String descr)
    {
-      return new Event(start, end, loc, descr);
+      club.createEvent(start, end, loc, descr);
    }
 
    /**
@@ -64,15 +64,10 @@ public class ClubAdmin extends User
     * @param event The Event to be updated.
     * @return The updated Event.
     */
-   private Event updateEvent(Event event, String start, String end,
+   private void updateEvent(Club club, Event event, String start, String end,
        String loc, String descr)
    {
-      Event curEvent = event;
-      curEvent.setStart(start);
-      curEvent.setEnd(end);
-      curEvent.setLocation(loc);
-      curEvent.setDescription(descr);
-      return curEvent;
+      club.updateEvent(event, start, end, loc, descr);
    }
 
    /**
@@ -88,6 +83,7 @@ public class ClubAdmin extends User
       {
          club.addUser(user);
       }
+      club.removeRequest(user);
       return accept;
    }
 
