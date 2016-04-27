@@ -3,7 +3,9 @@
  * @author mboyken
  */
 
+import org.json.*;
 import java.util.*;
+import java.io.*;
 
 public class User
 {
@@ -12,10 +14,11 @@ public class User
    private String email;
    private String empl;
    private Calendar events;
-   private Calendar schedule;
+   private Schedule schedule;
    private ArrayList<Club> clubs;
    private ArrayList<String> messages;
    private boolean hasMsg;
+   private JSONObject jsonDB;
 
    public User(String name, String phoneNum, String empl, String email)
    {
@@ -26,6 +29,7 @@ public class User
       clubs = new ArrayList<Club>();
       messages = new ArrayList<String>();
       hasMsg = false;
+      jsonDB = new JSONObject("");
    }
 
    /**
@@ -48,6 +52,7 @@ public class User
 
    /**
     * Method to view another club member.
+    * Will use Android Studio GUI.
     * @param member The member the user wants to view.
     */
    private void viewMember(User member)
@@ -77,10 +82,52 @@ public class User
 
    /**
     * Method to pull the user's schedule from their Portal.
+    * The JSONObject holds only the information for the courses.
+    * The JSONArray hold each portion of the courses attribute.
+    * Will use database object.
     */
    private void syncSchedule()
    {
+      private JSONObject jsonObj = jsonDB.getJSONObject("courses");
+      private JSONArray arr = jsonDB.getJSONArray("courses");
+      private ArrayList<String> courseList = new ArrayList<String>();
+      private ArrayList<String> dayList = new ArrayList<String>();
+      private int startH, startM, endH, endM;
+      private Reader rdr;
+      private Scanner scan;
+      private String curText, name;
+      private Course course;
 
+      //iterate through JSONArray to get strings for each course
+      for (int iter = 0; iter < arr.length(); iter++)
+      {
+         courseList.add(arr.getJsonString(iter).getString());
+      }
+
+      //iterate through courses to parse each course
+      for (int iter = 0; iter < courseList.length; iter++)
+      {
+         rdr = new StringReader(courses[iter]);
+         scan = new Scanner(rdr).useDelimiter(":- _");
+
+         //get start hour
+         //startH = Integer.parseInt(scan.next());
+         //get start minute
+         //startM = Integer.parseInt(scan.next());
+         //get end hour
+         //endH = Integer.parseInt(scan.next());
+         //get end minute
+         //endM = Integer.parseInt(scan.next());
+         //collect all days
+         /*
+         while (scan.hasNext())
+         {
+            //dayList.add(scan.next());
+         }
+         */
+
+         //course = new Course(name, startH, startM, endH, endM);
+      }
    }
 
    private void addMsg(String msg)

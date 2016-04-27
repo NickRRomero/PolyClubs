@@ -18,15 +18,19 @@ public class ClubAdmin extends User
 
    /**
     * Method to create an Event for the club.
-    * @param start The start time of the event.
-    * @param end The end time of the event.
+    * @param club The club the event is part of.
+    * @param startH The hour of the start time of the event.
+    * @param startM The minute of the start time of the event.
+    * @param endH The hour of the  end time of the event.
+    * @param endM The minute of the end time of the event.
     * @param loc The location of the event.
     * @param descr The description of the event.
     * @return Returns the created Event.
     */
-   private void createEvent(Club club, String start, String end, String loc, String descr)
+   private void createEvent(Club club, int startH, int startM,
+         int endH, int endM, String loc, String descr)
    {
-      club.createEvent(start, end, loc, descr);
+      club.createEvent(startH, startM, endH, endM, loc, descr);
    }
 
    /**
@@ -62,12 +66,19 @@ public class ClubAdmin extends User
    /**
     * Method to update an event.
     * @param event The Event to be updated.
+    * @param startH The hour of the start time of the event.
+    * @param startM The minute of the start time of the event.
+    * @param endH The hour of the  end time of the event.
+    * @param endM The minute of the end time of the event.
+    * @param loc The location of the event.
+    * @param descr The description of the event.
     * @return The updated Event.
     */
-   private void updateEvent(Club club, Event event, String start, String end,
+   private void updateEvent(Club club, Event event, int startH,
+       int startM, int endH, int endM,
        String loc, String descr)
    {
-      club.updateEvent(event, start, end, loc, descr);
+      club.editEvent(event, startH, startM, endH, endM, loc, descr);
    }
 
    /**
