@@ -26,43 +26,57 @@ public class Club
 	}
 
 	// Club admin functions
-	private void addAdmin(ClubAdmin admin)
+	private boolean addAdmin(ClubAdmin admin)
 	{
-		admins.add(admin);
+		return admins.add(admin);
 	}
 
-	private void deleteAdmin(ClubAdmin admin)
+	private boolean deleteAdmin(ClubAdmin admin)
 	{
-		admins.remove(admin);
+		return admins.remove(admin);
 	}
 
 	// Member request functions
-	private void addRequest(User user)
+	private boolean addRequest(User user)
 	{
-		userRequests.add(user);
 		areRequests = True;
+		return userRequests.add(user);
 	}
 
-	private void removeRequest(User user)
+	private boolean removeRequest(User user)
 	{
-		userRequests.remove(user);
-		areRequests = !userRequests.isEmpty()
+		boolean val = False;
+		val = userRequests.remove(user);
+		areRequests = !userRequests.isEmpty();
+
+		return val;
 	}
 
 	// Club event functions
-	private void addEvent(Event event)
+	private boolean addEvent(Event event)
 	{
-		clubEvents.add(event);
+		return clubEvents.add(event);
 	}
 
-	private void removeEvent()
+	private boolean removeEvent(Event event)
 	{
-		clubEvents.remove(event);
+		return clubEvents.remove(event);
 	}
 
 	private void editEvent(Event event, int sh, int sm, int eh, int em,
 		String loc, String desc)
 	{
 		event.updateEvent(sh, sm, eh, em, loc, desc);
+	}
+
+	// Club membership functions
+	private boolean addMember(User user)
+	{
+		return members.add(user);
+	}
+
+	private boolean removeMember(User user)
+	{
+		return members.remove(user);
 	}
 }
