@@ -12,23 +12,49 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 /**
+ * DatabaseManager class to handle MongoDB requests
+ * Associated Files - mongo-java-driver-3.2.0-SNAPSHOT 
  * Created by Nick on 4/20/16.
  */
 public class DatabaseManager extends AsyncTask<Object, Void, JSONObject>
 {
 
-
+    /**Database name to determine which database to access*/
     private String databaseName;
+
+    /**Collection of Documents containing all results of a MongoDB query*/
     private MongoCollection<Document> documentCollection;
+
+    /**Document object to hold a single query result*/
     private Document singleDocument;
+
+    /**Database URI used to access MongoDB at MLab.com*/
     private String databaseURIToAccess = "";
+
+    /**Which database to retreive out of the MongoDB*/
     private String collectionToRetrieve = "";
-    private String whichClubKey = "ClubName";
+
+    /**Identifier used to determine which database will be used*/
+    private static final String whichClubKey = "ClubName";
+    
+    /**Identifier used to specify a club*/
     private String whichClubName = "";
-    private String whichStudentKey = "email";
+
+    /**Identifier used to determine which database will be used*/
+    private static final String whichStudentKey = "email";
+
+    /**Identifier used to specify a student*/
     private String whichStudentByEmail = "";
+
+    /**Modifier used to determine how much of a colleciton is returned from a query*/
     private boolean scopeOfDatabaseAccess = false;
+
+    /**Container for a single student's profile*/
     private JSONObject profile = null;
+
+    /**
+     * Class Constructor
+     */
     public DatabaseManager() {
 
 
