@@ -7,58 +7,31 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 import org.bson.Document;
 import org.json.JSONObject;
 
 /**
- * DatabaseManager class to handle MongoDB requests
- * Associated Files - mongo-java-driver-3.2.0-SNAPSHOT 
  * Created by Nick on 4/20/16.
  */
 public class DatabaseManager extends AsyncTask<Object, Void, JSONObject>
 {
 
-    /**Database name to determine which database to access*/
+
     private String databaseName;
-
-    /**Collection of Documents containing all results of a MongoDB query*/
     private MongoCollection<Document> documentCollection;
-
-    /**Document object to hold a single query result*/
     private Document singleDocument;
-
-    /**Database URI used to access MongoDB at MLab.com*/
     private String databaseURIToAccess = "";
-
-    /**Which database to retreive out of the MongoDB*/
     private String collectionToRetrieve = "";
-
-    /**Identifier used to determine which database will be used*/
-    private static final String whichClubKey = "ClubName";
-    
-    /**Identifier used to specify a club*/
+    private String whichClubKey = "ClubName";
     private String whichClubName = "";
-
-    /**Identifier used to determine which database will be used*/
-    private static final String whichStudentKey = "email";
-
-    /**Identifier used to specify a student*/
+    private String whichStudentKey = "email";
     private String whichStudentByEmail = "";
-
-    /**Modifier used to determine how much of a colleciton is returned from a query*/
     private boolean scopeOfDatabaseAccess = false;
-
-    /**Container for a single student's profile*/
     private JSONObject profile = null;
 
-    /**
-     * Class Constructor
-     */
-    public DatabaseManager() {
-
-
-    }
+    public DatabaseManager() {}
 
     /**
      * Determine which database needs to be access
@@ -110,7 +83,7 @@ public class DatabaseManager extends AsyncTask<Object, Void, JSONObject>
         }
         else
         {
-            Iterable<Document> iterable = collection.find(eq("email",whichStudentByEmail));
+            Iterable<Document> iterable = collection.find(Filters.eq("email",whichStudentByEmail));
             Document doc = iterable.iterator().next();
             profile = new JSONObject(doc);
         }
