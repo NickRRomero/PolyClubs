@@ -2,8 +2,8 @@ public class Club
 {
 	private String name;
 	private String descrip;
-	private ArrayList<ClubAdmin> admins
-	private ArrayList<User> members
+	private ArrayList<ClubAdmin> admins;
+	private ArrayList<User> members;
 	private ArrayList<Event> clubEvents;
 	private ArrayList<User> userRequests;
 	private boolean areRequests;
