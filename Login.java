@@ -16,7 +16,8 @@ public class Login extends Activity {
 
     DatabaseManager databaseManager;
     private static final String incorrectLoginErrorMessage = "Incorrect email and/or password.";
-    EditText loginText, passwordText;
+    String loginText; 
+    String passwordText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +26,7 @@ public class Login extends Activity {
 
     public void confirmStudentInformation(View v) {
 
-        String key = null;
+        String key;
         loginText = (EditText) findViewById(R.id.loginUserName);
         passwordText = (EditText) findViewById(R.id.loginPassword);
         JSONObject userProfile = null;

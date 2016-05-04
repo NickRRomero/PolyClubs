@@ -21,18 +21,19 @@ public class DatabaseManager extends AsyncTask<Object, Void, JSONObject>
 
     private String databaseName;
     private MongoCollection<Document> documentCollection;
-    private Document singleDocument;
     private String databaseURIToAccess = "";
     private String collectionToRetrieve = "";
-    private String whichClubKey = "ClubName";
-    private String whichClubName = "";
-    private String whichStudentKey = "email";
     private String whichStudentByEmail = "";
     private boolean scopeOfDatabaseAccess = false;
     private JSONObject profile = null;
 
-    public DatabaseManager() {}
-
+    public DatabaseManager() 
+    {
+      /**
+       * No paramter needed. The object return has the needed API.
+       */
+    }
+      
     /**
      * Determine which database needs to be access
      * @param whichDatabase Either 'studentDatabase' or 'clubDatabase'
@@ -49,12 +50,12 @@ public class DatabaseManager extends AsyncTask<Object, Void, JSONObject>
      */
     private void setDatabaseAccess(String whichObject) {
 
-        if (databaseName.equals("StudentDatabase")) {
+        if ("StudentDatabase".equals(databaseName)) {
             collectionToRetrieve = "students";
             whichStudentByEmail = whichObject;
             databaseURIToAccess = "mongodb://nick:password@ds017231.mlab.com:17231/studentdatabase";
         }
-        else if (databaseName.equals("ClubDatabase")) {
+        else if ("ClubDatabase".eqauls(databaseName)) {
             collectionToRetrieve = "clubs";
             whichClubName = whichObject;
             databaseURIToAccess = "mongodb://nick:password@ds021691.mlab.com:21691/clubdatabase";
@@ -66,7 +67,6 @@ public class DatabaseManager extends AsyncTask<Object, Void, JSONObject>
     {
 
         MongoClientURI uri = new MongoClientURI(databaseURIToAccess);
-        JSONObject jsonObject = new JSONObject();
         MongoClient mongoClient = new MongoClient(uri);
 
         MongoDatabase db = mongoClient.getDatabase(uri.getDatabase());
