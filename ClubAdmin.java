@@ -65,20 +65,40 @@ public class ClubAdmin extends User
 
    /**
     * Method to update an event.
+    * @param club Club the evemt is under.
     * @param event The Event to be updated.
     * @param startH The hour of the start time of the event.
     * @param startM The minute of the start time of the event.
     * @param endH The hour of the  end time of the event.
     * @param endM The minute of the end time of the event.
-    * @param loc The location of the event.
-    * @param descr The description of the event.
     * @return The updated Event.
     */
-   private void updateEvent(Club club, Event event, int startH,
-       int startM, int endH, int endM,
-       String loc, String descr)
+   private void updateEventTime(Club club, Event event, int startH,
+       int startM, int endH, int endM)
    {
-      club.editEvent(event, startH, startM, endH, endM, loc, descr);
+      club.updateEventTime(event, startH, startM, endH, endM);
+   }
+
+   /**
+    * Method to update event location.
+    * @param club Club the event is under.
+    * @param event The event to be updated.
+    * @param loc The new location of the event.
+    */
+   private void updateEventLoc(Club club, Event event, String loc)
+   {
+      club.updateEventLoc(event, loc);
+   }
+
+   /**
+    * Method to update event description.
+    * @param club Club the event is under.
+    * @param event The event to be updated.
+    * @param descr The new description of the club.
+    */
+   private void updateEventDescr(Club club, Event event, String descr)
+   {
+      club.updateEventDescr(event, descr);
    }
 
    /**

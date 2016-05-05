@@ -57,7 +57,10 @@ public class User
     */
    private void viewMember(User member)
    {
-
+      System.out.println("Name: " + name);
+      System.out.println("Empl ID: " + empl);
+      System.out.println("Phone number: " + phoneNum);
+      System.out.println("Email address: " + email);
    }
 
    /**
@@ -77,7 +80,7 @@ public class User
     */
    private void sendMsg(String msg, User member)
    {
-      member.addMsg(msg);
+      member.addMsg(msg, this.name);
    }
 
    /**
@@ -92,10 +95,14 @@ public class User
       private JSONArray arr = jsonDB.getJSONArray("courses");
       private ArrayList<String> courseList = new ArrayList<String>();
       private ArrayList<String> dayList = new ArrayList<String>();
-      private int startH, startM, endH, endM;
+      private int startH;
+      private int startM;
+      private int endH;
+      private int endM;
       private Reader rdr;
       private Scanner scan;
-      private String curText, name;
+      private String curText
+      private String name;
       private Course course;
 
       //iterate through JSONArray to get strings for each course
@@ -130,9 +137,13 @@ public class User
       }
    }
 
-   private void addMsg(String msg)
+   /**
+    * Method to receive message.
+    * @param msg The message that is received.
+    */
+   private void addMsg(String msg, String from)
    {
-      messages.add(msg);
+      messages.add("From: " + from + "Message: " + msg);
       hasMsg = true;
    }
 }
