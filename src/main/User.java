@@ -19,8 +19,10 @@ public class User
    private ArrayList<String> messages;
    private boolean hasMsg;
    private JSONObject jsonDB;
+   private DatabaseManager databaseManager;
 
-   public User(String name, String phoneNum, String empl, String email)
+   public User(String name, String phoneNum, String empl,
+      String email) throws Exception
    {
       this.name = name;
       this.phoneNum = phoneNum;
@@ -29,7 +31,9 @@ public class User
       clubs = new ArrayList<Club>();
       messages = new ArrayList<String>();
       hasMsg = false;
-      jsonDB = new JSONObject("");
+      databaseManager = new DatabaseManager();
+      jsonDB = new databaseManager.execture().get();
+      schedule = new Schedule();
    }
 
    /**
@@ -57,10 +61,35 @@ public class User
     */
    private void viewMember(User member)
    {
-      System.out.println("Name: " + name);
-      System.out.println("Empl ID: " + empl);
-      System.out.println("Phone number: " + phoneNum);
-      System.out.println("Email address: " + email);
+      System.out.println("Name: " + member.getName());
+      System.out.println("Phone number: " + member.getPhoneNum());
+      System.out.println("Email address: " + member.getEmail());
+   }
+
+   /**
+    * Getter for name.
+    * @return The user's name.
+    */
+   public String getName()
+   {
+      return name;
+   }
+   /**
+    * Getter for phone number.
+    * @return The user's phone number.
+    */
+   public String getPhoneNum()
+   {
+      return phoneNum;
+   }
+
+   /**
+    * Getter for email.
+    * @return The user's email.
+    */
+   public String getEmail()
+   {
+      return email;
    }
 
    /**
@@ -118,22 +147,22 @@ public class User
          scan = new Scanner(rdr).useDelimiter(":- _");
 
          //get start hour
-         //startH = Integer.parseInt(scan.next());
+         startH = Integer.parseInt(scan.next());
          //get start minute
-         //startM = Integer.parseInt(scan.next());
+         startM = Integer.parseInt(scan.next());
          //get end hour
-         //endH = Integer.parseInt(scan.next());
+         endH = Integer.parseInt(scan.next());
          //get end minute
-         //endM = Integer.parseInt(scan.next());
+         endM = Integer.parseInt(scan.next());
          //collect all days
-         /*
          while (scan.hasNext())
          {
-            //dayList.add(scan.next());
+            dayList.add(scan.next());
          }
-         */
 
-         //course = new Course(name, startH, startM, endH, endM);
+         course = new Course(name, startH, startM, endH, endM, dayList);
+
+         schedule.addCourse(course);
       }
    }
 
