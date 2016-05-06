@@ -1,5 +1,7 @@
 # PolyClubs
 PolyClubs project for CPE308-309
+
+
 Authors:
    - Kevin Costello
    - Holly Haraguchi
