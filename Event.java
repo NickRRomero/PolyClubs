@@ -12,16 +12,18 @@ public class Event
    private int startMinute;
    private int endHour;
    private int endMinute;
+   private String eventName; 
    private String location; // location of the event
    private String descrip; // description of the event
    private ArrayList<User> going; // users going to the event
 
-   public Event(int sh, int sm, int eh, int em, String loc, String description)
+   public Event(int sh, int sm, int eh, int em, String name, String loc, String description)
    {
       startHour = sh;
       startMinute = sm;
       endHour = eh;
       endMinute = em;
+      eventName = name;
       location = loc;
       descrip = description;
       going = new ArrayList<User>();
@@ -36,6 +38,11 @@ public class Event
    public String getEndTime()
    {
       return Integer.toString(endHour) + ':' + Integer.toString(endMinute);
+   }
+
+   public String getName()
+   {
+      return eventName;
    }
 
    public String getLoc()
@@ -66,6 +73,11 @@ public class Event
       endMinute = em;
    }
 
+   public void setName(String name)
+   {
+      eventName = name;
+   }
+   
    public void setLoc(String loc)
    {
       location = loc;
@@ -85,5 +97,19 @@ public class Event
    public void deleteMember(User user)
    {
       going.remove(user);
+   }
+
+   // Print event information
+   public void printEventInfo()
+   {
+      System.out.println("Start time: " + getStartTime());
+      System.out.println("End time: " + getEndTime());
+      System.out.println("Event location: " + location);
+      System.out.println("Event description: " + descrip);
+      System.out.println("Members going: ");
+      for (int i = 0; i < going.size(); i++)
+      {
+         System.out.println("   -" + going.get(i).getName());
+      }
    }
 }

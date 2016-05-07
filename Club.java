@@ -102,12 +102,6 @@ public class Club
       return clubEvents.remove(event);
    }
 
-   public void editEvent(Event event, int sh, int sm, int eh, int em,
-      String loc, String desc)
-   {
-      event.updateEvent(sh, sm, eh, em, loc, desc);
-   }
-
    // Club membership functions
    public boolean addMember(User user)
    {
@@ -119,7 +113,7 @@ public class Club
       return members.remove(user);
    }
 
-   // Prints all club information
+   // Print club information
    public void printClubInfo()
    {
       System.out.println("Club name: " + name);
@@ -140,7 +134,7 @@ public class Club
         System.out.println("Club events: ");
         for (int i = 0; i < clubEvents.size(); i++)
         {
-            System.out.println("   -" + clubEvents.get(i));
+            System.out.println("   -" + clubEvents.get(i).getName());
         }
    }
 }
