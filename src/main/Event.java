@@ -63,16 +63,6 @@ public class Event
       return Integer.toString(endHour) + ':' + Integer.toString(endMinute);
    }
 
-   public String getName()
-   {
-      return eventName;
-   }
-
-   public String getLoc()
-   {
-      return location;
-   }
-
    public String getDescrip()
    {
       return descrip;
@@ -122,7 +112,6 @@ public class Event
    {
       System.out.println("Start time: " + getStartTime());
       System.out.println("End time: " + getEndTime());
-      System.out.println("Event location: " + location);
       System.out.println("Event description: " + descrip);
       System.out.println("Members going: ");
       for (int i = 0; i < going.size(); i++)
