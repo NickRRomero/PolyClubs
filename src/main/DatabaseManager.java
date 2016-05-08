@@ -2,11 +2,17 @@ package polyclubsconsole;
 
 
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+import java.io.Console;
+import org.bson.BSON;
 import org.json.simple.*;
 import org.bson.Document;
 
@@ -31,7 +37,10 @@ public class DatabaseManager
     private String collectionToRetrieve = "";
     
     /**Student to look for*/
-    private String whichStudentByEmail = "";
+    private String whichDocumentByName = "";
+    
+    /**Which club to access*/
+    //private String whichClubByName = "";
     
     /**How large of a collection to retrieve from MLAB*/
     private boolean scopeOfDatabaseAccess = false;
@@ -39,6 +48,10 @@ public class DatabaseManager
     /**Profile holding a single document from query*/
     private JSONObject profile = null;
 
+    MongoClientURI uri;// = new MongoClientURI(databaseURIToAccess);
+    MongoClient mongoClient;// = new MongoClient(uri);
+    MongoDatabase db;// = mongoClient.getDatabase(uri.getDatabase());
+    
     /**
      * Constructor for DatabaseManager instance
      */
@@ -70,7 +83,7 @@ public class DatabaseManager
     /**
      * Determine which database needs to be access
      * @param whichDatabase Either 'studentDatabase' or 'clubDatabase'
-     * @param whichObject name of a student i.e. Nick Romero or name of club i.e. Society of Women Engineers
+     * @param whichObject name of a student i.e. Nick Romero or name of 
      * @param scopeOfAccess grab an entire document or a single document
      */
     public void setDataBaseDestination(String whichDatabase, String whichObject, boolean scopeOfAccess) {
@@ -88,12 +101,13 @@ public class DatabaseManager
         if ("StudentDatabase".equals(databaseName)) 
         {
             collectionToRetrieve = "students";
-            whichStudentByEmail = whichObject;
+            whichDocumentByName= whichObject;
             databaseURIToAccess = "mongodb://nick:password@ds017231.mlab.com:17231/studentdatabase";
         }
         else if ("ClubDatabase".equals(databaseName)) 
         {
             collectionToRetrieve = "clubs";
+            whichDocumentByName = whichObject;
             databaseURIToAccess = "mongodb://nick:password@ds021691.mlab.com:21691/clubdatabase";
         }
     }
@@ -103,11 +117,8 @@ public class DatabaseManager
      */
     protected void accessDatabase()
     {
-        System.err.close();
-        MongoClientURI uri = new MongoClientURI(databaseURIToAccess);
-        MongoClient mongoClient = new MongoClient(uri);
-        
-        MongoDatabase db = mongoClient.getDatabase(uri.getDatabase());
+        //System.err.close();
+        initializeDatabaseConnection();
         MongoCollection<Document> collection =  db.getCollection(collectionToRetrieve);
 
         
@@ -121,11 +132,41 @@ public class DatabaseManager
         }
         else
         {
-            Iterable<Document> iterable = collection.find(Filters.eq("email",whichStudentByEmail));
-            Document doc = iterable.iterator().next();
-            profile = new JSONObject(doc);
+            Iterable<Document> iterable;
+            String key;
+            Document doc = null;
+            /**
+             * Determine which access mode to use.
+             */
+            if ("clubs".equals(collectionToRetrieve))
+            {
+                key = "ClubName";
+            }
+            else
+            {
+                key = "email";
+            }
+            iterable = collection.find(Filters.eq(key, whichDocumentByName));
+            
+            /**
+             * Determine if a document was found.
+             */
+            if (iterable.iterator().hasNext())
+            {
+                doc = iterable.iterator().next();
+                profile = new JSONObject(doc);
+            }
+            
         }
     }
+    
+    public void initializeDatabaseConnection()
+    {
+        uri = new MongoClientURI(databaseURIToAccess);
+        mongoClient = new MongoClient(uri);
+        db = mongoClient.getDatabase(uri.getDatabase());
+    }
+    
 
     /**
      * Getter for database query
@@ -144,5 +185,32 @@ public class DatabaseManager
     {
         return profile;
     }
+    
+    /**
+     * 
+     * @param string
+     * @return 
+     */
+    /*
+    public boolean addStudentToClub(String student)
+    {
+        
+        initializeDatabaseConnection();
+        MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
+        BasicDBObject newStudent = new BasicDBObject(); 
+        addToSet = new BasicDBObject("$addToSet", new BasicDBObject("name" : "Olive The Kitty") );
+        
+    }
+   
+    
+    public void changeClubDescription(String newDescription)
+    {
+        initializeDatabaseConnection();
+        MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
+        collection.updateOne(eq("ClubName", whichDocumentByName), 
+                set("description", newDescription));
+    }
+   */
+    
 }
 
