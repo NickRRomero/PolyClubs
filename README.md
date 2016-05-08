@@ -16,6 +16,6 @@ Current functionality is strictly terminal-based.
 Directory organization:
 
 - Source files are in *src/main/* 
-- Test files are in *src/test/*
+- Test files are in *src/tests/*
 - Property files and SonarQube setup are in *config/*
 - JAR files and other resources are in *lib/*
