@@ -8,6 +8,7 @@ import java.util.*;
 
 public class Event
 {
+   private String dayOfWeek;
    private int startHour;
    private int startMinute;
    private int endHour;
@@ -17,8 +18,9 @@ public class Event
    private String descrip; // description of the event
    private ArrayList<User> going; // users going to the event
 
-   public Event(int sh, int sm, int eh, int em, String name, String loc, String description)
+   public Event(String day, int sh, int sm, int eh, int em, String name, String loc, String description)
    {
+      dayOfWeek = day;
       startHour = sh;
       startMinute = sm;
       endHour = eh;
@@ -30,6 +32,11 @@ public class Event
    }
 
    // Event getters
+   public String getDay()
+   {
+      return dayOfWeek;
+   }
+
    public String getStartTime()
    {
       return Integer.toString(startHour) + ':' + Integer.toString(startMinute);
@@ -61,6 +68,11 @@ public class Event
    }
 
    // Event setters
+   public void setDayOfWeek(String day)
+   {
+      dayOfWeek = day;
+   }
+
    public void setStartTime(int sh, int sm)
    {
       startHour = sh;
