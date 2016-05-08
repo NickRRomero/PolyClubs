@@ -13,20 +13,16 @@ public class Event
    private int startMinute;
    private int endHour;
    private int endMinute;
-   private String eventName; 
-   private String location; // location of the event
-   private String descrip; // description of the event
+   private String descrip; // contains event name, location, and details
    private ArrayList<User> going; // users going to the event
 
-   public Event(String day, int sh, int sm, int eh, int em, String name, String loc, String description)
+   public Event(String day, int sh, int sm, int eh, int em, String description)
    {
       dayOfWeek = day;
       startHour = sh;
       startMinute = sm;
       endHour = eh;
       endMinute = em;
-      eventName = name;
-      location = loc;
       descrip = description;
       going = new ArrayList<User>();
    }
@@ -35,6 +31,26 @@ public class Event
    public String getDay()
    {
       return dayOfWeek;
+   }
+
+   public int getStartHr()
+   {
+      return startHour;
+   }
+
+   public int getStartMin()
+   {
+      return startMinute;
+   }
+
+   public int getEndHr()
+   {
+      return endHour;
+   }
+
+   public int getEndMin()
+   {
+      return endMinute;
    }
 
    public String getStartTime()
@@ -83,16 +99,6 @@ public class Event
    {
       endHour = eh;
       endMinute = em;
-   }
-
-   public void setName(String name)
-   {
-      eventName = name;
-   }
-   
-   public void setLoc(String loc)
-   {
-      location = loc;
    }
 
    public void setDescrip(String description)
