@@ -79,14 +79,10 @@ public class Event
       dayOfWeek = day;
    }
 
-   public void setStartTime(int sh, int sm)
+   public void setTime(int sh, int sm, int eh, int em)
    {
       startHour = sh;
       startMinute = sm;
-   }
-
-   public void setEndTime(int eh, int em)
-   {
       endHour = eh;
       endMinute = em;
    }
