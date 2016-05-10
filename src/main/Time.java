@@ -41,12 +41,12 @@ public class Time
       this.minute = minute;
    }
 
-   private void getHour()
+   private int getHour()
    {
       return hour;
    }
 
-   private void getMinute()
+   private int getMinute()
    {
       return minute;
    }
