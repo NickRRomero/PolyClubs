@@ -14,7 +14,7 @@ public class Date
       this.day = day;
    }
 
-   private String toString()
+   public String toString()
    {
       return Integer.toString(month) + "/" + Integer.toString(day);
    }
@@ -23,7 +23,7 @@ public class Date
     * Method to order dates
     * @return true if d1 is earlier than or equal to d2
     */
-   private boolean isEarlier(Date d1, Date d2)
+   public boolean isEarlier(Date d1, Date d2)
    {
       if (d1.month <= d2.month)
       {
@@ -35,18 +35,18 @@ public class Date
       return false;
    }
 
-   private void setDate(int month, int day)
+   public void setDate(int month, int day)
    {
       this.month = month;
       this.day = day;
    }
 
-   private int getMonth()
+   public int getMonth()
    {
       return month;
    } 
 
-   private int getDay()
+   public int getDay()
    {
       return day;
    }

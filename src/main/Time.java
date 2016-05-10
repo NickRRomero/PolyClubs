@@ -14,7 +14,7 @@ public class Time
       this.minute = minute;
    }
 
-   private String toString()
+   public String toString()
    {
       return Integer.toString(hour) + ":" + Integer.toString(minute);
    }
@@ -23,7 +23,7 @@ public class Time
     * Method to order times
     * @return true if t1 is earlier than or equal to t2
     */
-   private boolean isEarlier(Time t1, Time t2)
+   public boolean isEarlier(Time t1, Time t2)
    {
       if (t1.hour <= t2.hour)
       {
@@ -35,18 +35,18 @@ public class Time
       return false;
    }
 
-   private void setTime(int hour, int minute)
+   public void setTime(int hour, int minute)
    {
       this.hour = hour;
       this.minute = minute;
    }
 
-   private int getHour()
+   public int getHour()
    {
       return hour;
    }
 
-   private int getMinute()
+   public int getMinute()
    {
       return minute;
    }

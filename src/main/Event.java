@@ -26,71 +26,71 @@ public class Event
    }
 
    // Event getters
-   private String getDay()
+   public String getDay()
    {
       return dayOfWeek;
    }
   
-   private Date getDate()
+   public Date getDate()
    {
       return eventDate;
    }
 
-   private Time getStartTime()
+   public Time getStartTime()
    {
       return startTime;
    } 
 
-   private Time getEndTime()
+   public Time getEndTime()
    {
       return endTime;
    }
 
-   private String getDescrip()
+   public String getDescrip()
    {
       return descrip;
    }
 
-   private ArrayList<User> getGoing()
+   public ArrayList<User> getGoing()
    {
       return going;
    }
 
    // Event setters
-   private void setDayOfWeek(String day)
+   public void setDayOfWeek(String day)
    {
       dayOfWeek = day;
    }
 
-   private void setDate(Date date)
+   public void setDate(Date date)
    {
       eventDate = date;
    }
 
-   private void setTime(Time startT, Time endT)
+   public void setTime(Time startT, Time endT)
    {
       startTime = startT;
       endTime = endT;
    }
 
-   private void setDescrip(String description)
+   public void setDescrip(String description)
    {
       descrip = description;
    }
 
    // Event attendee functions
-   private void addMember(User user)
+   public void addMember(User user)
    {
       going.add(user);
    }
 
-   private void deleteMember(User user)
+   public void deleteMember(User user)
    {
       going.remove(user);
    }
 
    // Print event information
-   private void printEventInfo()
+   public void printEventInfo()
    {
       System.out.println("Start time: " + startTime.toString());
       System.out.println("End time: " + endTime.toString());

@@ -9,9 +9,6 @@ public class Club
 {
    private String name;
    private String descrip;
-   private ArrayList<ClubAdmin> admins;
-   private ArrayList<User> members;
-   private ArrayList<Event> clubEvents;
    private ArrayList<User> userRequests;
    private boolean areRequests;
 
@@ -19,45 +16,41 @@ public class Club
    {
       name = nm;
       descrip = des;
-      admins = new ArrayList<ClubAdmin>();
-      admins.add(admin);
-      members = new ArrayList<User>();
-      clubEvents = new ArrayList<Event>();
-      userRequests = new ArrayList<User>();
+      this.addAdmin(admin);
       areRequests = false;
    }
 
     // Club getters
-    public String getName()
-    {
-        return name;
-    }
+   public String getName()
+   {
+      return name;
+   }
 
-    public String getDescrip()
-    {
-        return descrip;
-    }
+   public String getDescrip()
+   {
+      return descrip;
+   }
 
-    public ArrayList<ClubAdmin> getAdmins()
-    {
-        return admins;
-    }
+   public ArrayList<ClubAdmin> getAdmins()
+   {
+      return admins;
+   }
 
-    public ArrayList<User> getMembers()
-    {
-        return members;
-    }
+   public ArrayList<User> getMembers()
+   {
+      return members;
+   }
 
-    public ArrayList<Event> getEvents()
-    {
-        return clubEvents;
-    }
+   public ArrayList<Event> getEvents()
+   {
+      return clubEvents;
+   }
 
-    // Club setters
-    public void setName(String newName)
-    {
-        name = newName;
-    }
+   // Club setters
+   public void setName(String newName)
+   {
+      name = newName;
+   }
 
    public void setDescription(String newDescrip)
    {
@@ -67,6 +60,7 @@ public class Club
    // Club admin functions
    public boolean addAdmin(ClubAdmin admin)
    {
+
       return admins.add(admin);
    }
 
@@ -134,7 +128,7 @@ public class Club
         System.out.println("Club events: ");
         for (int i = 0; i < clubEvents.size(); i++)
         {
-            System.out.println("   -" + clubEvents.get(i).getName());
+            System.out.println("   -" + clubEvents.get(i).getDescrip());
         }
    }
 }
