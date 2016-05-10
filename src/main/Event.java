@@ -9,105 +9,91 @@ import java.util.*;
 public class Event
 {
    private String dayOfWeek;
-   private int startHour;
-   private int startMinute;
-   private int endHour;
-   private int endMinute;
+   private Date eventDate;
+   private Time startTime; 
+   private Time endTime;
    private String descrip; // contains event name, location, and details
    private ArrayList<User> going; // users going to the event
 
-   public Event(String day, int sh, int sm, int eh, int em, String description)
+   public Event(String day, Date date, Time startT, Time endT, String description)
    {
       dayOfWeek = day;
-      startHour = sh;
-      startMinute = sm;
-      endHour = eh;
-      endMinute = em;
+      eventDate = date;
+      startTime = startT;
+      endTime = endT;
       descrip = description;
       going = new ArrayList<User>();
    }
 
    // Event getters
-   public String getDay()
+   private String getDay()
    {
       return dayOfWeek;
    }
-
-   public int getStartHr()
+  
+   private Date getDate()
    {
-      return startHour;
+      return eventDate;
    }
 
-   public int getStartMin()
+   private Time getStartTime()
    {
-      return startMinute;
-   }
-
-   public int getEndHr()
-   {
-      return endHour;
-   }
-
-   public int getEndMin()
-   {
-      return endMinute;
-   }
-
-   public String getStartTime()
-   {
-      return Integer.toString(startHour) + ':' + Integer.toString(startMinute);
+      return startTime;
    } 
 
-   public String getEndTime()
+   private Time getEndTime()
    {
-      return Integer.toString(endHour) + ':' + Integer.toString(endMinute);
+      return endTime;
    }
 
-   public String getDescrip()
+   private String getDescrip()
    {
       return descrip;
    }
 
-   public ArrayList<User> getGoing()
+   private ArrayList<User> getGoing()
    {
       return going;
    }
 
    // Event setters
-   public void setDayOfWeek(String day)
+   private void setDayOfWeek(String day)
    {
       dayOfWeek = day;
    }
 
-   public void setTime(int sh, int sm, int eh, int em)
+   private void setDate(Date date)
    {
-      startHour = sh;
-      startMinute = sm;
-      endHour = eh;
-      endMinute = em;
+      eventDate = date;
    }
 
-   public void setDescrip(String description)
+   private void setTime(Time startT, Time endT)
+   {
+      startTime = startT;
+      endTime = endT;
+   }
+
+   private void setDescrip(String description)
    {
       descrip = description;
    }
 
    // Event attendee functions
-   public void addMember(User user)
+   private void addMember(User user)
    {
       going.add(user);
    }
 
-   public void deleteMember(User user)
+   private void deleteMember(User user)
    {
       going.remove(user);
    }
 
    // Print event information
-   public void printEventInfo()
+   private void printEventInfo()
    {
-      System.out.println("Start time: " + getStartTime());
-      System.out.println("End time: " + getEndTime());
+      System.out.println("Start time: " + startTime.toString());
+      System.out.println("End time: " + endTime.toString());
       System.out.println("Event description: " + descrip);
       System.out.println("Members going: ");
       for (int i = 0; i < going.size(); i++)
