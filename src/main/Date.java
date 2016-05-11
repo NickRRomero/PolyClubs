@@ -21,13 +21,13 @@ public class Date
 
    /**
     * Method to order dates
-    * @return true if d1 is earlier than or equal to d2
+    * @return true if 'this' is earlier than or equal to d2
     */
-   public boolean isEarlier(Date d1, Date d2)
+   public boolean isEarlier(Date d2)
    {
-      if (d1.month <= d2.month)
+      if (this.month <= d2.month)
       {
-         if (d1.day <= d2.day)
+         if (this.day <= d2.day)
          {
             return true;
          }

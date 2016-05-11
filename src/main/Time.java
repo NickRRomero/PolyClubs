@@ -21,13 +21,13 @@ public class Time
 
    /**
     * Method to order times
-    * @return true if t1 is earlier than or equal to t2
+    * @return true if 'this' is earlier than or equal to t2
     */
-   public boolean isEarlier(Time t1, Time t2)
+   public boolean isEarlier(Time t2)
    {
-      if (t1.hour <= t2.hour)
+      if (this.hour <= t2.hour)
       {
-         if (t1.minute <= t2.minute)
+         if (this.minute <= t2.minute)
          {
             return true;
          }
