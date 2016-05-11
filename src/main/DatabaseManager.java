@@ -13,8 +13,10 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
 import java.io.Console;
 import org.bson.BSON;
+import org.bson.BSONObject;
 import org.json.simple.*;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  * Created by Nick on 4/20/16.
@@ -186,23 +188,37 @@ public class DatabaseManager
         return profile;
     }
     
+    
     /**
-     * 
-     * @param string
-     * @return 
+     * Add a student to a club as a member.
+     * @param student name of student to add to database
      */
-    /*
-    public boolean addStudentToClub(String student)
+    public void addStudentToClub(String student)
     {
-        
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        BasicDBObject newStudent = new BasicDBObject(); 
-        addToSet = new BasicDBObject("$addToSet", new BasicDBObject("name" : "Olive The Kitty") );
-        
+        BasicDBObject newStudent = new BasicDBObject("ClubName", whichDocumentByName); 
+        BasicDBObject students = new BasicDBObject("members", student);
+        collection.updateOne(newStudent, new BasicDBObject("$addToSet", students));
+    }
+    
+    /**
+     * Remove a student from a club as a member.
+     * @param student name of student to remove from database
+     */
+    public void removeStudentFromClub(String student)
+    {
+        initializeDatabaseConnection();
+        MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
+        BasicDBObject newStudent = new BasicDBObject("ClubName", whichDocumentByName); 
+        BasicDBObject students = new BasicDBObject("members", student);
+        collection.updateOne(newStudent, new BasicDBObject("$pull", students));
     }
    
-    
+    /**
+     * Change the description of a club.
+     * @param newDescription new description of a club.
+     */
     public void changeClubDescription(String newDescription)
     {
         initializeDatabaseConnection();
@@ -210,7 +226,33 @@ public class DatabaseManager
         collection.updateOne(eq("ClubName", whichDocumentByName), 
                 set("description", newDescription));
     }
-   */
+    
+    /**
+     * Add an event to a Club's page
+     * @param jsonobject Format - "Club Name or Description", "Information"
+     */
+    public void addEventToClub(JSONObject jsonobject)
+    {
+        initializeDatabaseConnection();
+        MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
+        BasicDBObject newEvent = new BasicDBObject("ClubName", whichDocumentByName);
+        BasicDBObject events = new BasicDBObject("events", jsonobject);
+        collection.updateOne(newEvent, new BasicDBObject("$addToSet", events));
+    }
+    
+    /**
+     * Remove an event from a Club's page
+     * @param jsonobject Format - "Club Name or Description", "Information"
+     */
+    public void removeEventFromClub(JSONObject jsonobject)
+    {
+        initializeDatabaseConnection();
+        MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
+        BasicDBObject newEvent = new BasicDBObject("ClubName", whichDocumentByName);
+        BasicDBObject events = new BasicDBObject("events", jsonobject);
+        collection.updateOne(newEvent, new BasicDBObject("$pull", events));
+    }
+   
     
 }
 
