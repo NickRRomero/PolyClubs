@@ -17,6 +17,7 @@ public class EventViewer {
    }
 
    public static synchronized EventViewer getInstance() {
+      // Singleton
       if (myView == null) {
          myView = new EventViewer();
       }
@@ -38,10 +39,12 @@ public class EventViewer {
    }
 
 
-
+   //Scanner from method prompt()
    private void rePrompt(Scanner s) {
       s.close();
       clearScreen();
+      //Any input besides b,l,p from User leads to this method
+      //invocation.
       System.out.println("Invalid character, try again");
       prompt();
    }
@@ -55,7 +58,8 @@ public class EventViewer {
 
    public void start(Event e) {
       char input;
-      showEvent(e);
+      myEvent = e;
+      printEventInfo();
       prompt();
    }
 
@@ -70,8 +74,8 @@ public class EventViewer {
 
    public void printEventInfo() {
       clearScreen();
-      System.out.println("Start time: "  +        myEvent.getStartTime());
-      System.out.println("End time: "  +          myEvent.getEndTime());
+      System.out.println("Start time: "  +        myEvent.getStartTime().toString());
+      System.out.println("End time: "  +          myEvent.getEndTime().toString());
       System.out.println("Event location: "    +  myEvent.getLoc());
       System.out.println("Event description: " +  myEvent.getDescrip());
       System.out.print("Members going: ");
@@ -84,11 +88,12 @@ public class EventViewer {
    }
 
    private void exitViewer() {
-
+      //TODO
+   
    }
 
    private void logout() {
-
+      //TO-DO
    }
 
 }
