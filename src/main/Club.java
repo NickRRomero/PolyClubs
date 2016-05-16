@@ -86,25 +86,41 @@ public class Club
    }
 
    // Club event functions
-   public boolean addEvent(Event event)
+   public void addEvent(Event event)
    {
       return clubEvents.add(event);
    }
 
-   public boolean removeEvent(Event event)
+   public void removeEvent(Event event)
    {
       return clubEvents.remove(event);
    }
 
    // Club membership functions
-   public boolean addMember(User user)
+   public void addMember(User user)
    {
-      return members.add(user);
+      // Set database destination to the club database
+      DatabaseManager db = DatabaseManager.getInstance();
+      db.setDataBaseDestination("ClubDatabase", name, true);
+      
+      // Add user to the database
+      db.addStudentToClub(user.name);
+
+      // Add user to the local ArrayList
+      members.add(user);
    }
 
-   public boolean removeMember(User user)
+   public void removeMember(User user)
    {
-      return members.remove(user);
+      // Set database destination to the club database
+      DatabaseManager db = DatabaseManager.getInstance();
+      db.setDataBaseDestination("ClubDatabase", name, true);
+      
+      // Remove user from the database
+      db.removeStudentFromClub(user.name);
+
+      // Remove user from the local ArrayList
+      members.remove(user);
    }
 
    // Print club information
@@ -132,3 +148,4 @@ public class Club
         }
    }
 }
+
