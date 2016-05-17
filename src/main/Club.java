@@ -12,6 +12,9 @@ public class Club
    private String descrip;
    private ArrayList<User> userRequests;
    private boolean areRequests;
+   private ArrayList<ClubAdmin> admins;
+   private ArrayList<User> members;
+   private ArrayList<Event> clubEvents;
 
    public Club(String nm, String des, ClubAdmin admin)
    {
