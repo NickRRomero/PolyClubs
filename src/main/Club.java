@@ -4,6 +4,7 @@
  */
 
 import java.util.*;
+import org.json.*;
 
 public class Club
 {
@@ -88,11 +89,40 @@ public class Club
    // Club event functions
    public void addEvent(Event event)
    {
-      return clubEvents.add(event);
+      // Set database destination to the club database
+      DatabaseManager db = DatabaseManager.getInstance();
+      db.setDataBaseDestination("ClubDatabase", name, true);
+
+      // Create the JSON object for the event
+      JSONObject obj = new JSONObject();
+      obj.put(event.getDescrip(), event.getDate().toString() + " " +
+         event.getStartTime().toString() + "-" + event.getEndTime().toString() +
+         event.getDay());
+
+      // Add the event to the database
+      db.addEventToClub(obj); 
+
+      // Add the event to the local ArrayList
+      clubEvents.add(event);
    }
 
    public void removeEvent(Event event)
    {
+      // Set database destination to the club database
+      DatabaseManager db = DatabaseManager.getInstance();
+      db.setDataBaseDestination("ClubDatabase", name, true);
+
+      // Create the JSON object for the event
+      JSONObject obj = new JSONObject();
+      obj.put(event.getDescrip(), event.getDate().toString() + " " +
+         event.getStartTime().toString() + "-" + event.getEndTime().toString() +
+         event.getDay());
+
+      // Remove the event from the database
+      db.addEventToClub(obj); 
+
+      // Remove the event from the local ArrayList
+      clubEvents.add(event);
       return clubEvents.remove(event);
    }
 
