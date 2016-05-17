@@ -21,19 +21,19 @@ public class Course {
     public Course(String n, Time s, Time e, String d) {
        name = new String(n);
        start = s;
-	   end = e;
+       end = e;
 
-	   // d contains String abbreviations separated by '_'
-	   days = new ArrayList<String>();
+       // d contains String abbreviations separated by '_'
+       days = new ArrayList<String>();
 	
-	   // Each elements in parts represents a day appreviation
-	   String[] parts = d.split("_");
+       // Each elements in parts represents a day appreviation
+       String[] parts = d.split("_");
 	
-	   // add each day abbreviation the course occurs on to the days
-	   // ArrayList
-	   for (int i = 0; i < parts.length; i ++) {
-	      days.add(parts[i]);
-	   }
+       // add each day abbreviation the course occurs on to the days
+       // ArrayList
+       for (int i = 0; i < parts.length; i ++) {
+           days.add(parts[i]);
+       }
     }
 
     // Set the start time of the course
@@ -52,32 +52,23 @@ public class Course {
    
     // Getter to return the String's name
     public String getName() {
-	   return new String(name);
+        return new String(name);
     }
 
     // Getter to return the Course's start hour
-    public int getStartHour() {
-        return start.getHour();
+    public Time getStart() {
+        return start;
     }
     
     // Getter to return the Course's end hour
-    public int getEndHour() {
-        return end.getHour();
+    public Time getEnd() {
+        return end;
     }
 
-    // Getter to return the Course's start minute
-    public int getStartMinute() {
-        return start.getMinute();
-    }
-
-    // Getter to return the Course's end minute
-    public int getEndMinute() {
-        return end.getMinute();
-    }
 
     // Getter to return an array list of day abbreviations
     public String[] getDays() {
-        return (String[])days.toArray();
+        return days.toArray(new String[0]);
     }
 
 }
