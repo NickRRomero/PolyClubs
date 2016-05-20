@@ -10,18 +10,54 @@ public class Club
 {
    private String name;
    private String descrip;
-   private ArrayList<User> userRequests;
-   private boolean areRequests;
    private ArrayList<ClubAdmin> admins;
    private ArrayList<User> members;
    private ArrayList<Event> clubEvents;
+   private DatabaseManager db;
 
-   public Club(String nm, String des, ClubAdmin admin)
+   
+   /**
+    * Initializes a Club object with information from the club's database entry
+    * @param nm - name of the club
+    */
+   public Club(String nm)
    {
       name = nm;
-      descrip = des;
-      this.addAdmin(admin);
-      areRequests = false;
+      
+      // Set database destination to the club database
+      db = DatabaseManager.getInstance();
+      db.setDataBaseDestination("ClubDatabase", name, true);
+      
+      // Initialize the instance variables
+     name = nm;
+     admins = new ArrayList<ClubAdmin>();
+     members = new ArrayList<User> ();
+     clubEvents = new ArrayList<Event>();
+      
+      // Get the club's database entry
+   }
+   
+   /**
+    * Adds a new club to the club database
+    * @param nm - name of the club
+    * @param presEmail - Cal Poly email address of the club's president
+    * @desc - description of the club
+    */
+   public Club(String nm, String presEmail, String desc)
+   {
+      // Set database destination to the club database
+      db = DatabaseManager.getInstance();
+      db.setDataBaseDestination("ClubDatabase", name, true);
+      
+      // Create the club
+      db.createNewClub(nm, presEmail, desc);
+      
+      // Initialize instance variables
+      name = nm;
+      descrip = desc;
+      admins = new ArrayList<ClubAdmin>();
+      members = new ArrayList<User> ();
+      clubEvents = new ArrayList<Event>();
    }
 
     // Club getters
@@ -34,7 +70,7 @@ public class Club
    {
       return descrip;
    }
-
+   
    public ArrayList<ClubAdmin> getAdmins()
    {
       return admins;
@@ -61,41 +97,10 @@ public class Club
       descrip = newDescrip;
    }
 
-   // Club admin functions
-   public boolean addAdmin(ClubAdmin admin)
-   {
-
-      return admins.add(admin);
-   }
-
-   public boolean deleteAdmin(ClubAdmin admin)
-   {
-      return admins.remove(admin);
-   }
-
-   // Member request functions
-   public boolean addRequest(User user)
-   {
-      areRequests = true;
-      return userRequests.add(user);
-   }
-
-   public boolean removeRequest(User user)
-   {
-      boolean val = false;
-      val = userRequests.remove(user);
-      areRequests = !userRequests.isEmpty();
-
-      return val;
-   }
-
+   
    // Club event functions
    public void addEvent(Event event)
    {
-      // Set database destination to the club database
-      DatabaseManager db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
-
       // Create the JSON object for the event
       JSONObject obj = new JSONObject();
       obj.put(event.getDescrip(), event.getDate().toString() + " " +
@@ -111,10 +116,6 @@ public class Club
 
    public void removeEvent(Event event)
    {
-      // Set database destination to the club database
-      DatabaseManager db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
-
       // Create the JSON object for the event
       JSONObject obj = new JSONObject();
       obj.put(event.getDescrip(), event.getDate().toString() + " " +
@@ -125,8 +126,7 @@ public class Club
       db.addEventToClub(obj); 
 
       // Remove the event from the local ArrayList
-      clubEvents.add(event);
-      return clubEvents.remove(event);
+      clubEvents.remove(event);
    }
 
    // Club membership functions
@@ -137,7 +137,7 @@ public class Club
       db.setDataBaseDestination("ClubDatabase", name, true);
       
       // Add user to the database
-      db.addStudentToClub(user.name);
+      db.addStudentToClub(user.getName());
 
       // Add user to the local ArrayList
       members.add(user);
@@ -150,7 +150,7 @@ public class Club
       db.setDataBaseDestination("ClubDatabase", name, true);
       
       // Remove user from the database
-      db.removeStudentFromClub(user.name);
+      db.removeStudentFromClub(user.getName());
 
       // Remove user from the local ArrayList
       members.remove(user);
@@ -181,4 +181,3 @@ public class Club
         }
    }
 }
-
