@@ -29,49 +29,69 @@ public class Schedule {
     
     // determine if an event conflicts with a user's schedule
     public boolean hasConflict(Event event) {
-    	// variables to be set later
+    	// course and event to be set in loop
     	Course c = null;
     	Event e = null;
-    	Time stime = null;
-    	Time etime = null;
+    	
+    	// sameDay is true if event is on same day as another course/event
     	boolean sameDay = false;
+    	
+    	// 0 if sameDay is false, 1 if event is on same day as another event
+    	// -1 if event is on same day as a course
+    	int course_or_event = 0;
     	
     	// loop through each event/course in schedule
     	outerloop: 
-    	for (Object ec : schedule) {
-    		System.out.println("Event");
-    		// if course, determine if event and course are on same day
-    		if (ec instanceof Course) {
-    			c = (Course) ec;
+    	for (Object obj : schedule) {
+    		// if obj is course, determine if event and course are on same day
+    		if (obj instanceof Course) {
+    			c = (Course) obj;
     			for(String day : c.getDays()) {
-    				// if on same day, get time and exit outerloop
+    				// if on same day, set variables and exit outerloop
     				if (event.getDay().equals(day)) {
     					sameDay = true;
-    					stime = c.getStart();
-    					etime = c.getEnd();
+    					course_or_event = -1;
     					break outerloop;
     				}
     			}
     		}
-    		// if event, determine if events are on same date
+    		// if obj is event, determine if events are on same date
     		else {
-    			e = (Event) ec;
-    			// if on same date, get time and exit outerloop
+    			e = (Event) obj;
+    			// if on same date, set variables and exit outerloop
 	    		if (event.getDate().equals(e.getDate())) {
 					sameDay = true;
-					stime = e.getStartTime();
-					etime = e.getEndTime();
+					course_or_event = 1;
 					break outerloop;
 	    		}
     		}	
     	}
     	
-    	if (sameDay) 
-    		System.out.println("Event: " + stime + " " + etime);
+    	if (course_or_event > 0 && sameDay) 
+    		return timeCheck(e.getStartTime(), e.getEndTime(), 
+    				event.getStartTime(), event.getEndTime());
+    	else if (course_or_event < 0 && sameDay)
+    		return timeCheck(c.getStart(), c.getEnd(), 
+    				event.getStartTime(), event.getEndTime());    	
+    		
+    	return false;
+    }
+    
+    // check if two events/courses have conflicting times
+    public boolean timeCheck(Time start1, Time end1, Time start2, Time end2) {
+    	// the first event ends before the second event starts
+    	if (end1.isEarlier(start2))
+    		return false;
     	
+    	// the first event starts after the second event ends
+    	if (!start1.isEarlier(end2))
+    		return false;
+    	
+    	// both conditions are false so there is a conflict
     	return true;
     }
     
+    // function that returns all the courses in a schedule
     public ArrayList<Course> getCourses() {
     	ArrayList<Course> courses = new ArrayList<Course>();
     	
@@ -85,41 +105,6 @@ public class Schedule {
     
     public void displayWeek() {
     	;
-    }
-    
-    static public void main(String[] args) {
-    	Date pd = new Date(5, 15);
-    	Time pst = new Time(13, 00);
-    	Time pet = new Time(15, 30);
-    	
-    	Date nd = new Date(5, 13);
-    	Time nst = new Time(14, 10);
-    	Time net = new Time(15, 05);
-    	
-    	Date pid = new Date(5, 14);
-    	Time pist = new Time(12, 00);
-    	Time piet = new Time(14, 25);
-    	
-    	Time sst = new Time(11, 10);
-    	Time set = new Time(13, 00);
-    	
-    	Event party = new Event("W", pid, pst, pet, "Birthday Party");
-    	Event nap = new Event("M", nd, nst, net, "Take a nap");
-    	Event eat = new Event("Sa", pid, pist, piet, "pizza time");
-    	Course math = new Course("math", nst, net, "M_T_W_R");
-    	Course science = new Course("science", sst, set, "M_W_F");
-    	
-    	Schedule sch = new Schedule();
-    	
-    	sch.add(math);
-    	sch.add(nap);
-    	sch.add(science);
-    	sch.add(party);
-    	System.out.println(sch.schedule.size() + "\n");
-    	System.out.println(nap.getEndTime().toString());
-
-    	sch.hasConflict(eat);
-    	
     }
 }
 
