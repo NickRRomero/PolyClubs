@@ -33,25 +33,21 @@ public class Schedule {
     	Course c = null;
     	Event e = null;
     	
-    	// sameDay is true if event is on same day as another course/event
-    	boolean sameDay = false;
-    	
-    	// 0 if sameDay is false, 1 if event is on same day as another event
-    	// -1 if event is on same day as a course
-    	int course_or_event = 0;
+    	// is there a conflict
+    	boolean conflict = false;
     	
     	// loop through each event/course in schedule
-    	outerloop: 
     	for (Object obj : schedule) {
     		// if obj is course, determine if event and course are on same day
     		if (obj instanceof Course) {
     			c = (Course) obj;
     			for(String day : c.getDays()) {
-    				// if on same day, set variables and exit outerloop
+    				// if on same day, check if times are in conflict
     				if (event.getDay().equals(day)) {
-    					sameDay = true;
-    					course_or_event = -1;
-    					break outerloop;
+    					conflict = timeCheck(c.getStart(), c.getEnd(), 
+    		    				event.getStartTime(), event.getEndTime());
+    					
+    					System.out.println(c.getName());
     				}
     			}
     		}
@@ -60,20 +56,17 @@ public class Schedule {
     			e = (Event) obj;
     			// if on same date, set variables and exit outerloop
 	    		if (event.getDate().equals(e.getDate())) {
-					sameDay = true;
-					course_or_event = 1;
-					break outerloop;
+					conflict = timeCheck(e.getStartTime(), e.getEndTime(), 
+		    				event.getStartTime(), event.getEndTime());
+					
+					System.out.println(e.getDescrip());
 	    		}
-    		}	
+    		}
+    		
+    		if (conflict)
+				return true;
     	}
     	
-    	if (course_or_event > 0 && sameDay) 
-    		return timeCheck(e.getStartTime(), e.getEndTime(), 
-    				event.getStartTime(), event.getEndTime());
-    	else if (course_or_event < 0 && sameDay)
-    		return timeCheck(c.getStart(), c.getEnd(), 
-    				event.getStartTime(), event.getEndTime());    	
-    		
     	return false;
     }
     
@@ -84,7 +77,7 @@ public class Schedule {
     		return false;
     	
     	// the first event starts after the second event ends
-    	if (!start1.isEarlier(end2))
+    	if (end2.isEarlier(start1))
     		return false;
     	
     	// both conditions are false so there is a conflict
