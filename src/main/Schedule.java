@@ -96,6 +96,7 @@ public class Schedule {
     	return courses;
     }
     
+    // display weekly calendar of courses
     public void displayWeek() {
     	;
     }
