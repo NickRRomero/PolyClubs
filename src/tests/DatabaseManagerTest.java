@@ -1,23 +1,83 @@
-
 package polyclubsconsole;
 
-import com.mongodb.client.MongoCollection;
-import java.util.Map;
 import junit.framework.TestCase;
-import org.bson.Document;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
+import org.junit.Test;
 
 /**
  *
- * @author Nick
+ * @author Nick Romero
  */
-public class DatabaseManagerTest extends TestCase {
+public class TestDatabaseManager extends TestCase 
+{
     
-    public DatabaseManagerTest(String testName) 
+    public TestDatabaseManager(String testName) 
     {
         super(testName);
+        System.err.close();
     }
 
+    
+    @Test
+    public void testSetAdvisorOfClub()
+    {
+        DatabaseManager db = DatabaseManager.getInstance();        
+        db.setAdvisorOfClub("mboyken@calpoly.edu", "Cats cats and more cats");
+    }
+    
+    
+    /*
+    @Test
+    public void testDatabaseManagerNewInstance()
+    {
+        System.out.println("testDatabaseManagerNewInstance");
+        DatabaseManager db = DatabaseManager.getInstance();
+        assertTrue(db instanceof DatabaseManager);
+    }
+    
+    @Test
+    public void testDatabaseManagerSameInstance()
+    {
+        System.out.println("testDatabaseManagerSameInstance");
+        DatabaseManager db = DatabaseManager.getInstance();
+        DatabaseManager identicalInstance = DatabaseManager.getInstance();
+        assertEquals(db, identicalInstance);
+    }
+    
+    @Test
+    public void testCheckIfAdminIsAdmin() throws InterruptedException
+    {
+        System.out.println("testCheckIfAdminIsAdmin");
+        DatabaseManager db = DatabaseManager.getInstance();
+        boolean isAdmin;
+        isAdmin = db.checkIfAdmin("Nick Romero");
+        assertTrue(isAdmin);
+    }
+    
+    @Test
+    public void testCheckIfAdminIsNotAdmin() throws InterruptedException
+    {
+        System.out.println("testCheckIfAdminIsNotAdmin");
+        DatabaseManager db = DatabaseManager.getInstance();
+        boolean isNotAdmin;
+        isNotAdmin = db.checkIfAdmin("Davide Falessi");
+        assertFalse(isNotAdmin);
+    }
+    
+    @Test
+    public void testDatabaseAccessSuccessful()
+    {
+        System.out.println("testDatabaseAccessSuccessful");
+        DatabaseManager db = DatabaseManager.getInstance();
+        
+        
+        db.setDataBaseDestination("ClubAdministrators", "Main", true);
+        db.accessDatabase();
+        JSONObject aprofile = db.getSingleDatabaseResults();
+        assertNotNull(aprofile);
+    }
+    
+/*
     public void testChangeClubDescription()
     {
         DatabaseManager db = DatabaseManager.getInstance();
@@ -50,4 +110,16 @@ public class DatabaseManagerTest extends TestCase {
         db.removeEventFromClub(jsonObject);
     }
 
+    public void testCreateNewClub()
+    {
+        DatabaseManager db = DatabaseManager.getInstance();
+        db.setDataBaseDestination("StudentDatabase", "nrromero@calpoly.edu", true);
+        db.createNewClub("Cats cats and more cats", "nrromero@calpoly.edu", 
+                "We are a dog loving club. Cats not required.");
+    }
+*/
+    
+    
+    
+    
 }
