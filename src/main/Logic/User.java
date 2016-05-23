@@ -1,3 +1,5 @@
+package Logic;
+
 /**
  * User class of PolyClubs.
  * @author mboyken
