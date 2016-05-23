@@ -1,3 +1,5 @@
+package Logic;
+
 /** 
  * @author Holly
  * Represents a club event
