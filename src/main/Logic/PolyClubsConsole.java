@@ -1,4 +1,4 @@
-package polyclubsconsole;
+package Logic;
 
 import org.json.JSONObject;
 
