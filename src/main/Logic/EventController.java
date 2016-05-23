@@ -1,10 +1,3 @@
-
-
-
-	/* Interfaces with boundaries and entities
-	 * They orchestrate the execution of commands coming from the boundary. 
-	 * They implement the logic of a UC.
-	 */
 package Logic;
 /*
 @Author: Kevin Costello
