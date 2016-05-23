@@ -1,4 +1,4 @@
-package polyclubsconsole;
+package Test;
 
 import junit.framework.TestCase;
 import org.json.JSONObject;
