@@ -1,5 +1,4 @@
-
-package polyclubsconsole;
+package Logic;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
