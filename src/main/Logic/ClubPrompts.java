@@ -1,4 +1,4 @@
-package polyclubsconsole;
+package Logic;
 
 import java.util.Scanner;
 import org.json.JSONException;
