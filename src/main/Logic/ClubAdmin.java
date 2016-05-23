@@ -1,3 +1,5 @@
+package Logic;
+
 /**
  * Class for ClubAdmin.
  * @author mboyken
