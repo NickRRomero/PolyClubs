@@ -1,3 +1,5 @@
+package Logic;
+
 /** 
  * @author Holly
  * Represents an event time
