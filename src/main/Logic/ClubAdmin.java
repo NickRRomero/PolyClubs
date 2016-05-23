@@ -2,130 +2,155 @@ package Logic;
 
 /**
  * Class for ClubAdmin.
+ * Made all methods public for testing purposes.
  * @author mboyken
  */
 
-import java.util.*;
+import java.util.Scanner;
+
+import org.json.JSONException;
 
 public class ClubAdmin extends User
 {
-   private int adminID;
+   private DatabaseManager database;
+   private Scanner scan;
 
-   public ClubAdmin(int adminID, String name, String phoneNum,
-      String empl, String email)
+   public ClubAdmin(String name, String phoneNum, String empl, String email)
+         throws Exception
    {
-      this.adminID = adminID;
-      this.super(name, phoneNum, empl, email);
+      super(name, phoneNum, empl, email);
    }
 
    /**
     * Method to create an Event for the club.
-    * @param club The club the event is part of.
-    * @param startH The hour of the start time of the event.
-    * @param startM The minute of the start time of the event.
-    * @param endH The hour of the  end time of the event.
-    * @param endM The minute of the end time of the event.
-    * @param loc The location of the event.
-    * @param descr The description of the event.
-    * @return Returns the created Event.
+    * 
+    * @param club
+    *           The club the event is part of.
+    * @throws JSONException
     */
-   private void createEvent(Club club, int startH, int startM,
-         int endH, int endM, String loc, String descr)
+   public Event createEvent(Club club) throws JSONException
    {
-      club.createEvent(startH, startM, endH, endM, loc, descr);
+      Event event;
+      String day;
+      int startH;
+      int startM;
+      int endH;
+      int endM;
+      int month;
+      int dayMonth;
+      String descr;
+      Time startTime;
+      Time endTime;
+      Date date;
+
+      System.out.println("Enter the day of the week of the event.");
+      day = scan.next();
+      System.out.println("Enter the month of the event as a number.");
+      month = scan.nextInt();
+      System.out
+            .println("Enter the day of the month of the event as a number.");
+      dayMonth = scan.nextInt();
+      System.out.println("Enter the start hour of the event.");
+      startH = scan.nextInt();
+      System.out.println("Enter the start minute of the event.");
+      startM = scan.nextInt();
+      System.out.println("Enter the end hour of the event.");
+      endH = scan.nextInt();
+      System.out.println("Enter the end minute of the event.");
+      endM = scan.nextInt();
+      System.out.println("Enter the name, location, and description"
+            + " of the new event.");
+      descr = scan.next();
+
+      date = new Date(month, dayMonth);
+      startTime = new Time(startH, startM);
+      endTime = new Time(endH, endM);
+
+      event = new Event(day, date, startTime, endTime, descr);
+      club.addEvent(event);
+      return event;
    }
 
    /**
     * Method to create a club.
-    * @param name The name of the club.
-    * @param descr The description of the club.
+    * 
+    * @return The new club created.
+    * @throws JSONException
     */
-   private Club createClub(String name, String descr)
+   public Club createClub() throws JSONException
    {
-      return new Club(name, descr, this);
-   }
+      String clubName;
+      String descr;
 
-   /**
-    * Method to add a new administrator to a club.
-    * @param club The club that will be affected.
-    * @param admin The admin to be added.
-    */
-   private void addAdmin(Club club, ClubAdmin admin)
-   {
-      club.addAdmin(admin);
+      System.out.println("Enter the name of the new club.");
+      clubName = scan.next();
+      System.out.println("Enter the description of the club.");
+      descr = scan.next();
+
+      return new Club(clubName, super.getEmail(), descr);
    }
 
    /**
     * Method to delete an event.
-    * @param event The event to be deleted.
-    * @param club The club that the event belonged to.
+    * 
+    * @param event
+    *           The event to be deleted.
+    * @param club
+    *           The club that the event belonged to.
+    * @throws JSONException
     */
-   private void deleteEvent(Event event, Club club)
+   public void removeEvent(Event event, Club club) throws JSONException
    {
-      club.deleteEvent(event);
+      club.removeEvent(event);
    }
 
    /**
     * Method to update an event.
-    * @param club Club the evemt is under.
-    * @param event The Event to be updated.
-    * @param startH The hour of the start time of the event.
-    * @param startM The minute of the start time of the event.
-    * @param endH The hour of the  end time of the event.
-    * @param endM The minute of the end time of the event.
-    * @return The updated Event.
+    * 
+    * @param event
+    *           The event to be changed.
     */
-   private void updateEventTime(Club club, Event event, int startH,
-       int startM, int endH, int endM)
+   public void setTime(Event event)
    {
-      club.updateEventTime(event, startH, startM, endH, endM);
+      int startH;
+      int startM;
+      int endH;
+      int endM;
+      Time startTime;
+      Time endTime;
+
+      scan = new Scanner(System.in);
+
+      System.out.println("Enter the new start hour of the event.");
+      startH = scan.nextInt();
+      System.out.println("Enter the new start minute of the event.");
+      startM = scan.nextInt();
+      System.out.println("Enter the new end hour of the event.");
+      endH = scan.nextInt();
+      System.out.println("Enter the new end minute of the event.");
+      endM = scan.nextInt();
+
+      startTime = new Time(startH, startM);
+      endTime = new Time(endH, endM);
+
+      event.setTime(startTime, endTime);
    }
 
    /**
     * Method to update event location.
-    * @param club Club the event is under.
-    * @param event The event to be updated.
-    * @param loc The new location of the event.
+    * 
+    * @param event
+    *           The event to be changed.
     */
-   private void updateEventLoc(Club club, Event event, String loc)
+   public void setDescrip(Event event)
    {
-      club.updateEventLoc(event, loc);
+      String descrip;
+
+      scan = new Scanner(System.in);
+      System.out.println("Enter the new name, description, and "
+            + "location of the event.");
+      descrip = scan.nextLine();
+      event.setDescrip(descrip);
    }
 
-   /**
-    * Method to update event description.
-    * @param club Club the event is under.
-    * @param event The event to be updated.
-    * @param descr The new description of the club.
-    */
-   private void updateEventDescr(Club club, Event event, String descr)
-   {
-      club.updateEventDescr(event, descr);
-   }
-
-   /**
-    * Method to accept or reject member's request to join club.
-    * @param user The User that will be affected.
-    * @param club The Club that will be affected.
-    * @param accept The decision; true if accepted; false if rejected.
-    * @return Returns the decision of the admin.
-    */
-   private boolean acceptMember(User user, Club club, boolean accept)
-   {
-      if (accept)
-      {
-         club.addUser(user);
-      }
-      club.removeRequest(user);
-      return accept;
-   }
-
-   /**
-    * Getter for adminID.
-    * @return Returns adminID.
-    */
-   public int getAdminID()
-   {
-      return adminID;
-   }
 }
