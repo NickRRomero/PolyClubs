@@ -2,12 +2,20 @@ package Logic;
 
 /**
  * User class of PolyClubs.
+ * Made all methods public for testing purposes.
  * @author mboyken
  */
 
-import org.json.*;
-import java.util.*;
-import java.io.*;
+
+
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class User
 {
@@ -15,16 +23,16 @@ public class User
    private String phoneNum;
    private String email;
    private String empl;
-   private Calendar events;
    private Schedule schedule;
    private ArrayList<Club> clubs;
    private ArrayList<String> messages;
-   private boolean hasMsg;
+   public boolean hasMsg;
    private JSONObject jsonDB;
    private DatabaseManager databaseManager;
+   private Scanner scan;
 
-   public User(String name, String phoneNum, String empl,
-      String email) throws Exception
+   public User(String name, String phoneNum, String empl, String email)
+         throws Exception
    {
       this.name = name;
       this.phoneNum = phoneNum;
@@ -33,35 +41,31 @@ public class User
       clubs = new ArrayList<Club>();
       messages = new ArrayList<String>();
       hasMsg = false;
-      databaseManager = new DatabaseManager();
-      jsonDB = new databaseManager.execture().get();
+      databaseManager = DatabaseManager.getInstance();
+      databaseManager.setDataBaseDestination("StudentDatabase", name, true);
+      // jsonDB = new databaseManager.execute().get();
       schedule = new Schedule();
    }
 
    /**
     * Method to leave a club.
-    * @param club The club that will be affected.
+    * 
+    * @param club
+    *           The club that will be affected.
     */
-   private void leaveClub(Club club)
+   public void leaveClub(Club club)
    {
+      club.removeMember(this);
       clubs.remove(club);
    }
 
    /**
-    * Method to request to join a club.
-    * @param club The club that the user is requesting to join.
-    */
-   private void requestJoin(Club club)
-   {
-      club.addRequest(this);
-   }
-
-   /**
     * Method to view another club member.
-    * Will use Android Studio GUI.
-    * @param member The member the user wants to view.
+    * 
+    * @param member
+    *           The member the user wants to view.
     */
-   private void viewMember(User member)
+   public void viewMember(User member)
    {
       System.out.println("Name: " + member.getName());
       System.out.println("Phone number: " + member.getPhoneNum());
@@ -70,14 +74,17 @@ public class User
 
    /**
     * Getter for name.
+    * 
     * @return The user's name.
     */
    public String getName()
    {
       return name;
    }
+
    /**
     * Getter for phone number.
+    * 
     * @return The user's phone number.
     */
    public String getPhoneNum()
@@ -87,6 +94,7 @@ public class User
 
    /**
     * Getter for email.
+    * 
     * @return The user's email.
     */
    public String getEmail()
@@ -96,85 +104,129 @@ public class User
 
    /**
     * Method to get all events from a club.
-    * @param club The club that the user wants to view the events of.
-    * @return An array list of the club's events.
+    * 
+    * @param club
+    *           The club that the user wants to view the events of.
     */
-   private ArrayList<Event> getClubEvents(Club club)
+   public void getClubEvents(Club club)
    {
-      return club.getEvents();
+      ArrayList<Event> events = club.getEvents();
+
+      for (int iter = 0; iter < events.size(); iter++)
+      {
+         events.get(iter).printEventInfo();
+      }
    }
 
    /**
     * Method to send a message to another user.
-    * @param msg The message to send.
-    * @param User The member to which the message is to be sent.
+    * 
+    * @param User
+    *           The member to which the message is to be sent.
     */
-   private void sendMsg(String msg, User member)
+   public void sendMsg(User member)
    {
+      String msg;
+
+      scan = new Scanner(System.in);
+      System.out.println("Enter a short message to be sent to "
+            + member.getName() + ".");
+      msg = scan.nextLine();
       member.addMsg(msg, this.name);
    }
 
-   /**
-    * Method to pull the user's schedule from their Portal.
-    * The JSONObject holds only the information for the courses.
-    * The JSONArray hold each portion of the courses attribute.
-    * Will use database object.
-    */
-   private void syncSchedule()
+   public void syncSchedule() throws JSONException
    {
-      private JSONObject jsonObj = jsonDB.getJSONObject("courses");
-      private JSONArray arr = jsonDB.getJSONArray("courses");
-      private ArrayList<String> courseList = new ArrayList<String>();
-      private ArrayList<String> dayList = new ArrayList<String>();
-      private int startH;
-      private int startM;
-      private int endH;
-      private int endM;
-      private Reader rdr;
-      private Scanner scan;
-      private String curText
-      private String name;
-      private Course course;
+      jsonDB = databaseManager.getSingleDatabaseResults();
+      JSONArray arr = jsonDB.getJSONArray("courses");
+      ArrayList<String> courseList = new ArrayList<String>();
 
-      //iterate through JSONArray to get strings for each course
+      // iterate through JSONArray to get strings for each course
       for (int iter = 0; iter < arr.length(); iter++)
       {
-         courseList.add(arr.getJsonString(iter).getString());
+         courseList.add(arr.getString(iter));
       }
 
-      //iterate through courses to parse each course
-      for (int iter = 0; iter < courseList.length; iter++)
+      createSchedule(courseList);
+   }
+
+   /**
+    * Method to pull the user's schedule from their Portal. The JSONObject holds
+    * only the information for the courses. The JSONArray hold each portion of
+    * the courses attribute. Will use database object.
+    * 
+    * @throws JSONException
+    */
+   public Schedule createSchedule(ArrayList<String> courseList)
+   {
+      String dayList;
+      int startH;
+      int startM;
+      int endH;
+      int endM;
+      Reader rdr;
+      Scanner scan;
+      String courseName = "";
+      Course course;
+      Time startTime;
+      Time endTime;
+
+      // iterate through courses to parse each course
+      for (int iter = 0; iter < courseList.size(); iter++)
       {
-         rdr = new StringReader(courses[iter]);
-         scan = new Scanner(rdr).useDelimiter(":- _");
+         rdr = new StringReader(courseList.get(iter));
+         scan = new Scanner(rdr).useDelimiter(" |:|-");
 
-         //get start hour
-         startH = Integer.parseInt(scan.next());
-         //get start minute
-         startM = Integer.parseInt(scan.next());
-         //get end hour
-         endH = Integer.parseInt(scan.next());
-         //get end minute
-         endM = Integer.parseInt(scan.next());
-         //collect all days
-         while (scan.hasNext())
-         {
-            dayList.add(scan.next());
-         }
+         // get course name
+         courseName = scan.next();
 
-         course = new Course(name, startH, startM, endH, endM, dayList);
+         // get start hour
+         startH = scan.nextInt();
 
-         schedule.addCourse(course);
+         // get start minute
+         startM = scan.nextInt();
+
+         // get end hour
+         endH = scan.nextInt();
+
+         // get end minute
+         endM = scan.nextInt();
+
+         // collect string of days
+         dayList = scan.next();
+
+         startTime = new Time(startH, startM);
+         endTime = new Time(endH, endM);
+
+         course = new Course(courseName, startTime, endTime, dayList);
+
+         schedule.add(course);
       }
+
+      return schedule;
    }
 
    /**
     * Method to receive message.
-    * @param msg The message that is received.
+    * 
+    * @param msg
+    *           The message that is received.
     */
-   private void addMsg(String msg, String from)
+   public void addMsg(String msg, String from)
    {
-      messages.add("From: " + from + "Message: " + msg);
+      messages.add("From: " + from + " Message: " + msg);
       hasMsg = true;
+   }
+
+   /**
+    * Get a message from User's messages.
+    * 
+    * @param position
+    *           Number position of the message.
+    */
+   public String getMsg(int position)
+   {
+      System.out.println(messages.get(position));
+      return messages.get(position);
    }
 }
