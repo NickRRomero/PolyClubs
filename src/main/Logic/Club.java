@@ -183,7 +183,7 @@ public class Club
          event.getDay());
 
       // Remove the event from the database
-      db.addEventToClub(obj); 
+      db.removeEventFromClub(obj); 
 
       // Remove the event from the local ArrayList
       clubEvents.remove(event);
