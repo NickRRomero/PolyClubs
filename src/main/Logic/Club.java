@@ -168,7 +168,7 @@ public class Club
 
       // Add the event to the database
       db.setDataBaseDestination("ClubDatabase", name, true);
-      db.addEventToClub(obj); 
+      db.addEventToClub(obj, description.split("\\|")[0]); 
 
       // Add the event to the local ArrayList
       clubEvents.add(event);
