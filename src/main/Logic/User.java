@@ -6,8 +6,6 @@ package Logic;
  * @author mboyken
  */
 
-
-
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -80,6 +78,16 @@ public class User
    public String getName()
    {
       return name;
+   }
+
+   /**
+    * Getter for user's empl ID number.
+    * 
+    * @return The Empl ID number in String format.
+    */
+   public String getEmpl()
+   {
+      return empl;
    }
 
    /**

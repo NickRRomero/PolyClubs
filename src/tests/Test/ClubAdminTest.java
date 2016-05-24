@@ -2,7 +2,6 @@ package Test;
 
 /**
  * Tests for ClubAdmin class.
- * Tests without comments have not been started.
  * @author mboyken
  */
 
@@ -19,14 +18,11 @@ import Logic.ClubAdmin;
 import Logic.Date;
 import Logic.Event;
 import Logic.Time;
-import Logic.User;
 
 public class ClubAdminTest
 {
    private ClubAdmin admin;
-   private User member;
    private Event event1;
-   private Event event2;
    private Club club;
 
    /**
@@ -43,7 +39,6 @@ public class ClubAdminTest
 
       admin = new ClubAdmin("Marii", "(270) 314-6742", "008602954",
             "mboyken@calpoly.edu");
-      member = new User("Maeve", "123456789", "123456789", "maeve@calpoly.edu");
       club = new Club("SWE", admin.getEmail(), "Society of Women Engineers");
       event1 = new Event("Tuesday", date, startTime, endTime,
             "B-day Party. Garfield Arms. Marii's birthday party.");
