@@ -1,4 +1,4 @@
-package polyclubsconsole;
+package Logic;
 
 import static java.lang.Thread.sleep;
 import java.util.Scanner;
