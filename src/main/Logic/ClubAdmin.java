@@ -12,7 +12,6 @@ import org.json.JSONException;
 
 public class ClubAdmin extends User
 {
-   private DatabaseManager database;
    private Scanner scan;
 
    public ClubAdmin(String name, String phoneNum, String empl, String email)
@@ -38,7 +37,7 @@ public class ClubAdmin extends User
       int endM;
       int month;
       int dayMonth;
-      String descr;
+      String descr = "";
       Time startTime;
       Time endTime;
       Date date;
@@ -58,9 +57,14 @@ public class ClubAdmin extends User
       endH = scan.nextInt();
       System.out.println("Enter the end minute of the event.");
       endM = scan.nextInt();
-      System.out.println("Enter the name, location, and description"
-            + " of the new event.");
-      descr = scan.next();
+      System.out.println("Enter the name of the event.");
+      descr.concat(scan.next());
+      descr.concat("|");
+      System.out.println("Enter the location of the event.");
+      descr.concat(scan.next());
+      descr.concat("|");
+      System.out.println("Enter the description of the event.");
+      descr.concat(scan.next());
 
       date = new Date(month, dayMonth);
       startTime = new Time(startH, startM);
@@ -144,12 +148,17 @@ public class ClubAdmin extends User
     */
    public void setDescrip(Event event)
    {
-      String descrip;
+      String descrip = "";
 
       scan = new Scanner(System.in);
-      System.out.println("Enter the new name, description, and "
-            + "location of the event.");
-      descrip = scan.nextLine();
+      System.out.println("Enter the new name of the event.");
+      descrip.concat(scan.next());
+      descrip.concat("|");
+      System.out.println("Enter the description of the event.");
+      descrip.concat(scan.next());
+      descrip.concat("|");
+      System.out.println("Enter the location of the event.");
+      descrip.concat(scan.next());
       event.setDescrip(descrip);
    }
 
