@@ -1,3 +1,5 @@
+package Logic;
+
 /** 
  * @author Holly
  * Represents a Cal Poly campus club
@@ -6,12 +8,14 @@
 import java.util.*;
 import org.json.*;
 
+
 public class Club
 {
    private String name;
    private String descrip;
-   private ArrayList<ClubAdmin> admins;
-   private ArrayList<User> members;
+   private String admin;
+   private String advisor; 
+   private ArrayList<String> members;
    private ArrayList<Event> clubEvents;
    private DatabaseManager db;
 
@@ -22,19 +26,47 @@ public class Club
     */
    public Club(String nm)
    {
-      name = nm;
-      
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
-      
-      // Initialize the instance variables
-     name = nm;
-     admins = new ArrayList<ClubAdmin>();
-     members = new ArrayList<User> ();
-     clubEvents = new ArrayList<Event>();
+      db.setDataBaseDestination("ClubDatabase", nm, true);
+      db.accessDatabase();
       
       // Get the club's database entry
+      JSONObject clubJson = db.getSingleDatabaseResults();
+      
+      // Initialize the instance variables
+	  name = nm;
+	  descrip = clubJson.getString("description");
+	  admin = clubJson.getJSONObject("President").getString("name");
+	  advisor = clubJson.getJSONObject("Advisor").getString("name");
+	  
+	  // Initalize the ArrayList of club members
+	  JSONArray mems = clubJson.getJSONArray("members");
+	  members = new ArrayList<String>();	  
+	  for (int i = 0; i < mems.length(); i++)
+	  {
+		  members.add(mems.getString(i));
+	  }
+	  
+	  // Initialize the ArrayList of club events
+	  JSONArray events = clubJson.getJSONArray("events");
+	  clubEvents = new ArrayList<Event>();
+	  for (int i = 0; i < events.length(); i++)
+	  {
+		  JSONObject event = events.getJSONObject(i);
+		  String desc = (String)(event.get("description"));
+
+		  String time = (String)(event.getString("time"));
+		  String[] timeInfo = time.split(" ");
+			
+			
+		  Date d = new Date(Integer.parseInt(timeInfo[0]), Integer.parseInt(timeInfo[1]));
+		  Time start = new Time(Integer.parseInt(timeInfo[2]), Integer.parseInt(timeInfo[3]));
+		  Time end = new Time(Integer.parseInt(timeInfo[4]), Integer.parseInt(timeInfo[5]));
+		
+		  Event e = new Event(timeInfo[6], d, start, end, desc);
+		  clubEvents.add(e);
+	  }  
    }
    
    /**
@@ -45,19 +77,32 @@ public class Club
     */
    public Club(String nm, String presEmail, String desc)
    {
-      // Set database destination to the club database
-      db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
-      
-      // Create the club
-      db.createNewClub(nm, presEmail, desc);
-      
-      // Initialize instance variables
-      name = nm;
-      descrip = desc;
-      admins = new ArrayList<ClubAdmin>();
-      members = new ArrayList<User> ();
-      clubEvents = new ArrayList<Event>();
+	   // Set database destination to the club database
+	   db = DatabaseManager.getInstance();
+	   db.setDataBaseDestination("ClubDatabase", presEmail, true);
+	   
+	   // Create the club
+	   db.createNewClub(nm, presEmail, desc);
+	  	      
+	   // Get the club's database entry
+	   db.setDataBaseDestination("ClubDatabase", nm, true);
+	   db.accessDatabase();
+	   JSONObject clubJson = db.getSingleDatabaseResults();
+	   
+	   // Initialize instance variables
+	   name = nm;
+	   descrip = desc;
+	   admin = clubJson.getJSONObject("President").getString("name");
+
+	   // Initalize the ArrayList of club members
+	   JSONArray mems = clubJson.getJSONArray("members");
+	   members = new ArrayList<String>();	  
+	   for (int i = 0; i < mems.length(); i++)
+	   {
+		   members.add(mems.getString(i));
+	   }
+		  
+	   clubEvents = new ArrayList<Event>();
    }
 
     // Club getters
@@ -71,12 +116,12 @@ public class Club
       return descrip;
    }
    
-   public ArrayList<ClubAdmin> getAdmins()
+   public String getAdmin()
    {
-      return admins;
+      return admin;
    }
 
-   public ArrayList<User> getMembers()
+   public ArrayList<String> getMembers()
    {
       return members;
    }
@@ -98,16 +143,31 @@ public class Club
    }
 
    
+   /**
+    * Sets the club's advisor
+    * @param advEmail - Cal Poly email address of the club's advisor
+    */
+   public void setAdvisor(String advEmail)
+   {
+	   db.setDataBaseDestination("ClubDatabase", name, true);
+	   db.setAdvisorOfClub(advEmail, name);
+   }
+   
    // Club event functions
    public void addEvent(Event event)
    {
       // Create the JSON object for the event
       JSONObject obj = new JSONObject();
-      obj.put(event.getDescrip(), event.getDate().toString() + " " +
-         event.getStartTime().toString() + "-" + event.getEndTime().toString() +
-         event.getDay());
+      Date eDate = event.getDate();
+      Time startT = event.getStartTime();
+      Time endT = event.getEndTime();
+      
+      obj.put("description", event.getDescrip()).append("time", eDate.getMonth() + " " +
+    		  eDate.getDay() + " " + startT.getHour() + " " + startT.getMinute() + " " +
+    		  endT.getHour() + " " + endT.getMinute() + event.getDay());
 
       // Add the event to the database
+      db.setDataBaseDestination("ClubDatabase", name, true);
       db.addEventToClub(obj); 
 
       // Add the event to the local ArrayList
@@ -140,7 +200,7 @@ public class Club
       db.addStudentToClub(user.getName());
 
       // Add user to the local ArrayList
-      members.add(user);
+      members.add(user.getName());
    }
 
    public void removeMember(User user)
@@ -153,7 +213,7 @@ public class Club
       db.removeStudentFromClub(user.getName());
 
       // Remove user from the local ArrayList
-      members.remove(user);
+      members.remove(user.getName());
    }
 
    // Print club information
@@ -162,22 +222,18 @@ public class Club
       System.out.println("Club name: " + name);
       System.out.println("Club description: " + descrip);
       
-      System.out.println("Club admins: ");
-      for (int i = 0; i < admins.size(); i++)
-      {
-         System.out.println("   -" + admins.get(i));
-      }
-
+      System.out.println("Club admin: " + admin);
+      System.out.println("Club advisor: " + advisor);
       System.out.println("Club members: ");
       for (int i = 0; i < members.size(); i++)
       {
-         System.out.println("   -" + members.get(i));
+         System.out.println("   - " + members.get(i));
       }
 
         System.out.println("Club events: ");
         for (int i = 0; i < clubEvents.size(); i++)
         {
-            System.out.println("   -" + clubEvents.get(i).getDescrip());
+            clubEvents.get(i).printEventInfo();
         }
    }
 }
