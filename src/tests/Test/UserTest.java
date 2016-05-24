@@ -2,7 +2,9 @@ package Test;
 
 /**
  * Unit tests for User class.
- * Tests that do not have comments yet are not started.
+ * Schedule tests are commented out to prevent database manipulation.
+ * Uncomment out the tests to run them.
+ * Be sure to remove excess from the database after running tests.
  * @author mboyken
  */
 
@@ -10,25 +12,19 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import Logic.Course;
-import Logic.Time;
 import Logic.User;
 
 public class UserTest
 {
    private User user1;
    private User user2;
-   private Course course;
 
    public UserTest() throws Exception
    {
-      Time startTime = new Time(8, 0);
-      Time endTime = new Time(10, 0);
       user1 = new User("Marii", "(270) 314-6742", "008602954",
             "mboyken@calpoly.edu");
       user2 = new User("Jesus", "8675309", "000000001",
             "jc@christianmingle.com");
-      course = new Course("MATH244", startTime, endTime, "M_W_F");
    }
 
    /**
