@@ -256,13 +256,17 @@ public class DatabaseManager
      * Add an event to a Club's page
      * @param jsonobject Format - "Club Name or Description", "Information"
      */
-    public void addEventToClub(JSONObject jsonobject)
+    public void addEventToClub(JSONObject jsonobject, String eventName)
     {
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        BasicDBObject newEvent = new BasicDBObject("ClubName", whichDocumentByName);
-        BasicDBObject events = new BasicDBObject("events", jsonobject);
-        collection.updateOne(newEvent, new BasicDBObject("$addToSet", events));
+        BasicDBObject club = new BasicDBObject("ClubName", whichDocumentByName);
+        
+        BasicDBObject events = new BasicDBObject("event1", jsonobject);
+        
+        collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject("events", 
+                new BasicDBObject(eventName, new BasicDBObject("description", jsonobject.getString("description"))
+                        .append("time", jsonobject.getString("time"))))));
     }
     
     /**
