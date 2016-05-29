@@ -1,4 +1,4 @@
-package main.Logic;
+package main.logic;
 
 import static java.lang.Thread.sleep;
 
