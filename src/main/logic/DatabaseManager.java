@@ -15,6 +15,7 @@ import static com.mongodb.client.model.Updates.set;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 import org.bson.Document;
 import org.json.JSONArray;
@@ -257,16 +258,14 @@ public class DatabaseManager
      * Add an event to a Club's page
      * @param jsonobject Format - "Club Name or Description", "Information"
      */
-    public void addEventToClub(JSONObject jsonobject, String eventName)
+    public void addEventToClub(JSONObject jsonobject)
     {
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         BasicDBObject club = new BasicDBObject("ClubName", whichDocumentByName);
         
-        BasicDBObject events = new BasicDBObject(eventName, jsonobject);
         
-        collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject("events", 
-                new BasicDBObject(eventName, new BasicDBObject("description", jsonobject.getString("description"))
+        collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject("events",(new BasicDBObject("description", jsonobject.getString("description"))
                         .append("time", jsonobject.getString("time"))))));
     }
     
@@ -274,13 +273,42 @@ public class DatabaseManager
      * Remove an event from a Club's page
      * @param jsonobject Format - "Club Name or Description", "Information"
      */
-    public void removeEventFromClub(JSONObject jsonobject)
+    public void removeEventFromClub(String eventName)
     {
         initializeDatabaseConnection();
+        accessDatabase();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         BasicDBObject newEvent = new BasicDBObject("ClubName", whichDocumentByName);
-        BasicDBObject events = new BasicDBObject("events", jsonobject);
-        collection.updateOne(newEvent, new BasicDBObject("$pull", events));
+        String desc;
+        JSONObject event = null;
+        JSONObject clubJson = getSingleDatabaseResults();
+        JSONArray events = clubJson.getJSONArray("events");
+        
+        System.out.println(clubJson.toString());
+        for (int i = 0; i < events.length(); i++)
+        {
+            event = events.getJSONObject(i);
+            
+            desc = (String)(event.get("description"));
+            
+            desc = desc.split("\\|")[0];
+            
+            if (desc.equals(eventName))
+            {
+               
+                break;
+            }
+            
+        }
+        
+        BasicDBObject club = new BasicDBObject("ClubName", whichDocumentByName);
+        
+        BasicDBObject eventToRemove = new BasicDBObject("events", event);
+        
+        collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject("events", 
+                new BasicDBObject("description", 
+                        event.getString("description")).append("time", 
+                                event.getString("time")))));
     }
     
     /**
