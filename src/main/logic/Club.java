@@ -200,7 +200,6 @@ public class Club
    public void addMember(String userName)
    {
       // Set database destination to the club database
-      DatabaseManager db = DatabaseManager.getInstance();
       db.setDataBaseDestination(clubDatabase, name, true);
       
       // Add user to the database
@@ -213,7 +212,6 @@ public class Club
    public void removeMember(String userName)
    {
       // Set database destination to the club database
-      DatabaseManager db = DatabaseManager.getInstance();
       db.setDataBaseDestination(clubDatabase, name, true);
       
       // Remove user from the database
