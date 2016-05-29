@@ -26,7 +26,7 @@ public class Logout
       scan = new Scanner(System.in);
       logger.log(Level.INFO, "Type \"logout\" to log out of the app.");
       logger.log(Level.INFO, "Type \"exit\" to exit the app.");
-
+      input = "";
       while (!"logout".equals(input) && !"exit".equals(input))
       {
          input = scan.next();
