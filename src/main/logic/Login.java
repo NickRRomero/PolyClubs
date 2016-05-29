@@ -13,6 +13,9 @@ import org.json.JSONObject;
  */
 public class Login
 {
+   /** Logger for output */
+   private static final Logger logger = Logger.getLogger( Login.class.getName() );
+   
    /** Student's email address */
    protected String studentEmail = "";
 
@@ -55,9 +58,8 @@ public class Login
    public void displayWelcomeScreen() throws InterruptedException,
          JSONException
    {
-      System.out.println("Poly\n    Clubs\n");
-      System.out
-            .println("Please enter Login Credentials or type EXIT in email "
+      logger.log(Level.INFO, "Poly\n    Clubs\n");
+      logger.log(Level.INFO, "Please enter Login Credentials or type EXIT in email "
                   + "field to close the application.\n");
       /**
        * Continuously prompt user for correct information.
@@ -77,19 +79,19 @@ public class Login
          JSONException
    {
       scanner = new Scanner(System.in);
-      System.out.print(emailPrompt);
+      logger.log(emailPrompt);
       studentEmail = scanner.next();
-      System.out.println();
+      logger.log(Level.INFO, "\n");
 
       /**
-       * Determine if the user decided to exit the system. TODO Maybe IX
+       * Determine if the user decided to exit the system. to-do Maybe IX
        */
       if ("EXIT".equals(studentEmail))
       {
          System.exit(0);
       }
 
-      System.out.print(passwordPrompt);
+      logger.log(Level.INFO, passwordPrompt);
       studentPassword = scanner.next();
       confirmStudentInformation(studentEmail, studentPassword);
    }
@@ -118,16 +120,16 @@ public class Login
 
       databaseManager.accessDatabase();
 
-      System.out.print("Checking Login Credentials");
+      logger.log(Level.INFO, "Checking Login Credentials");
       /**
        * Simulate a loading bar.
        */
       for (int i = 0; i < 13; i++)
       {
-         System.out.print('.');
+         logger.log('.');
          sleep(500L);
       }
-      System.out.println('\n');
+      logger.log(Level.INFO, '\n');
 
       userProfile = databaseManager.getSingleDatabaseResults();
       /**
@@ -162,7 +164,7 @@ public class Login
    private void repromptStudentLogin() throws InterruptedException,
          JSONException
    {
-      System.out.println(errorLogin);
+      logger.log(Level.INFO, errorLogin);
       displayLoginRequests();
    }
 
@@ -173,10 +175,10 @@ public class Login
 
    public User setupUser(JSONObject userProfile) throws Exception
    {
-      String name = "";
-      String phoneNum = "";
-      String empl = "";
-      String email = "";
+      String name;
+      String phoneNum;
+      String empl;
+      String email;
       DatabaseManager db = DatabaseManager.getInstance();
       boolean isClubAdmin;
 
@@ -185,7 +187,7 @@ public class Login
       empl = userProfile.get("EmplID").toString();
       email = userProfile.get("email").toString();
 
-      System.out.println(name + '\n' + phoneNum + '\n' + empl + '\n' + email);
+      logger.log(Level.INFO, name + '\n' + phoneNum + '\n' + empl + '\n' + email);
       isClubAdmin = db.checkIfAdmin(name);
 
       /**
