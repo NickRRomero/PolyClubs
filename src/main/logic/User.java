@@ -66,9 +66,9 @@ public class User
     */
    public void viewMember(User member)
    {
-      logger.log("Name: " + member.getName());
-      logger.log("Phone number: " + member.getPhoneNum());
-      logger.log("Email address: " + member.getEmail());
+      logger.log(Level.INFO, "Name: " + member.getName());
+      logger.log(Level.INFO, "Phone number: " + member.getPhoneNum());
+      logger.log(Level.INFO, "Email address: " + member.getEmail());
    }
 
    /**
@@ -138,7 +138,7 @@ public class User
       String msg;
 
       scan = new Scanner(System.in);
-      logger.log("Enter a short message to be sent to "
+      logger.log(Level.INFO, "Enter a short message to be sent to "
             + member.getName() + ".");
       msg = scan.nextLine();
       member.addMsg(msg, this.name);
@@ -235,7 +235,7 @@ public class User
     */
    public String getMsg(int position)
    {
-      logger.log(messages.get(position));
+      logger.log(Level.INFO, messages.get(position));
       return messages.get(position);
    }
 }
