@@ -11,10 +11,15 @@ public class PolyClubsConsole
     /**User of the application at run time*/
     protected static User user = null;
     
+    private PolyClubsConsole()
+    {
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws InterruptedException, Exception 
+    public static void main(String[] args) throws InterruptedException
     {
        
         
