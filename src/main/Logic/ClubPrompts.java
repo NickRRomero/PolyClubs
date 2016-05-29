@@ -1,4 +1,4 @@
-package Logic;
+package main.Logic;
 
 import java.util.Scanner;
 import org.json.JSONException;
@@ -59,10 +59,14 @@ public class ClubPrompts
         userChoice = new Scanner(System.in);
         
         choice = userChoice.next();
-        //choice += " ";
-        //choice += userChoice.next();
+        if (choice.equals("Exit"))
+        {
+            Logout logout = new Logout();
+        }
         
-        System.out.println(choice);
+        choice += " ";
+        choice += userChoice.next();
+        
         
         /**
          * Determine if an invalid option was entered as a prompt.
@@ -76,18 +80,23 @@ public class ClubPrompts
         {
             actOnClubPromptInput(choice);
         }
-        else
-        {
-            System.out.println("JERE");
-            Logout logout = new Logout();
-        }
+        
     }
     
-    private void actOnClubPromptInput(String choice)
+    private void actOnClubPromptInput(String choice) throws InterruptedException
     {
         if (choice.equals(search))
         {
             clubSearch = ClubSearch.getInstance();
+        }
+        if (choice.equals(viewClub))
+        {
+            String clubChoice = "";
+            Scanner s = new Scanner(System.in).useDelimiter("\n");
+            System.out.println("Please enter a club to search for.");
+            clubChoice = s.next();
+            Club club = new Club(clubChoice);
+            club.printClubInfo();
         }
         
         
