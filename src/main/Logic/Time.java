@@ -23,13 +23,13 @@ public class Time
     */
    public boolean isEarlier(Time t2)
    {
-      if (this.hour <= t2.hour)
-      {
+      if (this.hour < t2.hour)
+    	  return true;
+      else if (this.hour == t2.hour) {
          if (this.minute <= t2.minute)
-         {
             return true;
-         }
       }
+      
       return false;
    }
 
