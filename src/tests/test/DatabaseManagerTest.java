@@ -1,4 +1,4 @@
-package Test;
+package tests.test;
 
 import junit.framework.TestCase;
 import org.json.JSONObject;
