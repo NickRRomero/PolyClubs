@@ -15,7 +15,7 @@ public class ClubAdmin extends User
 {
    private Scanner scan;
    private PrintWriter writer;
-   private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
+   private static final Logger logger = Logger.getLogger( ClubAdmin.class.getName() );
 
    public ClubAdmin(String name, String phoneNum, String empl, String email)
          throws Exception
