@@ -5,6 +5,8 @@ package main.logic;
  * Represents a club event
  * Event start and end times based on a 24-hour clock
  */
+ 
+ import java.uti.*;
 
 public class Event
 {
@@ -13,6 +15,7 @@ public class Event
    private Time startTime; 
    private Time endTime;
    private String descrip; // formatted as "event_name|location|event_details"
+   private static final Logger logger = Logger.getLogger( Event.class.getName() );
 
    public Event(String day, Date date, Time startT, Time endT, String description)
    {
@@ -77,10 +80,10 @@ public class Event
    {
 	  String[] desc = descrip.split("\\|");
 	  
-	  System.out.println("   - Event name: " + desc[0]);
-	  System.out.println("      - Location: " + desc[1]);
-	  System.out.println("      - Description: " + desc[2]);
-	  System.out.println("      - Date: " + eventDate.toString() + "/16");
-      System.out.println("      - Time: " + startTime.toString() + "-" + endTime.toString());   
+	  logger.log(Level.INFO, "   - Event name: " + desc[0]);
+	  logger.log(Level.INFO, "      - Location: " + desc[1]);
+	  logger.log(Level.INFO, "      - Description: " + desc[2]);
+	  logger.log(Level.INFO, "      - Date: " + eventDate.toString() + "/16");
+          logger.log(Level.INFO, "      - Time: " + startTime.toString() + "-" + endTime.toString());   
    }
 }
