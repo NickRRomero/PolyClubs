@@ -8,7 +8,7 @@ package main.logic;
  */
 
 import java.util.Scanner;
-import java.util.logging;
+import java.util.logging.*;
 
 public class Logout
 {
