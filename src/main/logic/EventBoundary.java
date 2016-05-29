@@ -1,14 +1,14 @@
 package main.logic;
 
+import java.util.logging.*;
 
 public class EventBoundary {
 	// Interface with system actors: user interfaces
 	// Visualization of the Event's information
-
-	public EventBoundary() {}
+	private static final Logger logger = Logger.getLogger( EventBoundary.class.getName() );
 	
 	public void showPrompt() {
-	    System.out.println("Press 'p' to print the event's info");
+	    logger.log(Level.INFO, "Press 'p' to print the event's info");
 	}
 
 	
