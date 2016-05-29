@@ -27,17 +27,17 @@ public class Logout
       logger.log(Level.INFO, "Type \"logout\" to log out of the app.");
       logger.log(Level.INFO, "Type \"exit\" to exit the app.");
 
-      while (!input.equals("logout") && !input.equals("exit"))
+      while (!"logout".equals(input) && !"exit".equals(input))
       {
          input = scan.next();
 
          // if the user types "logout", log the user out and return to login
-         if (input.equals("logout"))
+         if ("logout".equals(input))
          {
             logout();
          }
          // if the user types "exit", the app will close
-         else if (input.equals("exit"))
+         else if ("exit".equals(input))
          {
             exit();
          }
