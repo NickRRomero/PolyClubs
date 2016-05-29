@@ -42,7 +42,8 @@ public class Course {
     public boolean conflicts(String d) {
     	boolean val = false;
     	for (int i = 0; i < days.size(); i++) {
-    		if (d.equals(days.get(i))) val = true;
+    		if (d.equals(days.get(i))) 
+    			val = true;
     	}
     	return val;
     }
