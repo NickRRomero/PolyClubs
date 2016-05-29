@@ -253,20 +253,20 @@ public class Club
        Scanner userInput = new Scanner(System.in).useDelimiter("\n");
        String userChoice = "";
        
-       System.out.println("Please Enter One of the Folowing Options");
+       logger.log(Level.INFO, "Please Enter One of the Folowing Options");
        
        while(!userChoice.equals("Go To Club Prompts"))
        {
-            System.out.println("Go To Club Prompts");
+            logger.log(Level.INFO, "Go To Club Prompts");
             if (isAdmin)
             {
-            System.out.println("Add Member");
-            System.out.println("Remove Member");
-            System.out.println("Add Event To Club");
-            System.out.println("Remove Event From Club");
-            System.out.println("Set Club Advisor");
+                logger.log(Level.INFO, "Add Member");
+                logger.log(Level.INFO, "Remove Member");
+                logger.log(Level.INFO, "Add Event To Club");
+                logger.log(Level.INFO, "Remove Event From Club");
+                logger.log(Level.INFO, "Set Club Advisor");
             }
-            System.out.println("Logout");
+            logger.log(Level.INFO, "Logout");
             userChoice = userInput.next();
        
             processUserChoice(userChoice);
@@ -282,11 +282,11 @@ public class Club
         switch(userChoice)
         {
             case "Add Member":
-                System.out.println("Please enter the new member's name.");
+                logger.log(Level.INFO, "Please enter the new member's name.");
                 addMember(input.next());
                 break;
             case "Remove Member":
-                System.out.println("Please enter the name of the member to remove.");
+                logger.log(Level.INFO, "Please enter the name of the member to remove.");
                 removeMember(input.next());
                 break;
             case "Add Event To Club":
@@ -294,11 +294,11 @@ public class Club
                 addEvent(clubAdmin.createEvent(this));
                 break;
             case "Remove Event From Club":
-                System.out.println("Plese Enter the name of the event to remove.");
+                logger.log(Level.INFO, "Please Enter the name of the event to remove.");
                 removeEventFromDatabase(input.next());
                 break;
             case "Set Club Advisor":
-                System.out.println("Please Enter the cal poly of "
+                logger.log(Level.INFO, "Please Enter the cal poly of "
                         + "the Advisor to the club");
                 setAdvisor(input.next());
                 break;
