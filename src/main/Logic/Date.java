@@ -31,6 +31,14 @@ public class Date {
       }
       return false;
    }
+   
+   // compare two dates
+   public boolean isEqual(Date d2) {
+	   if (this.month == d2.month && this.day == d2.day)
+		   return true;
+	   
+	   return false;
+   }
 
    // Date setters
    public void setDate(int month, int day)
