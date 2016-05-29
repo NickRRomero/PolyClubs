@@ -19,7 +19,7 @@ import Logic.Date;
 import Logic.Event;
 import Logic.Time;
 
-public class ClubAdminTest
+public class TestClubAdmin
 {
    private ClubAdmin admin;
    private Event event1;
@@ -31,7 +31,7 @@ public class ClubAdminTest
     * 
     * @throws Exception
     */
-   public ClubAdminTest() throws Exception
+   public TestClubAdmin() throws Exception
    {
       Time startTime = new Time(8, 0);
       Time endTime = new Time(23, 59);
@@ -51,7 +51,7 @@ public class ClubAdminTest
     * @throws JSONException
     */
    @Test
-   public void removeEventTest() throws JSONException
+   public void testRemoveEvent() throws JSONException
    {
       Club club = Mockito.mock(Club.class);
       ArrayList<Event> eventList;
