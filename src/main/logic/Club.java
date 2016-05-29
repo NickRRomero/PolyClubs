@@ -18,6 +18,7 @@ public class Club
    private ArrayList<String> members;
    private ArrayList<Event> clubEvents;
    private DatabaseManager db;
+   private static final Logger logger = Logger.getLogger( Club.class.getName() );
 
    
    /**
@@ -121,12 +122,12 @@ public class Club
       return admin;
    }
 
-   public ArrayList<String> getMembers()
+   public ArrayList<> getMembers()
    {
       return members;
    }
 
-   public ArrayList<Event> getEvents()
+   public ArrayList<> getEvents()
    {
       return clubEvents;
    }
@@ -219,18 +220,18 @@ public class Club
    // Print club information
    public void printClubInfo()
    {
-      System.out.println("Club name: " + name);
-      System.out.println("Club description: " + descrip);
+      logger.log(Level.INFO, "Club name: " + name);
+      logger.log(Level.INFO, "Club description: " + descrip);
       
-      System.out.println("Club admin: " + admin);
-      System.out.println("Club advisor: " + advisor);
-      System.out.println("Club members: ");
+      logger.log(Level.INFO, "Club admin: " + admin);
+      logger.log(Level.INFO, "Club advisor: " + advisor);
+      logger.log(Level.INFO, "Club members: ");
       for (int i = 0; i < members.size(); i++)
       {
-         System.out.println("   - " + members.get(i));
+         logger.log(Level.INFO, "   - " + members.get(i));
       }
 
-        System.out.println("Club events: ");
+        logger.log(Level.INFO, "Club events: ");
         for (int i = 0; i < clubEvents.size(); i++)
         {
             clubEvents.get(i).printEventInfo();
