@@ -23,7 +23,7 @@ public class PolyClubsConsole
         login.displayWelcomeScreen();
         JSONObject objec = login.getStudentProfile();
         user = login.setupUser(objec);
-        clubPrompts.displayClubPrompt();
+        clubPrompts.displayClubPrompt(user instanceof ClubAdmin);
         
         
     }
