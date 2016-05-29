@@ -14,12 +14,12 @@ import org.junit.Test;
 
 import Logic.User;
 
-public class UserTest
+public class TestUser
 {
    private User user1;
    private User user2;
 
-   public UserTest() throws Exception
+   public TestUser() throws Exception
    {
       user1 = new User("Marii", "(270) 314-6742", "008602954",
             "mboyken@calpoly.edu");
@@ -31,7 +31,7 @@ public class UserTest
     * Test getter for User's name.
     */
    @Test
-   public void getNameTest()
+   public void testGetName()
    {
       assertEquals("Marii", user1.getName());
    }
@@ -40,7 +40,7 @@ public class UserTest
     * Test getter for User's email.
     */
    @Test
-   public void getEmailTest()
+   public void testGetEmail()
    {
       assertEquals("jc@christianmingle.com", user2.getEmail());
    }
@@ -49,7 +49,7 @@ public class UserTest
     * Test createSchedule loop for only one class.
     */
    /*
-    * @Test public void createScheduleTestOne() { ArrayList<String> classes =
+    * @Test public void testCreateScheduleOne() { ArrayList<String> classes =
     * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
     * 
     * classes.add("MATH241 11:00-12:00 M_W_F"); schedule =
@@ -62,7 +62,7 @@ public class UserTest
     * Test createSchedule loop for only two classes.
     */
    /*
-    * @Test public void createScheduleTestTwo() { ArrayList<String> classes =
+    * @Test public void testCreateScheduleTwo() { ArrayList<String> classes =
     * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
     * 
     * classes.add("MATH241 11:00-12:00 M_W_F");
@@ -76,7 +76,7 @@ public class UserTest
     * Test createSchedule loop for three classes.
     */
    /*
-    * @Test public void createScheduleTestThree() { ArrayList<String> classes =
+    * @Test public void testCreateScheduleThree() { ArrayList<String> classes =
     * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
     * 
     * classes.add("MATH241 11:00-12:00 M_W_F");
@@ -91,7 +91,7 @@ public class UserTest
     * Test createSchedule loop for four classes.
     */
    /*
-    * @Test public void createScheduleTestFour() { ArrayList<String> classes =
+    * @Test public void testCreateScheduleFour() { ArrayList<String> classes =
     * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
     * 
     * classes.add("MATH241 11:00-12:00 M_W_F");
@@ -107,7 +107,7 @@ public class UserTest
     * Test addMsg to another User.
     */
    @Test
-   public void addMsgTest()
+   public void testAddMsg()
    {
       user1.addMsg("Son of the original G.", "Jesus");
 
@@ -119,7 +119,7 @@ public class UserTest
     * Test getMsg of User.
     */
    @Test
-   public void getMsgTest()
+   public void testSetMsg()
    {
       user2.addMsg("Yo, JC.", "Marii");
       assertEquals("From: Marii Message: Yo, JC.", user2.getMsg(0));
