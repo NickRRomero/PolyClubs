@@ -201,7 +201,7 @@ public class Club
    {
       // Set database destination to the club database
       DatabaseManager db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
+      db.setDataBaseDestination(clubDatabase, name, true);
       
       // Add user to the database
       db.addStudentToClub(userName);
@@ -214,7 +214,7 @@ public class Club
    {
       // Set database destination to the club database
       DatabaseManager db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
+      db.setDataBaseDestination(clubDatabase, name, true);
       
       // Remove user from the database
       db.removeStudentFromClub(usersName);
