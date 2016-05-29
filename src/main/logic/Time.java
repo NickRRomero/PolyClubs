@@ -27,12 +27,9 @@ public class Time
       {
     	  return true;
       }
-      else if (this.hour == t2.hour) 
+      else if (this.hour == t2.hour && this.minute <= t2.minute) 
       {
-         if (this.minute <= t2.minute)
-         {
-            return true;
-         }
+         return true;
       }
       
       return false;
