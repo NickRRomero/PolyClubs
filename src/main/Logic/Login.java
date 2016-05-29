@@ -1,4 +1,4 @@
-package Logic;
+package main.Logic;
 
 import static java.lang.Thread.sleep;
 
@@ -114,7 +114,7 @@ public class Login
       /** Comparison key for returned profile */
       String tempKey;
 
-      databaseManager.setDataBaseDestination("StudentDatabase", user, true);
+      databaseManager.setDataBaseDestination("StudentDatabase", user, false);
 
       databaseManager.accessDatabase();
 
