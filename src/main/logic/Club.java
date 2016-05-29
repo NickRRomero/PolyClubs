@@ -271,6 +271,8 @@ public class Club
        
             processUserChoice(userChoice);
        }
+       ClubPrompts backToClubPrompts = new ClubPrompts();
+       backToClubPrompts.displayClubPrompt(isAdmin);
          
    }
    
