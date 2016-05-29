@@ -37,6 +37,15 @@ public class Course {
            days.add(parts[i]);
        }
     }
+    
+    // Used in Schedule class
+    public boolean conflicts(String d) {
+    	boolean val = false;
+    	for (int i = 0; i < days.size(); i++) {
+    		if (d.equals(days.get(i))) val = true;
+    	}
+    	return val;
+    }
 
     // Set the start time of the course
     public void setStartTime(Time t) {
