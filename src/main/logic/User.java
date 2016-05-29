@@ -8,7 +8,7 @@ package main.logic;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.logging;
+import java.util.logging.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
