@@ -6,12 +6,12 @@ package main.logic;
  */
 
 public class Date {
-	private int month;
-	private int day;
+   private int month;
+   private int day;
 
-	public Date(int month, int day)
-	{
-		this.month = month;
+   public Date(int month, int day)
+   {
+      this.month = month;
       this.day = day;
     }
 
@@ -29,12 +29,18 @@ public class Date {
       return false;
    }
    
-   // compare two dates
-   public boolean isEqual(Date d2) {
-	   if (this.month == d2.month && this.day == d2.day)
-		   return true;
-	   
-	   return false;
+   /** 
+    * Method to determine if two dates are equal
+    * @param d2 - Date to compare to 'this'
+    * @ return true if 'this' is equal to d2
+    */
+   public boolean isEqual(Date d2)
+   {
+      if (this.month == d2.month && this.day == d2.day)
+      {
+         return true;
+      }  
+      return false;
    }
 
    // Date setters
