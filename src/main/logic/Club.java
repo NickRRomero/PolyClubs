@@ -11,7 +11,7 @@ import org.json.*;
 
 public class Club
 {
-  private String name;
+   private String name;
    private String descrip;
    private String admin;
    private String advisor; 
@@ -79,32 +79,32 @@ public class Club
     */
    public Club(String nm, String presEmail, String desc)
    {
-     // Set database destination to the club database
-     db = DatabaseManager.getInstance();
-     db.setDataBaseDestination(clubDatabase, presEmail, true);
-     
-     // Create the club
-     db.createNewClub(nm, presEmail, desc);
-            
-     // Get the club's database entry
-     db.setDataBaseDestination(clubDatabase, nm, true);
-     db.accessDatabase();
-     JSONObject clubJson = db.getSingleDatabaseResults();
-     
-     // Initialize instance variables
-     name = nm;
-     descrip = desc;
-     admin = clubJson.getJSONObject("President").getString("name");
+      // Set database destination to the club database
+      db = DatabaseManager.getInstance();
+      db.setDataBaseDestination(clubDatabase, presEmail, true);
 
-     // Initalize the ArrayList of club members
-     JSONArray mems = clubJson.getJSONArray("members");
-     members = new ArrayList<String>();   
-     for (int i = 0; i < mems.length(); i++)
-     {
-       members.add(mems.getString(i));
-     }
+      // Create the club
+      db.createNewClub(nm, presEmail, desc);
+            
+      // Get the club's database entry
+      db.setDataBaseDestination(clubDatabase, nm, true);
+      db.accessDatabase();
+      JSONObject clubJson = db.getSingleDatabaseResults();
+
+      // Initialize instance variables
+      name = nm;
+      descrip = desc;
+      admin = clubJson.getJSONObject("President").getString("name");
+
+      // Initalize the ArrayList of club members
+      JSONArray mems = clubJson.getJSONArray("members");
+      members = new ArrayList<String>();   
+      for (int i = 0; i < mems.length(); i++)
+      {
+         members.add(mems.getString(i));
+      }
       
-     clubEvents = new ArrayList<Event>();
+      clubEvents = new ArrayList<Event>();
    }
 
     // Club getters
@@ -184,15 +184,13 @@ public class Club
          event.getStartTime().toString() + "-" + event.getEndTime().toString() +
          event.getDay());
 
-      
-
       // Remove the event from the local ArrayList
       clubEvents.remove(event);
    }
    
    public void removeEventFromDatabase(String eventName)
    {
-    db.removeEventFromClub(eventName);
+      db.removeEventFromClub(eventName);
    }
 
    // Club membership functions
@@ -225,96 +223,95 @@ public class Club
    {
     
       logger.log(Level.INFO, "Club name: " + name);
-      logger.log(Level.INFO, "Club description: " + descrip);
-      
+      logger.log(Level.INFO, "Club description: " + descrip);      
       logger.log(Level.INFO, "Club admin: " + admin);
       logger.log(Level.INFO, "Club advisor: " + advisor);
+      
       logger.log(Level.INFO, "Club members: ");
       for (int i = 0; i < members.size(); i++)
       {
          logger.log(Level.INFO, "   - " + members.get(i));
       }
 
-        logger.log(Level.INFO, "Club events: ");
-        for (int i = 0; i < clubEvents.size(); i++)
-        {
-            clubEvents.get(i).printEventInfo();
-        }
+      logger.log(Level.INFO, "Club events: ");
+      for (int i = 0; i < clubEvents.size(); i++)
+      {
+         clubEvents.get(i).printEventInfo();
+      }
    }
    
    public void printClubPromptsAndInfo(boolean isAdmin) throws Exception
    {
-       printClubInfo();
-       System.out.print("\n\n");
-       
-       Scanner userInput = new Scanner(System.in).useDelimiter("\n");
-       String userChoice = "";
-       
-       logger.log(Level.INFO, "Please Enter One of the Folowing Options");
-       
-       while(!userChoice.equals("Go To Club Prompts"))
-       {
-            logger.log(Level.INFO, "Go To Club Prompts");
-            if (isAdmin)
-            {
-                logger.log(Level.INFO, "Add Member");
-                logger.log(Level.INFO, "Remove Member");
-                logger.log(Level.INFO, "Add Event To Club");
-                logger.log(Level.INFO, "Remove Event From Club");
-                logger.log(Level.INFO, "Set Club Advisor");
-            }
-            logger.log(Level.INFO, "Logout");
-            userChoice = userInput.next();
-       
-            processUserChoice(userChoice);
-       }
-       ClubPrompts backToClubPrompts = new ClubPrompts();
-       backToClubPrompts.displayClubPrompt(isAdmin);
-         
+      printClubInfo();
+      System.out.print("\n\n");
+
+      Scanner userInput = new Scanner(System.in).useDelimiter("\n");
+      String userChoice = "";
+
+      logger.log(Level.INFO, "Please Enter One of the Folowing Options");
+
+      while(!userChoice.equals("Go To Club Prompts"))
+      {
+         logger.log(Level.INFO, "Go To Club Prompts");
+         if (isAdmin)
+         {
+             logger.log(Level.INFO, "Add Member");
+             logger.log(Level.INFO, "Remove Member");
+             logger.log(Level.INFO, "Add Event To Club");
+             logger.log(Level.INFO, "Remove Event From Club");
+             logger.log(Level.INFO, "Set Club Advisor");
+         }
+         logger.log(Level.INFO, "Logout");
+         userChoice = userInput.next();
+
+         processUserChoice(userChoice);
+      }
+
+      ClubPrompts backToClubPrompts = new ClubPrompts();
+      backToClubPrompts.displayClubPrompt(isAdmin);        
    }
    
    private void processUserChoice(String userChoice) throws Exception 
-    {
-        Scanner input = new Scanner(System.in).useDelimiter("\n");
-        
-        ClubAdmin clubAdmin = new ClubAdmin("", "", "", "");
-        switch(userChoice)
-        {
-            case "Add Member":
-                logger.log(Level.INFO, "Please enter the new member's name.");
-                addMember(input.next());
-                break;
-            case "Remove Member":
-                logger.log(Level.INFO, "Please enter the name of the member to remove.");
-                removeMember(input.next());
-                break;
-            case "Add Event To Club":
-                
-                addEvent(clubAdmin.createEvent(this));
-                break;
-            case "Remove Event From Club":
-                logger.log(Level.INFO, "Please Enter the name of the event to remove.");
-                removeEventFromDatabase(input.next());
-                break;
-            case "Set Club Advisor":
-                logger.log(Level.INFO, "Please Enter the cal poly of "
-                        + "the Advisor to the club");
-                setAdvisor(input.next());
-                break;
-            case "Logout":
+   {
+     Scanner input = new Scanner(System.in).useDelimiter("\n");
+     
+     ClubAdmin clubAdmin = new ClubAdmin("", "", "", "");
+     switch(userChoice)
+     {
+         case "Add Member":
+             logger.log(Level.INFO, "Please enter the new member's name.");
+             addMember(input.next());
+             break;
+         case "Remove Member":
+             logger.log(Level.INFO, "Please enter the name of the member to remove.");
+             removeMember(input.next());
+             break;
+         case "Add Event To Club":             
+             addEvent(clubAdmin.createEvent(this));
+             break;
+         case "Remove Event From Club":
+             logger.log(Level.INFO, "Please enter the name of the event to remove.");
+             removeEventFromDatabase(input.next());
+             break;
+         case "Set Club Advisor":
+             logger.log(Level.INFO, "Please enter the Cal Poly of "
+                     + "the Advisor for the club");
+             setAdvisor(input.next());
+             break;
+         case "Logout":
+         {
+            try 
             {
-                try 
-                {
-                    Logout logout = new Logout();
-                } 
-                catch (Exception ex) 
-                {
-                    Logger.getLogger(Club.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               Logout logout = new Logout();
+            } 
+            catch (Exception ex) 
+            {
+               Logger.getLogger(Club.class.getName()).log(Level.SEVERE, null, ex);
             }
-                break;
-            default:
-                break;
-        }
-    }
+            break;
+         }
+         default:
+            break;
+     }
+   }
 }
