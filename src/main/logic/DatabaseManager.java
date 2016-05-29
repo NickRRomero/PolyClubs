@@ -343,7 +343,7 @@ public class DatabaseManager
         advisorProfile = getSingleDatabaseResults();
         advisorName = advisorProfile.getString("name");
         advisorPhoneNumber = advisorProfile.getString(phoneNumber);
-        advisorEmail = advisorProfile.getString("mail);
+        advisorEmail = advisorProfile.getString(email);
         
         setDataBaseDestination(clubDatabase, clubName, false);
         initializeDatabaseConnection();
