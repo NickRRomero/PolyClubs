@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.logging.*;
 
 import org.bson.Document;
 import org.json.JSONArray;
@@ -26,6 +27,9 @@ import org.json.JSONObject;
  */
 public class DatabaseManager 
 {
+    /*Logger to output*/
+    private static final Logger logger = Logger.getLogger( DatabaseManager.class.getName() );
+    
     /**Database Instance*/
     private static DatabaseManager instance;
     
@@ -67,6 +71,16 @@ public class DatabaseManager
     
     /**Database Object for the Mongo Connection*/
     MongoDatabase db;
+    
+    private String studentDatabase = "StudentDatabase";
+    private String clubs = "clubs";
+    private String clubName = "ClubName";
+    private String email = "email";
+    private String members = "members";
+    private String description = "description";
+    private String events = "events";
+    private String phoneNumber = "phoneNumber";
+    private String time = "time";
     
     /**
      * Constructor for DatabaseManager instance
@@ -116,7 +130,7 @@ public class DatabaseManager
     private void setDatabaseAccess(String whichObject) 
     {
 
-        if ("StudentDatabase".equals(databaseName)) 
+        if (studentDatabase.equals(databaseName)) 
         {
             collectionToRetrieve = "students";
             whichDocumentByName= whichObject;
@@ -165,11 +179,11 @@ public class DatabaseManager
              */
             if ("clubs".equals(collectionToRetrieve))
             {
-                key = "ClubName";
+                key = clubName;
             }
             else if ("students".equals(collectionToRetrieve))
             {
-                key = "email";
+                key = email;
             }
             else
             {
@@ -224,8 +238,8 @@ public class DatabaseManager
     {
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        BasicDBObject newStudent = new BasicDBObject("ClubName", whichDocumentByName); 
-        BasicDBObject students = new BasicDBObject("members", student);
+        BasicDBObject newStudent = new BasicDBObject(clubName, whichDocumentByName); 
+        BasicDBObject students = new BasicDBObject(members, student);
         collection.updateOne(newStudent, new BasicDBObject("$addToSet", students));
     }
     
@@ -237,8 +251,8 @@ public class DatabaseManager
     {
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        BasicDBObject newStudent = new BasicDBObject("ClubName", whichDocumentByName); 
-        BasicDBObject students = new BasicDBObject("members", student);
+        BasicDBObject newStudent = new BasicDBObject(clubName, whichDocumentByName); 
+        BasicDBObject students = new BasicDBObject(members, student);
         collection.updateOne(newStudent, new BasicDBObject("$pull", students));
     }
    
@@ -250,8 +264,8 @@ public class DatabaseManager
     {
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        collection.updateOne(eq("ClubName", whichDocumentByName), 
-                set("description", newDescription));
+        collection.updateOne(eq(clubName, whichDocumentByName), 
+                set(description, newDescription));
     }
     
     /**
@@ -262,11 +276,11 @@ public class DatabaseManager
     {
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        BasicDBObject club = new BasicDBObject("ClubName", whichDocumentByName);
+        BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
         
         
         collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject("events",(new BasicDBObject("description", jsonobject.getString("description"))
-                        .append("time", jsonobject.getString("time"))))));
+                        .append(time, jsonobject.getString(time))))));
     }
     
     /**
@@ -278,18 +292,18 @@ public class DatabaseManager
         initializeDatabaseConnection();
         accessDatabase();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        BasicDBObject newEvent = new BasicDBObject("ClubName", whichDocumentByName);
+        BasicDBObject newEvent = new BasicDBObject(clubName, whichDocumentByName);
         String desc;
         JSONObject event = null;
         JSONObject clubJson = getSingleDatabaseResults();
-        JSONArray events = clubJson.getJSONArray("events");
+        JSONArray events = clubJson.getJSONArray(events);
         
-        System.out.println(clubJson.toString());
+        logger.log(Level.INFO, clubJson.toString());
         for (int i = 0; i < events.length(); i++)
         {
             event = events.getJSONObject(i);
             
-            desc = (String)(event.get("description"));
+            desc = (String)(event.get(description));
             
             desc = desc.split("\\|")[0];
             
@@ -301,14 +315,14 @@ public class DatabaseManager
             
         }
         
-        BasicDBObject club = new BasicDBObject("ClubName", whichDocumentByName);
+        BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
         
-        BasicDBObject eventToRemove = new BasicDBObject("events", event);
+        BasicDBObject eventToRemove = new BasicDBObject(events, event);
         
         collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject("events", 
-                new BasicDBObject("description", 
-                        event.getString("description")).append("time", 
-                                event.getString("time")))));
+                new BasicDBObject(description, 
+                        event.getString(description)).append(time, 
+                                event.getString(time)))));
     }
     
     /**
@@ -328,17 +342,17 @@ public class DatabaseManager
         
         advisorProfile = getSingleDatabaseResults();
         advisorName = advisorProfile.getString("name");
-        advisorPhoneNumber = advisorProfile.getString("phoneNumber");
-        advisorEmail = advisorProfile.getString("email");
+        advisorPhoneNumber = advisorProfile.getString(phoneNumber);
+        advisorEmail = advisorProfile.getString("mail);
         
-        setDataBaseDestination("ClubDatabase", clubName, false);
+        setDataBaseDestination(clubDatabase, clubName, false);
         initializeDatabaseConnection();
         
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         BasicDBObject newAdvisor = new BasicDBObject("name", advisorName).append("phoneNumber", advisorPhoneNumber)
-                .append("email", advisorEmail);
+                .append(email, advisorEmail);
         
-        collection.updateOne(eq("ClubName", clubName), new Document("$set", new Document("Advisor", newAdvisor)));    
+        collection.updateOne(eq(clubName, clubName), new Document("$set", new Document("Advisor", newAdvisor)));    
     }
     
    
@@ -356,7 +370,7 @@ public class DatabaseManager
         mongoClient = new MongoClient(uri);
         db = mongoClient.getDatabase(uri.getDatabase());
         
-        this.setDataBaseDestination("StudentDatabase", presidentEmail, true);
+        this.setDataBaseDestination(studentDatabase, presidentEmail, true);
         this.accessDatabase();
         userProfile = this.getSingleDatabaseResults();
         
@@ -364,19 +378,19 @@ public class DatabaseManager
         mongoClient = new MongoClient(uri);
         db = mongoClient.getDatabase(uri.getDatabase());
         
-        db.getCollection("clubs").insertOne(
+        db.getCollection(clubs).insertOne(
                 new Document()
-                    .append("ClubName", clubName)
+                    .append(clubName, clubName)
                     .append("President", new Document()
                             .append("name", userProfile.get("name"))
-                            .append("phoneNumber", userProfile.get("phoneNumber"))
-                            .append("email", userProfile.get("email")))
+                            .append(phoneNumber, userProfile.get(phoneNumber))
+                            .append(email, userProfile.get(email)))
                     .append("Advisor", new Document()
                             .append("name", "")
-                            .append("phoneNumber", "")
-                            .append("email", ""))
-                    .append("description", desc)
-                    .append("members", Arrays.asList(userProfile.get("name"))));
+                            .append(phoneNumber, "")
+                            .append(email, ""))
+                    .append(description, desc)
+                    .append(members, Arrays.asList(userProfile.get("name"))));
                     
     }
     
@@ -390,7 +404,7 @@ public class DatabaseManager
         this.setDataBaseDestination("ClubAdministrators", "Main", false);
         initializeDatabaseConnection();
         
-        ArrayList<String> admins = new ArrayList<String>();
+        ArrayList<> admins = new ArrayList<>();
         this.accessDatabase();
         
         JSONObject aprofile = this.getSingleDatabaseResults();
