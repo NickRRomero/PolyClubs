@@ -306,15 +306,16 @@ public class Club
             {
                 try 
                 {
-                Logout logout = new Logout();
-            } 
-            catch (Exception ex) 
-            {
-                Logger.getLogger(Club.class.getName()).log(Level.SEVERE, null, ex);
+                    Logout logout = new Logout();
+                } 
+                catch (Exception ex) 
+                {
+                    Logger.getLogger(Club.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
                 break;
             default:
                 break;
         }
+    }
 }
