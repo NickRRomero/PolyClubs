@@ -25,7 +25,7 @@ public class User
    private Schedule schedule;
    private ArrayList<> clubs;
    private ArrayList<> messages;
-   public boolean hasMsg;
+   private boolean hasMsg;
    private JSONObject jsonDB;
    private DatabaseManager databaseManager;
    private Scanner scan;
@@ -237,5 +237,15 @@ public class User
    {
       logger.log(Level.INFO, messages.get(position));
       return messages.get(position);
+   }
+   
+   /**
+    * Returns whether or not the user has any messages.
+    * 
+    * @return True if there are any messages.
+    */
+   public boolean hasMsg()
+   {
+      return hasMsg;
    }
 }
