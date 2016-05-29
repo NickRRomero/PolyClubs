@@ -1,4 +1,4 @@
-package Logic;
+package main.Logic;
 
 /**
  * User class of PolyClubs.
