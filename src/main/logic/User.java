@@ -23,8 +23,8 @@ public class User
    private String email;
    private String empl;
    private Schedule schedule;
-   private ArrayList<Club> clubs;
-   private ArrayList<String> messages;
+   private ArrayList<> clubs;
+   private ArrayList<> messages;
    public boolean hasMsg;
    private JSONObject jsonDB;
    private DatabaseManager databaseManager;
@@ -38,12 +38,11 @@ public class User
       this.phoneNum = phoneNum;
       this.empl = empl;
       this.email = email;
-      clubs = new ArrayList<Club>();
-      messages = new ArrayList<String>();
+      clubs = new ArrayList<>();
+      messages = new ArrayList<>();
       hasMsg = false;
       databaseManager = DatabaseManager.getInstance();
       databaseManager.setDataBaseDestination("StudentDatabase", name, true);
-      // jsonDB = new databaseManager.execute().get();
       schedule = new Schedule();
       writer = new PrintWriter(System.out);
    }
@@ -121,7 +120,7 @@ public class User
     */
    public void getClubEvents(Club club)
    {
-      ArrayList<Event> events = club.getEvents();
+      ArrayList<> events = club.getEvents();
 
       for (int iter = 0; iter < events.size(); iter++)
       {
@@ -150,7 +149,7 @@ public class User
    {
       jsonDB = databaseManager.getSingleDatabaseResults();
       JSONArray arr = jsonDB.getJSONArray("courses");
-      ArrayList<String> courseList = new ArrayList<String>();
+      List<> courseList = new ArrayList<>();
 
       // iterate through JSONArray to get strings for each course
       for (int iter = 0; iter < arr.length(); iter++)
@@ -168,7 +167,7 @@ public class User
     * 
     * @throws JSONException
     */
-   public Schedule createSchedule(ArrayList<String> courseList)
+   public Schedule createSchedule(List<> courseList)
    {
       String dayList;
       int startH;
@@ -176,8 +175,8 @@ public class User
       int endH;
       int endM;
       Reader rdr;
-      Scanner scan;
-      String courseName = "";
+      Scanner stringScan;
+      String courseName;
       Course course;
       Time startTime;
       Time endTime;
@@ -186,25 +185,25 @@ public class User
       for (int iter = 0; iter < courseList.size(); iter++)
       {
          rdr = new StringReader(courseList.get(iter));
-         scan = new Scanner(rdr).useDelimiter(" |:|-");
+         stringScan = new Scanner(rdr).useDelimiter(" |:|-");
 
          // get course name
-         courseName = scan.next();
+         courseName = stringScan.next();
 
          // get start hour
-         startH = scan.nextInt();
+         startH = stringScan.nextInt();
 
          // get start minute
-         startM = scan.nextInt();
+         startM = stringScan.nextInt();
 
          // get end hour
-         endH = scan.nextInt();
+         endH = stringScan.nextInt();
 
          // get end minute
-         endM = scan.nextInt();
+         endM = stringScan.nextInt();
 
          // collect string of days
-         dayList = scan.next();
+         dayList = stringScan.next();
 
          startTime = new Time(startH, startM);
          endTime = new Time(endH, endM);
