@@ -78,7 +78,7 @@ public class DatabaseManager
     private String email = "email";
     private String members = "members";
     private String description = "description";
-    private String events = "events";
+    private String eventString = "events";
     private String phoneNumber = "phoneNumber";
     private String time = "time";
     
@@ -173,7 +173,7 @@ public class DatabaseManager
         {
             Iterable<Document> iterable;
             String key;
-            Document doc = null;
+            Document doc;
             /**
              * Determine which access mode to use.
              */
@@ -279,8 +279,8 @@ public class DatabaseManager
         BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
         
         
-        collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject("events",(new BasicDBObject("description", jsonobject.getString("description"))
-                        .append(time, jsonobject.getString(time))))));
+        collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject(eventString,new BasicDBObject(description, jsonobject.getString(description))
+                        .append(time, jsonobject.getString(time)))));
     }
     
     /**
@@ -319,7 +319,7 @@ public class DatabaseManager
         
         BasicDBObject eventToRemove = new BasicDBObject(events, event);
         
-        collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject("events", 
+        collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject(eventString, 
                 new BasicDBObject(description, 
                         event.getString(description)).append(time, 
                                 event.getString(time)))));
