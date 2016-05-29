@@ -194,10 +194,6 @@ public class Club
    // Club membership functions
    public void addMember(User user)
    {
-      // Set database destination to the club database
-      DatabaseManager db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
-      
       // Add user to the database
       db.addStudentToClub(user.getName());
 
@@ -207,10 +203,6 @@ public class Club
 
    public void removeMember(User user)
    {
-      // Set database destination to the club database
-      DatabaseManager db = DatabaseManager.getInstance();
-      db.setDataBaseDestination("ClubDatabase", name, true);
-      
       // Remove user from the database
       db.removeStudentFromClub(user.getName());
 
