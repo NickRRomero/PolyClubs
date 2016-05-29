@@ -1,4 +1,4 @@
-package main.Logic;
+package main.logic;
 
 /**
  * Class to deal with logging out and/or exiting.
