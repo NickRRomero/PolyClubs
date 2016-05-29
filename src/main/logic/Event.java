@@ -6,7 +6,7 @@ package main.logic;
  * Event start and end times based on a 24-hour clock
  */
  
- import java.uti.*;
+ import java.util.*;
 
 public class Event
 {
