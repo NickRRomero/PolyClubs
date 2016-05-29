@@ -15,10 +15,11 @@ public class Club
    private String descrip;
    private String admin;
    private String advisor; 
-   private ArrayList<String> members;
-   private ArrayList<Event> clubEvents;
+   private ArrayList<> members;
+   private ArrayList<> clubEvents;
    private DatabaseManager db;
    private static final Logger logger = Logger.getLogger( Club.class.getName() );
+   private String description = "description";
 
    
    /**
@@ -37,13 +38,13 @@ public class Club
       
       // Initialize the instance variables
 	  name = nm;
-	  descrip = clubJson.getString("description");
+	  descrip = clubJson.getString(description);
 	  admin = clubJson.getJSONObject("President").getString("name");
 	  advisor = clubJson.getJSONObject("Advisor").getString("name");
 	  
 	  // Initalize the ArrayList of club members
 	  JSONArray mems = clubJson.getJSONArray("members");
-	  members = new ArrayList<String>();	  
+	  members = new ArrayList<>();	  
 	  for (int i = 0; i < mems.length(); i++)
 	  {
 		  members.add(mems.getString(i));
@@ -51,11 +52,11 @@ public class Club
 	  
 	  // Initialize the ArrayList of club events
 	  JSONArray events = clubJson.getJSONArray("events");
-	  clubEvents = new ArrayList<Event>();
+	  clubEvents = new ArrayList<>();
 	  for (int i = 0; i < events.length(); i++)
 	  {
 		  JSONObject event = events.getJSONObject(i);
-		  String desc = (String)(event.get("description"));
+		  String desc = (String)(event.get(description));
 
 		  String time = (String)(event.getString("time"));
 		  String[] timeInfo = time.split(" ");
@@ -122,12 +123,12 @@ public class Club
       return admin;
    }
 
-   public ArrayList<> getMembers()
+   public List<> getMembers()
    {
       return members;
    }
 
-   public ArrayList<> getEvents()
+   public List<> getEvents()
    {
       return clubEvents;
    }
@@ -163,7 +164,7 @@ public class Club
       Time startT = event.getStartTime();
       Time endT = event.getEndTime();
       
-      obj.put("description", event.getDescrip()).append("time", eDate.getMonth() + " " +
+      obj.put(description, event.getDescrip()).append("time", eDate.getMonth() + " " +
     		  eDate.getDay() + " " + startT.getHour() + " " + startT.getMinute() + " " +
     		  endT.getHour() + " " + endT.getMinute() + event.getDay());
 
