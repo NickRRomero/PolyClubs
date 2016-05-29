@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.*;
 import org.bson.Document;
 import org.json.simple.JSONObject;
 
@@ -18,6 +19,7 @@ public class ClubSearch
    private String openPrompt;
    private DatabaseManager db;
    private static ClubSearch clubSearch;
+   private static final Logger logger = Logger.getLogger( ClubSearch.class.getName() );
    
    /**
     * constructor initializes scanner and database manager
@@ -52,27 +54,27 @@ public class ClubSearch
 	   boolean done = false;
 	   
 	   do {
-		   System.out.println("\n" + openPrompt);
+		   logging.log(Level.INFO, "\n" + openPrompt);
 		   String choice = in.nextLine();
 		   
 		   // search
-		   if (choice.equalsIgnoreCase("s")) {
+		   if ("s".equalsIgnoreCase(choice)) {
 			   done = true;
 			   displaySearch();
 		   }
 		   // filter
-		   else if (choice.equalsIgnoreCase("f")) {
+		   else if ("f".equalsIgnoreCase(choice)) {
 			   done = true;
 			   displayFilter();
 		   }
 		   // exit
-		   else if (choice.equalsIgnoreCase("e")) {
+		   else if ("e".equalsIgnoreCase(choice)) {
 			   done = true;
 			   ; //exit
 		   }
 		   // invalid
 		   else 
-			   System.out.println("Invalid option.");
+			   logging.log(Level.INFO, "Invalid option.");
 		   
 	   } while (!done);
    }
@@ -81,7 +83,7 @@ public class ClubSearch
     * display search prompt to user
     */
    private void displaySearch() {
-      System.out.println("\nPlease enter the name of the club you would " +
+      logging.log(Level.INFO, "\nPlease enter the name of the club you would " +
        "like to search for or 'back' to return to initial prompt:");
       
       // club name that user searches for
@@ -113,7 +115,7 @@ public class ClubSearch
          viewPage(name);
       }
       else {
-         System.out.println("The club you entered is " +
+         logging.log(Level.INFO, "The club you entered is " +
           "not in the database.");
          displaySearch();
       } 
@@ -124,7 +126,7 @@ public class ClubSearch
     * @param club
     */
    private void viewPage(String club) {
-      System.out.println("Would you like to view the " + 
+      logging.log(Level.INFO, "Would you like to view the " + 
        club + " clubpage? (y/n)");
       
       // if yes, go to club page
@@ -139,7 +141,7 @@ public class ClubSearch
     * Display filter prompt to user
     */
    private void displayFilter() {
-      System.out.println("\nPlease enter the type of club you would " +
+      logging.log(Level.INFO, "\nPlease enter the type of club you would " +
        "like to filter by or 'back' to return to initial prompt:");
       
       // club name that user searches for
@@ -179,7 +181,7 @@ public class ClubSearch
       }
       
       if (clubs.size() == 0) {
-    	  System.out.println("There are no clubs matching that type.");
+    	  logging.log(Level.INFO, "There are no clubs matching that type.");
     	  displayFilter();
       }
       else     
@@ -199,12 +201,12 @@ public class ClubSearch
 	  do {
 	      for (JSONObject c : clubs) {
 	    	  index = clubs.indexOf(c) + 1;
-	    	  System.out.println(index + ". " + c.get("ClubName").toString());
+	    	  logging.log(Level.INFO, index + ". " + c.get("ClubName").toString());
 	      }
 	
 	      index = -1;
             
-    	  System.out.println("Please enter the number of the club you" +
+    	  logging.log(Level.INFO, "Please enter the number of the club you" +
 		   " would like to view or 'back' to return to the filter page");
     	  
     	  if (in.hasNextInt()) 
@@ -217,13 +219,13 @@ public class ClubSearch
 	    	  done = true;
 	    	  clubs.get(index);
 	      }
-	      else if (back.equals("back")) {
+	      else if ("back".equals(back)) {
 	    	  done = true;
 	    	  displayFilter();
 	      }
 	      else {
 	    	  done = false;
-	    	  System.out.println("Invalid option.\n");
+	    	  logging.log(Level.INFO, "Invalid option.\n");
 	      }
       } while (!done);
    }
