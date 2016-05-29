@@ -1,6 +1,7 @@
 package main.logic;
 
 import java.util.Scanner;
+import java.util.logging.*;
 import org.json.JSONException;
 
 /**
@@ -9,6 +10,9 @@ import org.json.JSONException;
  */
 public class ClubPrompts 
 {
+    /**Logger for output*/
+    private static final Logger logger = Logger.getLogger( ClubPrompts.class.getName() );
+    
     /**System search command*/
     private final String search = "Club Search";
     
@@ -39,12 +43,12 @@ public class ClubPrompts
      */
     public void displayClubPrompt() throws Exception
     {
-        System.out.println("Welcome to PolyClubs.\nPlease enter one of the"
+        logger.log(Level.INFO, "Welcome to PolyClubs.\nPlease enter one of the"
                 + "following options");
-        System.out.println("To Search For Clubs: Enter \"Club Search\"");
-        System.out.println("To Load a Club's Page: Enter \"View Club\"");
+        logger.log(Level.INFO, "To Search For Clubs: Enter \"Club Search\"");
+        logger.log(Level.INFO, "To Load a Club's Page: Enter \"View Club\"");
         
-        System.out.println("To Exit the application: Enter \"Exit\"");
+        logger.log(Level.INFO, "To Exit the application: Enter \"Exit\"");
         
         retrieveClubPromptInput();
     }
@@ -59,7 +63,7 @@ public class ClubPrompts
         userChoice = new Scanner(System.in);
         
         choice = userChoice.next();
-        if (choice.equals("Exit"))
+        if ("Exit".equals(choice))
         {
             Logout logout = new Logout();
         }
@@ -91,9 +95,9 @@ public class ClubPrompts
         }
         if (choice.equals(viewClub))
         {
-            String clubChoice = "";
+            String clubChoice;
             Scanner s = new Scanner(System.in).useDelimiter("\n");
-            System.out.println("Please enter a club to search for.");
+            logger.log(Level.INFO, "Please enter a club to search for.");
             clubChoice = s.next();
             Club club = new Club(clubChoice);
             club.printClubInfo();
@@ -107,7 +111,7 @@ public class ClubPrompts
      */
     private void displayIncorrectOption() throws Exception 
     {
-        System.out.println("Invalid Option. Please choose from one of the following");
+        logger.log(Level.INFO, "Invalid Option. Please choose from one of the following");
         displayClubPrompt();
     }
     
