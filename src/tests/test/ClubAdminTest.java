@@ -1,4 +1,4 @@
-package Test;
+package tests.test;
 
 /**
  * Tests for ClubAdmin class.
