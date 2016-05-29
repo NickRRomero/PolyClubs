@@ -22,12 +22,9 @@ public class Date {
     */
    public boolean isEarlier(Date d2)
    {
-      if (this.month <= d2.month)
+      if (this.month <= d2.month && this.day <= d2.day)
       {
-         if (this.day <= d2.day)
-         {
-            return true;
-         }
+         return true;
       }
       return false;
    }
