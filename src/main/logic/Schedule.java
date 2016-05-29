@@ -7,14 +7,15 @@ import java.util.ArrayList;
  * Created by jacob on 4/24/2016.
  */
 public class Schedule {
-    private ArrayList<Object> schedule;
-    boolean LeapYear = false;
+    private ArrayList<> sched;
+    boolean leapYear = false;
+    private static final Logger logger = Logger.getLogger( Schedule.class.getName() );
     
     /**
      * simple constructor initializes schedule
      */
     public Schedule() {
-    	schedule = new ArrayList<Object>();
+    	sched = new ArrayList<>();
     }
 
     /**
@@ -22,7 +23,7 @@ public class Schedule {
      * @param obj
      */
     public void add(Object obj) {
-    	schedule.add(obj);
+    	sched.add(obj);
     }
     
     /**
@@ -30,14 +31,14 @@ public class Schedule {
      * @param event
      */
     public void remove(Object obj) {
-        schedule.remove(obj);
+        sched.remove(obj);
     }
     
     /**
      * clear schedule
      */
     public void clear() {
-    	schedule.clear();
+    	sched.clear();
     }
     
     /**
@@ -45,15 +46,15 @@ public class Schedule {
      * @return
      */
     public int getSize() {
-    	return schedule.size();
+    	return sched.size();
     }
     
     /**
      * function that returns all the courses in a schedule
      * @return Arraylist of courses
      */
-    public ArrayList<Course> getCourses() {
-    	ArrayList<Course> courses = new ArrayList<Course>();
+    public List<> getCourses() {
+    	ArrayList<> courses = new ArrayList<>();
     	
     	// if object is a course, add it to list
     	for (Object obj : schedule) {
@@ -93,8 +94,8 @@ public class Schedule {
      */
     public boolean hasConflict(Event event) {
     	// course and event to be set in loop
-    	Course c = null;
-    	Event e = null;
+    	Course c;
+    	Event e;
     	
     	boolean conflict = false;
     	
@@ -113,7 +114,7 @@ public class Schedule {
     					conflict = timeCheck(c.getStart(), c.getEnd(), 
     		    				event.getStartTime(), event.getEndTime());
     					
-    					System.out.println(c.getName());
+    					logger.log(Level.INFO, c.getName());
     					break;
     				}
     			}
@@ -127,7 +128,7 @@ public class Schedule {
 					conflict = timeCheck(e.getStartTime(), e.getEndTime(), 
 		    				event.getStartTime(), event.getEndTime());
 					
-					System.out.println(e.getDescrip());
+					logger.log(Level.INFO, e.getDescrip());
 	    		}
     		}
     		
@@ -247,7 +248,7 @@ public class Schedule {
     	
     	// determine how many days are in current month
     	if (month == 2) {
-    		if (LeapYear)
+    		if (leapYear)
     			maxDays = 29;
     		else
     			maxDays = 28;
@@ -285,9 +286,9 @@ public class Schedule {
      * @param dayOfWeek
      * @return an arraylist of courses/events
      */
-    public ArrayList<Object> getDayEvents(String dayOfWeek, Date date) {
+    public List<> getDayEvents(String dayOfWeek, Date date) {
     	// list of events on the day
-    	ArrayList<Object> events = new ArrayList<Object>();
+    	ArrayList<> events = new ArrayList<>();
     	
     	// used when object in schedule is course or event
     	Course c = null;
@@ -335,9 +336,9 @@ public class Schedule {
      * @param events
      * @return a sorted ArrayList 
      */
-    public ArrayList<Object> sortList(ArrayList<Object> events) {
+    public List<> sortList(List<> events) {
     	// list to be returned
-    	ArrayList<Object> newList = new ArrayList<Object>();
+    	ArrayList<> newList = new ArrayList<>();
     	
     	// time which will always be greater than time compared to it
     	Time minComp = new Time(24, 00);
@@ -389,8 +390,8 @@ public class Schedule {
      * @param events
      * @return an ArrayList of names
      */
-    public ArrayList<String> getNames(ArrayList<Object> events) {
-    	ArrayList<String> names = new ArrayList<String>();
+    public ArrayList<> getNames(ArrayList<> events) {
+    	ArrayList<> names = new ArrayList<>();
     	for (Object obj : events) {
     		if (obj instanceof Course) {
     			Course c = (Course) obj;
@@ -410,8 +411,8 @@ public class Schedule {
      * @param events
      * @return a list of times
      */
-    public ArrayList<String> getTimes(ArrayList<Object> events) {
-    	ArrayList<String> times = new ArrayList<String>();
+    public ArrayList<> getTimes(ArrayList<> events) {
+    	ArrayList<> times = new ArrayList<>();
     	for (Object obj : events) {
     		if (obj instanceof Course) {
     			Course c = (Course) obj;
@@ -444,10 +445,10 @@ public class Schedule {
     	// index for current day of week, used for days array
     	int num = dayOfWeek(day);
     	    	    	
-    	ArrayList<Object> events; // courses/events on a given day
-    	ArrayList<Object> sorted; // "events" sorted
-    	ArrayList<String> names; // names of the courses/events in "events"
-    	ArrayList<String> times; // times of the courses/events in "events"
+    	ArrayList<> events; // courses/events on a given day
+    	ArrayList<> sorted; // "events" sorted
+    	ArrayList<> names; // names of the courses/events in "events"
+    	ArrayList<> times; // times of the courses/events in "events"
     	
     	int[] daypad = {9, 9, 9, 11, 10, 9, 10}; // padding data for each day
     	int datepad = 8; // number of padded spaces for date
@@ -468,26 +469,26 @@ public class Schedule {
     		times = getTimes(sorted);
     		
     		// print day of week and first 2 bars
-	    	System.out.println(String.format("%" + barpad + "s", "|"));
-	    	System.out.print(String.format("%" + pad + "s" + 
+	    	logger.log(Level.INFO, String.format("%" + barpad + "s", "|"));
+	    	logger.log(Level.INFO, String.format("%" + pad + "s" + 
 	   	    	 "%" + (barpad-pad) + "s     ", dayOW, "|"));
 	    	
 	    	// print names of courses/events
 	    	for (String name : names) 
-	    		System.out.print(String.format("%-" + timepad + "s", name));
+	    		logger.log(Level.INFO, String.format("%-" + timepad + "s", name));
 	    	
 	    	// print date and bar
-	    	System.out.print("\n" + String.format("%" + datepad + "s" + 
+	    	logger.log(Level.INFO, "\n" + String.format("%" + datepad + "s" + 
 	    			"%" + (barpad-datepad) + "s     ", 
 	    			week[count].toString(), "|"));
 	    	
 	    	// print times of courses/events
 	    	for (String time : times)
-	    		System.out.print(String.format("%-" + timepad + "s", time));
+	    		logger.log(Level.INFO, String.format("%-" + timepad + "s", time));
 	    	
 	    	// print last bar and dashes
-	    	System.out.println("\n" + String.format("%" + barpad + "s", "|"));
-	    	System.out.println(String.format("%100s", "").replace(' ', '-'));
+	    	logger.log(Level.INFO, "\n" + String.format("%" + barpad + "s", "|"));
+	    	logger.log(Level.INFO, String.format("%100s", "").replace(' ', '-'));
 	    	
 	    	// move to the next day
 	    	if (num == 6)
