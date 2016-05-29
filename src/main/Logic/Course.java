@@ -1,4 +1,4 @@
-package Logic;
+package main.Logic;
 
 /**
  * Created by KCost on 4/21/16.
