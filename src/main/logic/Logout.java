@@ -8,11 +8,13 @@ package main.logic;
  */
 
 import java.util.Scanner;
+import java.io.PrintWriter;
 
 public class Logout
 {
    private Scanner scan;
    private String input;
+   private PrintWriter writer;
 
    /**
     * Constructor for Logout object.
@@ -22,8 +24,9 @@ public class Logout
    public Logout() throws Exception
    {
       scan = new Scanner(System.in);
-      System.out.println("Type \"logout\" to log out of the app.");
-      System.out.println("Type \"exit\" to exit the app.");
+      writer = new PrintWriter(System.out);
+      writer.println("Type \"logout\" to log out of the app.");
+      writer.println("Type \"exit\" to exit the app.");
 
       while (!input.equals("logout") && !input.equals("exit"))
       {
@@ -42,7 +45,7 @@ public class Logout
          // if the user types neither, error message and return
          else
          {
-            System.out.println("Incorrect input. Type \"logout\" or \"exit\"");
+            writer.println("Incorrect input. Type \"logout\" or \"exit\"");
          }
       }
    }
