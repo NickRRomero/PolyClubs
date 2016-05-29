@@ -6,7 +6,7 @@ package main.logic;
 import java.util.ArrayList;
 
 public class Course {
-    private ArrayList<String> days;
+    private ArrayList<> days;
     private String name;
     private Time start;
     private Time end;
@@ -26,7 +26,7 @@ public class Course {
        end = e;
 
        // d contains String abbreviations separated by '_'
-       days = new ArrayList<String>();
+       days = new ArrayList<>();
 	
        // Each elements in parts represents a day appreviation
        String[] parts = d.split("_");
