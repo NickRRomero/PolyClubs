@@ -8,6 +8,7 @@ package main.logic;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,6 +29,7 @@ public class User
    private JSONObject jsonDB;
    private DatabaseManager databaseManager;
    private Scanner scan;
+   private PrinterWriter writer;
 
    public User(String name, String phoneNum, String empl, String email)
          throws Exception
@@ -43,6 +45,7 @@ public class User
       databaseManager.setDataBaseDestination("StudentDatabase", name, true);
       // jsonDB = new databaseManager.execute().get();
       schedule = new Schedule();
+      writer = new PrintWriter(System.out);
    }
 
    /**
@@ -65,9 +68,9 @@ public class User
     */
    public void viewMember(User member)
    {
-      System.out.println("Name: " + member.getName());
-      System.out.println("Phone number: " + member.getPhoneNum());
-      System.out.println("Email address: " + member.getEmail());
+      writer.println("Name: " + member.getName());
+      writer.println("Phone number: " + member.getPhoneNum());
+      writer.println("Email address: " + member.getEmail());
    }
 
    /**
@@ -137,7 +140,7 @@ public class User
       String msg;
 
       scan = new Scanner(System.in);
-      System.out.println("Enter a short message to be sent to "
+      writer.println("Enter a short message to be sent to "
             + member.getName() + ".");
       msg = scan.nextLine();
       member.addMsg(msg, this.name);
@@ -234,7 +237,7 @@ public class User
     */
    public String getMsg(int position)
    {
-      System.out.println(messages.get(position));
+      writer.println(messages.get(position));
       return messages.get(position);
    }
 }
