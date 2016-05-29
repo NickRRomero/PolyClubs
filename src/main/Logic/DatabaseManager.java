@@ -1,4 +1,4 @@
-package Logic;
+package main.Logic;
 
 
 
@@ -44,7 +44,7 @@ public class DatabaseManager
     private String whichDocumentByName = "";
     
     /**How large of a collection to retrieve from MLAB*/
-    private boolean scopeOfDatabaseAccess = false;
+    private boolean retrieveEntireDatabaseQuery = false;
     
     /**Profile holding a single document from query*/
     private JSONObject profile = null;
@@ -101,9 +101,9 @@ public class DatabaseManager
      * @param whichObject name of a student i.e. Nick Romero or name of club
      * @param retrieveEntireDatabaseQuery grab an entire document or a single document
      */
-    public void setDataBaseDestination(String whichDatabase, String whichObject, boolean retrieveEntireDatabaseQuery) {
+    public void setDataBaseDestination(String whichDatabase, String whichObject, boolean entireDatabase) {
         databaseName = whichDatabase;
-        scopeOfDatabaseAccess = retrieveEntireDatabaseQuery;
+        retrieveEntireDatabaseQuery = entireDatabase;
         setDatabaseAccess(whichObject);
     }
 
@@ -123,6 +123,7 @@ public class DatabaseManager
         }
         else if ("ClubDatabase".equals(databaseName)) 
         {
+            
             collectionToRetrieve = "clubs";
             whichDocumentByName = whichObject;
             databaseURIToAccess = uriClubs;
@@ -149,7 +150,7 @@ public class DatabaseManager
          * scopeOfAccess determines if a single document is returned from the database
          * or a collection of documents
          */
-        if (!scopeOfDatabaseAccess)
+        if (retrieveEntireDatabaseQuery)
         {
             documentCollection = collection;
         }
@@ -262,7 +263,7 @@ public class DatabaseManager
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         BasicDBObject club = new BasicDBObject("ClubName", whichDocumentByName);
         
-        BasicDBObject events = new BasicDBObject("event1", jsonobject);
+        BasicDBObject events = new BasicDBObject(eventName, jsonobject);
         
         collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject("events", 
                 new BasicDBObject(eventName, new BasicDBObject("description", jsonobject.getString("description"))
@@ -358,7 +359,7 @@ public class DatabaseManager
      */
     public boolean checkIfAdmin(String currentStudentUser) throws InterruptedException
     {
-        this.setDataBaseDestination("ClubAdministrators", "Main", true);
+        this.setDataBaseDestination("ClubAdministrators", "Main", false);
         initializeDatabaseConnection();
         
         ArrayList<String> admins = new ArrayList<String>();
