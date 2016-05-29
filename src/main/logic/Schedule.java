@@ -192,7 +192,7 @@ public class Schedule {
     		return day.substring(0, 2);
 		
 		// if Thursday, return "R"
-		else if (day.substring(0, 2).equals("Th"))
+		else if ("Th".equals(day.substring(0, 2)))
 			return "R";
 		
 		// else return first letter
@@ -288,11 +288,11 @@ public class Schedule {
      */
     public List<> getDayEvents(String dayOfWeek, Date date) {
     	// list of events on the day
-    	ArrayList<> events = new ArrayList<>();
+    	List<> events = new ArrayList<>();
     	
     	// used when object in schedule is course or event
-    	Course c = null;
-    	Event e = null;
+    	Course c;
+    	Event e;
     	
     	// get day abbreviation
     	String day = getDayAbbrev(dayOfWeek);
@@ -334,11 +334,11 @@ public class Schedule {
     /**
      * Sort list of courses/events
      * @param events
-     * @return a sorted ArrayList 
+     * @return a sorted List 
      */
     public List<> sortList(List<> events) {
     	// list to be returned
-    	ArrayList<> newList = new ArrayList<>();
+    	List<> newList = new ArrayList<>();
     	
     	// time which will always be greater than time compared to it
     	Time minComp = new Time(24, 00);
@@ -390,7 +390,7 @@ public class Schedule {
      * @param events
      * @return an ArrayList of names
      */
-    public ArrayList<> getNames(ArrayList<> events) {
+    public List<> getNames(List<> events) {
     	ArrayList<> names = new ArrayList<>();
     	for (Object obj : events) {
     		if (obj instanceof Course) {
@@ -411,7 +411,7 @@ public class Schedule {
      * @param events
      * @return a list of times
      */
-    public ArrayList<> getTimes(ArrayList<> events) {
+    public yList<> getTimes(List<> events) {
     	ArrayList<> times = new ArrayList<>();
     	for (Object obj : events) {
     		if (obj instanceof Course) {
