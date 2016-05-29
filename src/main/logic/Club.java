@@ -103,11 +103,11 @@ public class Club
       {
          members.add(mems.getString(i));
       }
-      
+
       clubEvents = new ArrayList<Event>();
    }
 
-    // Club getters
+   // Club getters
    public String getName()
    {
       return name;
@@ -117,7 +117,7 @@ public class Club
    {
       return descrip;
    }
-   
+
    public String getAdmin()
    {
       return admin;
@@ -141,18 +141,17 @@ public class Club
 
    public void setDescription(String newDescrip)
    {
-    descrip = newDescrip;
+      descrip = newDescrip;
    }
-
-   
+  
    /**
-    * Sets the club's advisor
-    * @param advEmail - Cal Poly email address of the club's advisor
-    */
+   * Sets the club's advisor
+   * @param advEmail - Cal Poly email address of the club's advisor
+   */
    public void setAdvisor(String advEmail)
    {
-     db.setDataBaseDestination(clubDatabase, name, true);
-     db.setAdvisorOfClub(advEmail, name);
+      db.setDataBaseDestination(clubDatabase, name, true);
+      db.setAdvisorOfClub(advEmail, name);
    }
    
    // Club event functions
@@ -165,8 +164,8 @@ public class Club
       Time endT = event.getEndTime();
       
       obj.put(description, event.getDescrip()).append("time", eDate.getMonth() + " " +
-          eDate.getDay() + " " + startT.getHour() + " " + startT.getMinute() + " " +
-          endT.getHour() + " " + endT.getMinute() + event.getDay());
+         eDate.getDay() + " " + startT.getHour() + " " + startT.getMinute() + " " +
+         endT.getHour() + " " + endT.getMinute() + event.getDay());
 
       // Add the event to the database
       db.setDataBaseDestination(clubDatabase, name, true);
@@ -240,26 +239,45 @@ public class Club
       }
    }
    
+
+   /**
+    * Logs the user out upon selecting the "Logout" option
+    */
+   private void logout()
+   {
+      try 
+      {
+         Logout logout = new Logout();
+      } 
+      catch (Exception ex) 
+      {
+         Logger.getLogger(Club.class.getName()).log(Level.SEVERE, null, ex);
+      }
+   }
+
+   /**
+    * Method that prompts user for input and prints the requested information
+    */
    public void printClubPromptsAndInfo(boolean isAdmin) throws Exception
    {
       printClubInfo();
-      System.out.print("\n\n");
+      logger.log(Level.INFO, "\n\n");
 
       Scanner userInput = new Scanner(System.in).useDelimiter("\n");
       String userChoice = "";
 
       logger.log(Level.INFO, "Please Enter One of the Folowing Options");
 
-      while(!userChoice.equals("Go To Club Prompts"))
+      while(!"Go To Club Prompts".equals(userChoice))
       {
          logger.log(Level.INFO, "Go To Club Prompts");
          if (isAdmin)
          {
-             logger.log(Level.INFO, "Add Member");
-             logger.log(Level.INFO, "Remove Member");
-             logger.log(Level.INFO, "Add Event To Club");
-             logger.log(Level.INFO, "Remove Event From Club");
-             logger.log(Level.INFO, "Set Club Advisor");
+            logger.log(Level.INFO, "Add Member");
+            logger.log(Level.INFO, "Remove Member");
+            logger.log(Level.INFO, "Add Event To Club");
+            logger.log(Level.INFO, "Remove Event From Club");
+            logger.log(Level.INFO, "Set Club Advisor");
          }
          logger.log(Level.INFO, "Logout");
          userChoice = userInput.next();
@@ -294,20 +312,12 @@ public class Club
              removeEventFromDatabase(input.next());
              break;
          case "Set Club Advisor":
-             logger.log(Level.INFO, "Please enter the Cal Poly of "
-                     + "the Advisor for the club");
+             logger.log(Level.INFO, "Please enter the Cal Poly email of the club advisor");
              setAdvisor(input.next());
              break;
          case "Logout":
          {
-            try 
-            {
-               Logout logout = new Logout();
-            } 
-            catch (Exception ex) 
-            {
-               Logger.getLogger(Club.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            logout();
             break;
          }
          default:
@@ -315,3 +325,4 @@ public class Club
      }
    }
 }
+
