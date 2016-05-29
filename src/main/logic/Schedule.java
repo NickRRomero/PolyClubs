@@ -350,7 +350,7 @@ public class Schedule {
     	Time min = minComp;
     	
     	// loop until all objects are removed from events
-    	while (events.size() > 0) {
+    	while (events.isEmpty()) {
 	    	for (Object obj : events) {
 	    		if (obj instanceof Course) {
 	    			Course c = (Course) obj;
