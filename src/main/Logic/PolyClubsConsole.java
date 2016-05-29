@@ -1,4 +1,4 @@
-package Logic;
+package main.Logic;
 
 import org.json.JSONObject;
 
@@ -23,10 +23,6 @@ public class PolyClubsConsole
         login.displayWelcomeScreen();
         JSONObject objec = login.getStudentProfile();
         user = login.setupUser(objec);
-        System.out.println(user.getEmail());
-        System.out.println(user.getName());
-        System.out.println(user.getPhoneNum());
-        System.out.println(user.getClass());
         clubPrompts.displayClubPrompt();
         
         
