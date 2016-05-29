@@ -100,7 +100,7 @@ public class ClubPrompts
             logger.log(Level.INFO, "Please enter a club to search for.");
             clubChoice = s.next();
             Club club = new Club(clubChoice);
-            club.printClubInfo();
+            club.printClubPromptsAndInfo(true);
         }
         
         
