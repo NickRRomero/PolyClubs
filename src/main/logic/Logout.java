@@ -14,7 +14,7 @@ public class Logout
 {
    private Scanner scan;
    private String input;
-   private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
+   private static final Logger logger = Logger.getLogger( Logout.class.getName() );
 
    /**
     * Constructor for Logout object.
