@@ -3,6 +3,7 @@ package main.logic;
 @Author: Kevin Costello
 */
 import java.util.Scanner;
+import java.util.logging.*;
 import Logic.Event;
 
 public class EventController {
@@ -10,6 +11,7 @@ public class EventController {
 	private static Event myEvent;
 	private static EventController myControl;
 	private static EventBoundary myBoundary;
+	private static final Logger logger = Logger.getLogger( EventController.class.getName() );
 	
 	private EventController() {    }
 	
@@ -32,7 +34,7 @@ public class EventController {
 	    s.close();
 	    clearScreen();
 
-	    System.out.println("Invalid character, try again");
+	    logger.log(Level.INFO, "Invalid character, try again");
 	    prompt();
 	}
 	
@@ -45,11 +47,10 @@ public class EventController {
 	
 	private void clearScreen() {
 	    /* Prints out 50 new line characters */
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n");
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n");
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n");
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n");
-		System.out.printf("\n\n\n\n\n\n\n\n\n\n");
+	    for (int iter = 0; iter < 50; iter++)
+	    {
+		logger.log(Level.INFO, "\n");
+	    }
 	}
 	
 	private void prompt() {
@@ -65,15 +66,15 @@ public class EventController {
 	
 	public void printEventInfo() {
 	    clearScreen();
-	    System.out.println("Start time: "  +        myEvent.getStartTime().toString());
-	    System.out.println("End time: "  +          myEvent.getEndTime().toString());
-	    System.out.println("Event description: " +  myEvent.getDescrip());
-	    System.out.print("Members going: ");
+	    logger.log(Level.INFO, "Start time: "  +        myEvent.getStartTime().toString());
+	    logger.log(Level.INFO, "End time: "  +          myEvent.getEndTime().toString());
+	    logger.log(Level.INFO, "Event description: " +  myEvent.getDescrip());
+	    logger.log(Level.INFO, "Members going: ");
 	    for (int i = 0; i < myEvent.getGoing().size(); i++) {
 	       if (i % 5 == 0) {
-	          System.out.println();
+	          logger.log("\n");
 	       }
-	       System.out.print(myEvent.getGoing().get(i).getName());
+	       logger.log(Level.INFO, myEvent.getGoing().get(i).getName());
 	    }
 	}
 
