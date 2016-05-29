@@ -1,4 +1,4 @@
-package main.Logic;
+package main.logic;
 
 import java.util.Scanner;
 import org.json.JSONException;
