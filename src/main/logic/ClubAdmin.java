@@ -45,27 +45,27 @@ public class ClubAdmin extends User
       Time endTime;
       Date date;
 
-      logger.log("Enter the day of the week of the event.");
+      logger.log(Level.INFO, "Enter the day of the week of the event.");
       day = scan.next();
-      logger.log("Enter the month of the event as a number.");
+      logger.log(Level.INFO, "Enter the month of the event as a number.");
       month = scan.nextInt();
-      logger.log("Enter the day of the month of the event as a number.");
+      logger.log(Level.INFO, "Enter the day of the month of the event as a number.");
       dayMonth = scan.nextInt();
-      logger.log("Enter the start hour of the event.");
+      logger.log(Level.INFO, "Enter the start hour of the event.");
       startH = scan.nextInt();
-      logger.log("Enter the start minute of the event.");
+      logger.log(Level.INFO, "Enter the start minute of the event.");
       startM = scan.nextInt();
-      logger.log("Enter the end hour of the event.");
+      logger.log(Level.INFO, "Enter the end hour of the event.");
       endH = scan.nextInt();
-      logger.log("Enter the end minute of the event.");
+      logger.log(Level.INFO, "Enter the end minute of the event.");
       endM = scan.nextInt();
-      logger.log("Enter the name of the event.");
+      logger.log(Level.INFO, "Enter the name of the event.");
       descr.concat(scan.next());
       descr.concat("|");
-      logger.log("Enter the location of the event.");
+      logger.log(Level.INFO, "Enter the location of the event.");
       descr.concat(scan.next());
       descr.concat("|");
-      logger.log("Enter the description of the event.");
+      logger.log(Level.INFO, "Enter the description of the event.");
       descr.concat(scan.next());
 
       date = new Date(month, dayMonth);
@@ -88,9 +88,9 @@ public class ClubAdmin extends User
       String clubName;
       String descr;
 
-      logger.log("Enter the name of the new club.");
+      logger.log(Level.INFO, "Enter the name of the new club.");
       clubName = scan.next();
-      logger.log("Enter the description of the club.");
+      logger.log(Level.INFO, "Enter the description of the club.");
       descr = scan.next();
 
       return new Club(clubName, super.getEmail(), descr);
@@ -127,13 +127,13 @@ public class ClubAdmin extends User
 
       scan = new Scanner(System.in);
 
-      logger.log("Enter the new start hour of the event.");
+      logger.log(Level.INFO, "Enter the new start hour of the event.");
       startH = scan.nextInt();
-      logger.log("Enter the new start minute of the event.");
+      logger.log(Level.INFO, "Enter the new start minute of the event.");
       startM = scan.nextInt();
-      logger.log("Enter the new end hour of the event.");
+      logger.log(Level.INFO, "Enter the new end hour of the event.");
       endH = scan.nextInt();
-      logger.log("Enter the new end minute of the event.");
+      logger.log(Level.INFO, "Enter the new end minute of the event.");
       endM = scan.nextInt();
 
       startTime = new Time(startH, startM);
@@ -153,13 +153,13 @@ public class ClubAdmin extends User
       String descrip = "";
 
       scan = new Scanner(System.in);
-      logger.log("Enter the new name of the event.");
+      logger.log(Level.INFO, "Enter the new name of the event.");
       descrip.concat(scan.next());
       descrip.concat("|");
-      logger.log("Enter the description of the event.");
+      logger.log(Level.INFO, "Enter the description of the event.");
       descrip.concat(scan.next());
       descrip.concat("|");
-      logger.log("Enter the location of the event.");
+      logger.log(Level.INFO, "Enter the location of the event.");
       descrip.concat(scan.next());
       event.setDescrip(descrip);
    }
