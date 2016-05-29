@@ -1,4 +1,4 @@
-package Logic;
+package main.Logic;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
