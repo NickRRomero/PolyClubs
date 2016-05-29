@@ -7,17 +7,20 @@ package main.logic;
  */
 
 import java.util.Scanner;
+import java.io.PrinterWiter;
 
 import org.json.JSONException;
 
 public class ClubAdmin extends User
 {
    private Scanner scan;
+   private PrintWriter writer;
 
    public ClubAdmin(String name, String phoneNum, String empl, String email)
          throws Exception
    {
       super(name, phoneNum, empl, email);
+      writer = new PrintWriter(System.out);
    }
 
    /**
@@ -42,28 +45,27 @@ public class ClubAdmin extends User
       Time endTime;
       Date date;
 
-      System.out.println("Enter the day of the week of the event.");
+      writer.println("Enter the day of the week of the event.");
       day = scan.next();
-      System.out.println("Enter the month of the event as a number.");
+      writer.println("Enter the month of the event as a number.");
       month = scan.nextInt();
-      System.out
-            .println("Enter the day of the month of the event as a number.");
+      writer.println("Enter the day of the month of the event as a number.");
       dayMonth = scan.nextInt();
-      System.out.println("Enter the start hour of the event.");
+      writer.println("Enter the start hour of the event.");
       startH = scan.nextInt();
-      System.out.println("Enter the start minute of the event.");
+      writer.println("Enter the start minute of the event.");
       startM = scan.nextInt();
-      System.out.println("Enter the end hour of the event.");
+      writer.println("Enter the end hour of the event.");
       endH = scan.nextInt();
-      System.out.println("Enter the end minute of the event.");
+      writer.println("Enter the end minute of the event.");
       endM = scan.nextInt();
-      System.out.println("Enter the name of the event.");
+      writer.println("Enter the name of the event.");
       descr.concat(scan.next());
       descr.concat("|");
-      System.out.println("Enter the location of the event.");
+      writer.println("Enter the location of the event.");
       descr.concat(scan.next());
       descr.concat("|");
-      System.out.println("Enter the description of the event.");
+      writer.println("Enter the description of the event.");
       descr.concat(scan.next());
 
       date = new Date(month, dayMonth);
@@ -86,9 +88,9 @@ public class ClubAdmin extends User
       String clubName;
       String descr;
 
-      System.out.println("Enter the name of the new club.");
+      writer.println("Enter the name of the new club.");
       clubName = scan.next();
-      System.out.println("Enter the description of the club.");
+      writer.println("Enter the description of the club.");
       descr = scan.next();
 
       return new Club(clubName, super.getEmail(), descr);
@@ -125,13 +127,13 @@ public class ClubAdmin extends User
 
       scan = new Scanner(System.in);
 
-      System.out.println("Enter the new start hour of the event.");
+      writer.println("Enter the new start hour of the event.");
       startH = scan.nextInt();
-      System.out.println("Enter the new start minute of the event.");
+      writer.println("Enter the new start minute of the event.");
       startM = scan.nextInt();
-      System.out.println("Enter the new end hour of the event.");
+      writer.println("Enter the new end hour of the event.");
       endH = scan.nextInt();
-      System.out.println("Enter the new end minute of the event.");
+      writer.println("Enter the new end minute of the event.");
       endM = scan.nextInt();
 
       startTime = new Time(startH, startM);
@@ -151,13 +153,13 @@ public class ClubAdmin extends User
       String descrip = "";
 
       scan = new Scanner(System.in);
-      System.out.println("Enter the new name of the event.");
+      writer.println("Enter the new name of the event.");
       descrip.concat(scan.next());
       descrip.concat("|");
-      System.out.println("Enter the description of the event.");
+      writer.println("Enter the description of the event.");
       descrip.concat(scan.next());
       descrip.concat("|");
-      System.out.println("Enter the location of the event.");
+      writer.println("Enter the location of the event.");
       descrip.concat(scan.next());
       event.setDescrip(descrip);
    }
