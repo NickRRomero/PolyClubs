@@ -20,7 +20,7 @@ public class Club
    private DatabaseManager db;
    private static final Logger logger = Logger.getLogger( Club.class.getName() );
    private String description = "description";
-   private String ClubDatabase = "ClubDatabase";
+   private String clubDatabase = "ClubDatabase";
 
    
    /**
@@ -31,7 +31,7 @@ public class Club
    {
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
-      db.setDataBaseDestination(ClubDatabase, nm, true);
+      db.setDataBaseDestination(clubDatabase, nm, true);
       db.accessDatabase();
       
       // Get the club's database entry
@@ -82,13 +82,13 @@ public class Club
    {
 	   // Set database destination to the club database
 	   db = DatabaseManager.getInstance();
-	   db.setDataBaseDestination(ClubDatabase, presEmail, true);
+	   db.setDataBaseDestination(clubDatabase, presEmail, true);
 	   
 	   // Create the club
 	   db.createNewClub(nm, presEmail, desc);
 	  	      
 	   // Get the club's database entry
-	   db.setDataBaseDestination(ClubDatabase, nm, true);
+	   db.setDataBaseDestination(clubDatabase, nm, true);
 	   db.accessDatabase();
 	   JSONObject clubJson = db.getSingleDatabaseResults();
 	   
@@ -152,7 +152,7 @@ public class Club
     */
    public void setAdvisor(String advEmail)
    {
-	   db.setDataBaseDestination(ClubDatabase, name, true);
+	   db.setDataBaseDestination(clubDatabase, name, true);
 	   db.setAdvisorOfClub(advEmail, name);
    }
    
@@ -170,7 +170,7 @@ public class Club
     		  endT.getHour() + " " + endT.getMinute() + event.getDay());
 
       // Add the event to the database
-      db.setDataBaseDestination(ClubDatabase, name, true);
+      db.setDataBaseDestination(clubDatabase, name, true);
       db.addEventToClub(obj, description.split("\\|")[0]); 
 
       // Add the event to the local ArrayList
