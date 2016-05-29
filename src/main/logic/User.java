@@ -29,7 +29,7 @@ public class User
    private JSONObject jsonDB;
    private DatabaseManager databaseManager;
    private Scanner scan;
-   private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
+   private static final Logger logger = Logger.getLogger( User.class.getName() );
 
    public User(String name, String phoneNum, String empl, String email)
          throws Exception
