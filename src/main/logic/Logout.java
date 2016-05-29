@@ -24,8 +24,8 @@ public class Logout
    public Logout() throws Exception
    {
       scan = new Scanner(System.in);
-      logger.log("Type \"logout\" to log out of the app.");
-      logger.log("Type \"exit\" to exit the app.");
+      logger.log(Level.INFO, "Type \"logout\" to log out of the app.");
+      logger.log(Level.INFO, "Type \"exit\" to exit the app.");
 
       while (!input.equals("logout") && !input.equals("exit"))
       {
@@ -44,7 +44,7 @@ public class Logout
          // if the user types neither, error message and return
          else
          {
-            logger.log("Incorrect input. Type \"logout\" or \"exit\"");
+            logger.log(Level.INFO, "Incorrect input. Type \"logout\" or \"exit\"");
          }
       }
    }
