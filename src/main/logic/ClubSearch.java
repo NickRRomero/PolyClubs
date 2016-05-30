@@ -54,7 +54,7 @@ public class ClubSearch
 	   boolean done = false;
 	   
 	   do {
-		   logging.log(Level.INFO, "\n" + openPrompt);
+		   logger.log(Level.INFO, "\n" + openPrompt);
 		   String choice = in.nextLine();
 		   
 		   // search
@@ -74,7 +74,7 @@ public class ClubSearch
 		   }
 		   // invalid
 		   else 
-			   logging.log(Level.INFO, "Invalid option.");
+			   logger.log(Level.INFO, "Invalid option.");
 		   
 	   } while (!done);
    }
@@ -83,7 +83,7 @@ public class ClubSearch
     * display search prompt to user
     */
    private void displaySearch() {
-      logging.log(Level.INFO, "\nPlease enter the name of the club you would " +
+      logger.log(Level.INFO, "\nPlease enter the name of the club you would " +
        "like to search for or 'back' to return to initial prompt:");
       
       // club name that user searches for
@@ -115,7 +115,7 @@ public class ClubSearch
          viewPage(name);
       }
       else {
-         logging.log(Level.INFO, "The club you entered is " +
+         logger.log(Level.INFO, "The club you entered is " +
           "not in the database.");
          displaySearch();
       } 
@@ -126,7 +126,7 @@ public class ClubSearch
     * @param club
     */
    private void viewPage(String club) {
-      logging.log(Level.INFO, "Would you like to view the " + 
+      logger.log(Level.INFO, "Would you like to view the " + 
        club + " clubpage? (y/n)");
       
       // if yes, go to club page
@@ -141,7 +141,7 @@ public class ClubSearch
     * Display filter prompt to user
     */
    private void displayFilter() {
-      logging.log(Level.INFO, "\nPlease enter the type of club you would " +
+      logger.log(Level.INFO, "\nPlease enter the type of club you would " +
        "like to filter by or 'back' to return to initial prompt:");
       
       // club name that user searches for
@@ -181,7 +181,7 @@ public class ClubSearch
       }
       
       if (clubs.size() == 0) {
-    	  logging.log(Level.INFO, "There are no clubs matching that type.");
+    	  logger.log(Level.INFO, "There are no clubs matching that type.");
     	  displayFilter();
       }
       else     
@@ -201,12 +201,12 @@ public class ClubSearch
 	  do {
 	      for (JSONObject c : clubs) {
 	    	  index = clubs.indexOf(c) + 1;
-	    	  logging.log(Level.INFO, index + ". " + c.get("ClubName").toString());
+	    	  logger.log(Level.INFO, index + ". " + c.get("ClubName").toString());
 	      }
 	
 	      index = -1;
             
-    	  logging.log(Level.INFO, "Please enter the number of the club you" +
+    	  logger.log(Level.INFO, "Please enter the number of the club you" +
 		   " would like to view or 'back' to return to the filter page");
     	  
     	  if (in.hasNextInt()) 
@@ -225,7 +225,7 @@ public class ClubSearch
 	      }
 	      else {
 	    	  done = false;
-	    	  logging.log(Level.INFO, "Invalid option.\n");
+	    	  logger.log(Level.INFO, "Invalid option.\n");
 	      }
       } while (!done);
    }
