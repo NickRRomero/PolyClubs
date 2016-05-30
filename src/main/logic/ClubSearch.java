@@ -180,7 +180,7 @@ public class ClubSearch
         	 clubs.add(profile);
       }
       
-      if (clubs.size() == 0) {
+      if (clubs.isEmpty()) {
     	  logger.log(Level.INFO, "There are no clubs matching that type.");
     	  displayFilter();
       }
@@ -195,7 +195,7 @@ public class ClubSearch
    private void filter(ArrayList<JSONObject> clubs) {
 	  int index; 
 	  String back = "";
-	  boolean done = false;
+	  boolean done;
 	   
 	  // print clubs 
 	  do {
