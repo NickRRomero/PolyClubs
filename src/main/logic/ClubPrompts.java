@@ -14,13 +14,13 @@ public class ClubPrompts
     private static final Logger logger = Logger.getLogger( ClubPrompts.class.getName() );
     
     /**System search command*/
-    private final String search = "Club Search";
+    private static final String search = "Club Search";
     
     /**System view club command*/
-    private final String viewClub = "View Club";
+    private static final String viewClub = "View Club";
     
     /**System exit command*/
-    private final String systemExit = "Exit";
+    private static final String systemExit = "Exit";
     
     /**Scanner for user input*/
     private Scanner userChoice;
@@ -66,6 +66,7 @@ public class ClubPrompts
         if ("Exit".equals(choice))
         {
             Logout logout = new Logout();
+            logout.promptLogout();
         }
         
         choice += " ";
