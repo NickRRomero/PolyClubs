@@ -49,7 +49,7 @@ public class EventController {
 	    /* Prints out 50 new line characters */
 	    for (int iter = 0; iter < 50; iter++)
 	    {
-		logger.log(Level.INFO, "\n");
+			logger.log(Level.INFO, "\n");
 	    }
 	}
 	
@@ -58,9 +58,13 @@ public class EventController {
 	
 	    s = new Scanner(System.in);
 	    myBoundary.showPrompt();
-	    switch (s.next()) {
-	       case "p": printEventInfo();
-	       default: rePrompt(s);
+	    if (s.next() == 'p') 
+	    {
+	    	printEventInfo();
+	    }
+	    else
+	    { 
+	    	rePrompt(s);
 	    }
 	}
 	
