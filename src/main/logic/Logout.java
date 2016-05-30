@@ -17,11 +17,11 @@ public class Logout
    private static final Logger logger = Logger.getLogger( Logout.class.getName() );
 
    /**
-    * Constructor for Logout object.
+    * Method to log a user out.
     * 
     * @throws Exception
     */
-   public Logout() throws Exception
+   public void promptLogout() throws Exception
    {
       scan = new Scanner(System.in);
       logger.log(Level.INFO, "Type \"logout\" to log out of the app.");

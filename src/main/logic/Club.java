@@ -245,7 +245,8 @@ public class Club
    {
       try 
       {
-         Logout logout = new Logout();
+         Logout lo = new Logout();
+         lo.promptLogout();
       } 
       catch (Exception ex) 
       {
