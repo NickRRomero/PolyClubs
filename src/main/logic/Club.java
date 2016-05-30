@@ -219,8 +219,7 @@ public class Club
 
    // Print club information
    public void printClubInfo()
-   {
-    
+   {   
       logger.log(Level.INFO, "Club name: " + name);
       logger.log(Level.INFO, "Club description: " + descrip);      
       logger.log(Level.INFO, "Club admin: " + admin);
@@ -239,7 +238,6 @@ public class Club
       }
    }
    
-
    /**
     * Logs the user out upon selecting the "Logout" option
     */
@@ -257,6 +255,7 @@ public class Club
 
    /**
     * Method that prompts user for input and prints the requested information
+    * @param isAdmin - true if the user is a club administrator
     */
    public void printClubPromptsAndInfo(boolean isAdmin) throws Exception
    {
@@ -266,7 +265,7 @@ public class Club
       Scanner userInput = new Scanner(System.in).useDelimiter("\n");
       String userChoice = "";
 
-      logger.log(Level.INFO, "Please Enter One of the Folowing Options");
+      logger.log(Level.INFO, "Please Enter One of the Following Options");
 
       while(!"Go To Club Prompts".equals(userChoice))
       {
@@ -301,7 +300,7 @@ public class Club
              addMember(input.next());
              break;
          case "Remove Member":
-             logger.log(Level.INFO, "Please enter the name of the member to remove.");
+             logger.log(Level.INFO, "Please enter the name of the member to remove");
              removeMember(input.next());
              break;
          case "Add Event To Club":             
@@ -312,7 +311,7 @@ public class Club
              removeEventFromDatabase(input.next());
              break;
          case "Set Club Advisor":
-             logger.log(Level.INFO, "Please enter the Cal Poly email of the club advisor");
+             logger.log(Level.INFO, "Please enter the Cal Poly email of the club advisor.");
              setAdvisor(input.next());
              break;
          case "Logout":
