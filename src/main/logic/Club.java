@@ -316,10 +316,8 @@ public class Club
              setAdvisor(input.next());
              break;
          case "Logout":
-         {
             logout();
             break;
-         }
          default:
             break;
      }
