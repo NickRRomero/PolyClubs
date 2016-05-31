@@ -56,8 +56,8 @@ public class Schedule {
      * function that returns all the courses in a schedule
      * @return list of courses
      */
-    public List<Object> getCourses() {
-    	List<Object> courses = new ArrayList<>();
+    public List<Course> getCourses() {
+    	List<Course> courses = new ArrayList<>();
     	
     	// if object is a course, add it to list
     	for (Object obj : sched) {
@@ -343,19 +343,19 @@ public class Schedule {
     	Time min = minComp;
     	
     	// loop until all objects are removed from events
-    	while (events.isEmpty()) {
+    	while (!events.isEmpty()) {
 	    	for (Object obj : events) {
 	    		// if start time is earlier than min
     			// set min to start time and minCE to course
 	    		if (obj instanceof Course && ((Course)obj).getStart().isEarlier(min)) {
     				min = ((Course)obj).getStart();
-    				minCE = (Course)obj;   				
-				}	
+    				minCE = obj;   				
+			}	
 	    		// if start time is earlier than min
     			// set min to start time and minCE to event
 	    		else if (obj instanceof Event && ((Event)obj).getStartTime().isEarlier(min)) {
     				min = ((Event)obj).getStartTime();
-    				minCE = ((Event)obj);    				
+    				minCE = obj;    				
 	    		}
 	    	}
 	   
@@ -435,9 +435,6 @@ public class Schedule {
     	List<String> times; // times of the courses/events in "events"
     	
     	int[] daypad = {9, 9, 9, 11, 10, 9, 10}; // padding data for each day
-    	int datepad = 8; // number of padded spaces for date
-    	int barpad = 13; // number of padded spaces for bar
-    	int timepad = 20; // number of padded spaces for event time
     	String dayOW; // day of week
     	int pad; // number of padded spaces for day of week
     	
@@ -453,25 +450,23 @@ public class Schedule {
     		times = getTimes(sorted);
     		
     		// print day of week and first 2 bars
-	    	logger.log(Level.INFO, String.format("%" + barpad + "s", "|"));
-	    	logger.log(Level.INFO, String.format("%" + pad + "s" + 
-	   	    	 "%" + (barpad-pad) + "s     ", dayOW, "|"));
+	    	logger.log(Level.INFO, String.format("%13s", "|"));
+	    	logger.log(Level.INFO, String.format(" %-9s%3s     ", dayOW, "|"));
 	    	
 	    	// print names of courses/events
 	    	for (String name : names) 
-	    		logger.log(Level.INFO, String.format("%-" + timepad + "s", name));
+	    		logger.log(Level.INFO, String.format("%-20s", name));
 	    	
 	    	// print date and bar
-	    	logger.log(Level.INFO, "\n" + String.format("%" + datepad + "s" + 
-	    			"%" + (barpad-datepad) + "s     ", 
+	    	logger.log(Level.INFO, "\n" + String.format(" %-9s%3s     ", 
 	    			week[count].toString(), "|"));
 	    	
 	    	// print times of courses/events
 	    	for (String time : times)
-	    		logger.log(Level.INFO, String.format("%-" + timepad + "s", time));
+	    		logger.log(Level.INFO, String.format("%-20s", time));
 	    	
 	    	// print last bar and dashes
-	    	logger.log(Level.INFO, "\n" + String.format("%" + barpad + "s", "|"));
+	    	logger.log(Level.INFO, "\n" + String.format("%13s", "|"));
 	    	logger.log(Level.INFO, String.format("%100s", "").replace(' ', '-'));
 	    	
 	    	// move to the next day
