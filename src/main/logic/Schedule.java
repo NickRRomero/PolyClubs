@@ -2,12 +2,15 @@ package main.logic;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by jacob on 4/24/2016.
  */
 public class Schedule {
-    private ArrayList<> sched;
+    private ArrayList<Object> sched;
     boolean leapYear = false;
     private static final Logger logger = Logger.getLogger( Schedule.class.getName() );
     
@@ -51,13 +54,13 @@ public class Schedule {
     
     /**
      * function that returns all the courses in a schedule
-     * @return Arraylist of courses
+     * @return list of courses
      */
-    public List<> getCourses() {
-    	ArrayList<> courses = new ArrayList<>();
+    public List<Course> getCourses() {
+    	List<Course> courses = new ArrayList<>();
     	
     	// if object is a course, add it to list
-    	for (Object obj : schedule) {
+    	for (Object obj : sched) {
     		if (obj instanceof Course) 
     			courses.add((Course) obj);
     	}
@@ -100,23 +103,18 @@ public class Schedule {
     	boolean conflict = false;
     	
     	// loop through each event/course in schedule
-    	for (Object obj : schedule) {
+    	for (Object obj : sched) {
     		
     		// if obj is course, determine if event and course are on same day
     		if (obj instanceof Course) {
     			c = (Course) obj;
     			
-    			// check each day that the course is on
-    			for(String day : c.getDays()) {
-    				
-    				// if on same day, check if times are in conflict
-    				if (event.getDay().equals(day)) {
-    					conflict = timeCheck(c.getStart(), c.getEnd(), 
-    		    				event.getStartTime(), event.getEndTime());
+    			// determine if event conflicts with course
+    			if (c.conflicts(event.getDay())) {
+    				conflict = timeCheck(c.getStart(), c.getEnd(), 
+    		    		event.getStartTime(), event.getEndTime());
     					
-    					logger.log(Level.INFO, c.getName());
-    					break;
-    				}
+    				logger.log(Level.INFO, c.getName());
     			}
     		}
     		// if obj is event, determine if events are on same date
@@ -126,7 +124,7 @@ public class Schedule {
     			// if on same date, check if times are in conflict
 	    		if (event.getDate().equals(e.getDate())) {
 					conflict = timeCheck(e.getStartTime(), e.getEndTime(), 
-		    				event.getStartTime(), event.getEndTime());
+		    			event.getStartTime(), event.getEndTime());
 					
 					logger.log(Level.INFO, e.getDescrip());
 	    		}
@@ -231,6 +229,8 @@ public class Schedule {
     		case "Sa":
     			dayNum = 6;
     			break;
+    		default:
+    			break;
     	}
     	
     	return dayNum;
@@ -284,11 +284,11 @@ public class Schedule {
     /**
      * get the scheduled courses/events for the given day
      * @param dayOfWeek
-     * @return an arraylist of courses/events
+     * @return an list of courses/events
      */
-    public List<> getDayEvents(String dayOfWeek, Date date) {
+    public List<Object> getDayEvents(String dayOfWeek, Date date) {
     	// list of events on the day
-    	List<> events = new ArrayList<>();
+    	List<Object> events = new ArrayList<>();
     	
     	// used when object in schedule is course or event
     	Course c;
@@ -298,22 +298,15 @@ public class Schedule {
     	String day = getDayAbbrev(dayOfWeek);
     	
     	// loop through each event/course in schedule
-    	for (Object obj : schedule) {
+    	for (Object obj : sched) {
     		
     		// if obj is course, determine if course is on day
     		if (obj instanceof Course) {
     			c = (Course) obj;
     			
-    			// check each day that the course is on
-    			for(String d : c.getDays()) {
-    				
-    				// if on same day, add course to list
-    				if (day.equals(d)) {
-    					events.add(c);
-    					break;
-    				}
-    			}
-    		}
+    			if (c.conflicts(day)) 
+    				events.add(c);
+    		}	
     		// if obj is event, determine if event is on day
     		else {
     			e = (Event) obj;
@@ -336,9 +329,9 @@ public class Schedule {
      * @param events
      * @return a sorted List 
      */
-    public List<> sortList(List<> events) {
+    public List<Object> sortList(List<Object> events) {
     	// list to be returned
-    	List<> newList = new ArrayList<>();
+    	List<Object> newList = new ArrayList<>();
     	
     	// time which will always be greater than time compared to it
     	Time minComp = new Time(24, 00);
@@ -350,28 +343,19 @@ public class Schedule {
     	Time min = minComp;
     	
     	// loop until all objects are removed from events
-    	while (events.isEmpty()) {
+    	while (!events.isEmpty()) {
 	    	for (Object obj : events) {
-	    		if (obj instanceof Course) {
-	    			Course c = (Course) obj;
-	    			
-	    			// if start time is earlier than min
-	    			// set min to start time and minCE to course
-	    			if (c.getStart().isEarlier(min)) {
-	    				min = c.getStart();
-	    				minCE = c;
-	    			}
-	    				
-				}	
-	    		else {
-	    			Event e = (Event) obj;  		
-	    			
-	    			// if start time is earlier than min
-	    			// set min to start time and minCE to event
-	    			if (e.getStartTime().isEarlier(min)) {
-	    				min = e.getStartTime();
-	    				minCE = e;
-	    			}	    				
+	    		// if start time is earlier than min
+    			// set min to start time and minCE to course
+	    		if (obj instanceof Course && ((Course)obj).getStart().isEarlier(min)) {
+    				min = ((Course)obj).getStart();
+    				minCE = obj;   				
+			}	
+	    		// if start time is earlier than min
+    			// set min to start time and minCE to event
+	    		else if (obj instanceof Event && ((Event)obj).getStartTime().isEarlier(min)) {
+    				min = ((Event)obj).getStartTime();
+    				minCE = obj;    				
 	    		}
 	    	}
 	   
@@ -390,8 +374,8 @@ public class Schedule {
      * @param events
      * @return an ArrayList of names
      */
-    public List<> getNames(List<> events) {
-    	ArrayList<> names = new ArrayList<>();
+    public List<String> getNames(List<Object> events) {
+    	ArrayList<String> names = new ArrayList<>();
     	for (Object obj : events) {
     		if (obj instanceof Course) {
     			Course c = (Course) obj;
@@ -411,8 +395,8 @@ public class Schedule {
      * @param events
      * @return a list of times
      */
-    public yList<> getTimes(List<> events) {
-    	ArrayList<> times = new ArrayList<>();
+    public List<String> getTimes(List<Object> events) {
+    	ArrayList<String> times = new ArrayList<>();
     	for (Object obj : events) {
     		if (obj instanceof Course) {
     			Course c = (Course) obj;
@@ -445,15 +429,12 @@ public class Schedule {
     	// index for current day of week, used for days array
     	int num = dayOfWeek(day);
     	    	    	
-    	ArrayList<> events; // courses/events on a given day
-    	ArrayList<> sorted; // "events" sorted
-    	ArrayList<> names; // names of the courses/events in "events"
-    	ArrayList<> times; // times of the courses/events in "events"
+    	List<Object> events; // courses/events on a given day
+    	List<Object> sorted; // "events" sorted
+    	List<String> names; // names of the courses/events in "events"
+    	List<String> times; // times of the courses/events in "events"
     	
     	int[] daypad = {9, 9, 9, 11, 10, 9, 10}; // padding data for each day
-    	int datepad = 8; // number of padded spaces for date
-    	int barpad = 13; // number of padded spaces for bar
-    	int timepad = 20; // number of padded spaces for event time
     	String dayOW; // day of week
     	int pad; // number of padded spaces for day of week
     	
@@ -469,25 +450,23 @@ public class Schedule {
     		times = getTimes(sorted);
     		
     		// print day of week and first 2 bars
-	    	logger.log(Level.INFO, String.format("%" + barpad + "s", "|"));
-	    	logger.log(Level.INFO, String.format("%" + pad + "s" + 
-	   	    	 "%" + (barpad-pad) + "s     ", dayOW, "|"));
+	    	logger.log(Level.INFO, String.format("%13s", "|"));
+	    	logger.log(Level.INFO, String.format(" %-9s%3s     ", dayOW, "|"));
 	    	
 	    	// print names of courses/events
 	    	for (String name : names) 
-	    		logger.log(Level.INFO, String.format("%-" + timepad + "s", name));
+	    		logger.log(Level.INFO, String.format("%-20s", name));
 	    	
 	    	// print date and bar
-	    	logger.log(Level.INFO, "\n" + String.format("%" + datepad + "s" + 
-	    			"%" + (barpad-datepad) + "s     ", 
+	    	logger.log(Level.INFO, "\n" + String.format(" %-9s%3s     ", 
 	    			week[count].toString(), "|"));
 	    	
 	    	// print times of courses/events
 	    	for (String time : times)
-	    		logger.log(Level.INFO, String.format("%-" + timepad + "s", time));
+	    		logger.log(Level.INFO, String.format("%-20s", time));
 	    	
 	    	// print last bar and dashes
-	    	logger.log(Level.INFO, "\n" + String.format("%" + barpad + "s", "|"));
+	    	logger.log(Level.INFO, "\n" + String.format("%13s", "|"));
 	    	logger.log(Level.INFO, String.format("%100s", "").replace(' ', '-'));
 	    	
 	    	// move to the next day

@@ -14,13 +14,13 @@ public class ClubPrompts
     private static final Logger logger = Logger.getLogger( ClubPrompts.class.getName() );
     
     /**System search command*/
-    private static final String search = "Club Search";
+    private String search = "Club Search";
     
     /**System view club command*/
-    private static final String viewClub = "View Club";
+    private String viewClub = "View Club";
     
     /**System exit command*/
-    private static final String systemExit = "Exit";
+    private String systemExit = "Exit";
     
     private boolean isAdmin;
     
@@ -95,14 +95,17 @@ public class ClubPrompts
     
     private void actOnClubPromptInput(String choice) throws InterruptedException, JSONException
     {
+        Scanner s = new Scanner(System.in).useDelimiter("\n");
+        
         if (choice.equals(search))
         {
             clubSearch = ClubSearch.getInstance();
+            clubSearch.searchClub(s.next());
         }
         if (choice.equals(viewClub))
         {
             String clubChoice;
-            Scanner s = new Scanner(System.in).useDelimiter("\n");
+            
             logger.log(Level.INFO, "Please enter a club to search for.");
             clubChoice = s.next();
             Club club = new Club(clubChoice);
