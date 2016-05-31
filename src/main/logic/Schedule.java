@@ -229,6 +229,8 @@ public class Schedule {
     		case "Sa":
     			dayNum = 6;
     			break;
+    		default:
+    			break;
     	}
     	
     	return dayNum;
@@ -343,26 +345,17 @@ public class Schedule {
     	// loop until all objects are removed from events
     	while (events.isEmpty()) {
 	    	for (Object obj : events) {
-	    		if (obj instanceof Course) {
-	    			Course c = (Course) obj;
-	    			
-	    			// if start time is earlier than min
-	    			// set min to start time and minCE to course
-	    			if (c.getStart().isEarlier(min)) {
-	    				min = c.getStart();
-	    				minCE = c;
-	    			}
-	    				
+	    		// if start time is earlier than min
+    			// set min to start time and minCE to course
+	    		if (obj instanceof Course && ((Course)obj).getStart().isEarlier(min)) {
+    				min = ((Course)obj).getStart();
+    				minCE = (Course)obj;   				
 				}	
-	    		else {
-	    			Event e = (Event) obj;  		
-	    			
-	    			// if start time is earlier than min
-	    			// set min to start time and minCE to event
-	    			if (e.getStartTime().isEarlier(min)) {
-	    				min = e.getStartTime();
-	    				minCE = e;
-	    			}	    				
+	    		// if start time is earlier than min
+    			// set min to start time and minCE to event
+	    		else if (obj instanceof Event && ((Event)obj).getStartTime().isEarlier(min)) {
+    				min = ((Event)obj).getStartTime();
+    				minCE = ((Event)obj);    				
 	    		}
 	    	}
 	   
