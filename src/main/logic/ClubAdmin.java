@@ -17,7 +17,7 @@ public class ClubAdmin extends User
    private static final Logger logger = Logger.getLogger( ClubAdmin.class.getName() );
 
    public ClubAdmin(String name, String phoneNum, String empl, String email)
-         throws Exception
+         
    {
       super(name, phoneNum, empl, email);
    }
@@ -92,7 +92,7 @@ public class ClubAdmin extends User
       logger.log(Level.INFO, "Enter the description of the club.");
       descr = scan.next();
 
-      return new Club(clubName, super.getEmail(), descr);
+      return new Club(clubName, this.getEmail(), descr);
    }
 
    /**

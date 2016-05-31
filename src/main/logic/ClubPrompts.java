@@ -22,6 +22,8 @@ public class ClubPrompts
     /**System exit command*/
     private static final String systemExit = "Exit";
     
+    private boolean isAdmin;
+    
     /**Scanner for user input*/
     private Scanner userChoice;
     
@@ -40,8 +42,10 @@ public class ClubPrompts
     
     /**
      * Display ClubOptions to user.
+     * @throws InterruptedException 
+     * @throws JSONException 
      */
-    public void displayClubPrompt() throws Exception
+    public void displayClubPrompt() throws JSONException, InterruptedException
     {
         logger.log(Level.INFO, "Welcome to PolyClubs.\nPlease enter one of the"
                 + "following options");
@@ -55,8 +59,9 @@ public class ClubPrompts
     
     /**
      * Retrieve club prompts
+     * @throws InterruptedException 
      */
-    public void retrieveClubPromptInput() throws JSONException, Exception
+    public void retrieveClubPromptInput() throws JSONException, InterruptedException
     {
         String choice;
         
@@ -88,7 +93,7 @@ public class ClubPrompts
         
     }
     
-    private void actOnClubPromptInput(String choice) throws InterruptedException
+    private void actOnClubPromptInput(String choice) throws InterruptedException, JSONException
     {
         if (choice.equals(search))
         {
@@ -109,11 +114,22 @@ public class ClubPrompts
 
     /**
      * Incorrect Option
+     * @throws InterruptedException 
+     * @throws JSONException 
      */
-    private void displayIncorrectOption() throws Exception 
+    private void displayIncorrectOption() throws JSONException, InterruptedException 
     {
         logger.log(Level.INFO, "Invalid Option. Please choose from one of the following");
         displayClubPrompt();
+    }
+    
+    /**
+     * Getter for isAdmin
+     * @return If user is an admin
+     */
+    public boolean getIsAdmin()
+    {
+    	return isAdmin;
     }
     
 }

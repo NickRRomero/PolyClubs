@@ -152,15 +152,16 @@ public class Club
    /**
    * Sets the club's advisor
    * @param advEmail - Cal Poly email address of the club's advisor
+ * @throws JSONException 
    */
-   public void setAdvisor(String advEmail)
+   public void setAdvisor(String advEmail) throws JSONException
    {
       db.setDataBaseDestination(clubDatabase, name, true);
       db.setAdvisorOfClub(advEmail, name);
    }
    
    // Club event functions
-   public void addEvent(Event event)
+   public void addEvent(Event event) throws JSONException
    {
       // Create the JSON object for the event
       JSONObject obj = new JSONObject();
@@ -174,7 +175,7 @@ public class Club
 
       // Add the event to the database
       db.setDataBaseDestination(clubDatabase, name, true);
-      db.addEventToClub(obj, description.split("\\|")[0]); 
+      db.addEventToClub(obj); 
 
       // Add the event to the local ArrayList
       clubEvents.add(event);
@@ -192,7 +193,7 @@ public class Club
       clubEvents.remove(event);
    }
    
-   public void removeEventFromDatabase(String eventName)
+   public void removeEventFromDatabase(String eventName) throws JSONException
    {
       db.removeEventFromClub(eventName);
    }
@@ -207,7 +208,7 @@ public class Club
       db.addStudentToClub(userName);
 
       // Add user to the local ArrayList
-      members.add(user.getName());
+      members.add(userName);
    }
 
    public void removeMember(String userName)
@@ -219,7 +220,7 @@ public class Club
       db.removeStudentFromClub(userName);
 
       // Remove user from the local ArrayList
-      members.remove(user.getName());
+      members.remove(userName);
    }
 
    // Print club information
@@ -262,8 +263,10 @@ public class Club
    /**
     * Method that prompts user for input and prints the requested information
     * @param isAdmin - true if the user is a club administrator
+ * @throws JSONException 
+ * @throws InterruptedException 
     */
-   public void printClubPromptsAndInfo(boolean isAdmin) throws Exception
+   public void printClubPromptsAndInfo(boolean isAdmin) throws JSONException, InterruptedException
    {
       printClubInfo();
       logger.log(Level.INFO, "\n\n");
@@ -291,10 +294,10 @@ public class Club
       }
 
       ClubPrompts backToClubPrompts = new ClubPrompts();
-      backToClubPrompts.displayClubPrompt(isAdmin);        
+      backToClubPrompts.displayClubPrompt();        
    }
    
-   private void processUserChoice(String userChoice) throws Exception 
+   private void processUserChoice(String userChoice) throws JSONException
    {
      Scanner input = new Scanner(System.in).useDelimiter("\n");
      

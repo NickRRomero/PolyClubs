@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.*;
 import org.bson.Document;
-import org.json.simple.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -49,8 +50,9 @@ public class ClubSearch
    
    /**
     * prompt user to search or filter clubs
+ * @throws JSONException 
     */
-   private void displayOpen() {
+   private void displayOpen() throws JSONException {
 	   boolean done = false;
 	   
 	   do {
@@ -81,8 +83,9 @@ public class ClubSearch
    
    /**
     * display search prompt to user
+ * @throws JSONException 
     */
-   private void displaySearch() {
+   private void displaySearch() throws JSONException {
       logger.log(Level.INFO, "\nPlease enter the name of the club you would " +
        "like to search for or 'back' to return to initial prompt:");
       
@@ -99,8 +102,9 @@ public class ClubSearch
    /**
     * Search database for the name of the club input by user
     * @param club 
+ * @throws JSONException 
     */
-   public void searchClub(String club){
+   public void searchClub(String club) throws JSONException{
       /**Database Manager Object used to access mlab.com*/
       db.setDataBaseDestination("ClubDatabase", club, true);
       db.accessDatabase();
@@ -124,8 +128,9 @@ public class ClubSearch
    /**
     * Ask user if they want to view a club page
     * @param club
+ * @throws JSONException 
     */
-   private void viewPage(String club) {
+   private void viewPage(String club) throws JSONException {
       logger.log(Level.INFO, "Would you like to view the " + 
        club + " clubpage? (y/n)");
       
@@ -139,8 +144,9 @@ public class ClubSearch
    
    /**
     * Display filter prompt to user
+ * @throws JSONException 
     */
-   private void displayFilter() {
+   private void displayFilter() throws JSONException {
       logger.log(Level.INFO, "\nPlease enter the type of club you would " +
        "like to filter by or 'back' to return to initial prompt:");
       
@@ -157,8 +163,9 @@ public class ClubSearch
    /**
     * Filter clubs by category
     * @param filter
+ * @throws JSONException 
     */
-   private void filterClub(String filter) {
+   private void filterClub(String filter) throws JSONException {
 	   /**Database Manager Object used to access mlab.com*/
       db.setDataBaseDestination("ClubDatabase", null, false);
       db.accessDatabase();
@@ -191,8 +198,9 @@ public class ClubSearch
    /**
     * display filtered clubs to user
     * @param clubs
+ * @throws JSONException 
     */
-   private void filter(ArrayList<JSONObject> clubs) {
+   private void filter(ArrayList<JSONObject> clubs) throws JSONException {
 	  int index; 
 	  String back = "";
 	  boolean done;

@@ -18,10 +18,11 @@ public class Logout
 
    /**
     * Method to log a user out.
+ * @throws InterruptedException 
     * 
     * @throws Exception
     */
-   public void promptLogout() throws Exception
+   public void promptLogout() throws InterruptedException
    {
       scan = new Scanner(System.in);
       logger.log(Level.INFO, "Type \"logout\" to log out of the app.");
@@ -51,10 +52,11 @@ public class Logout
 
    /**
     * Log out of the app by calling the main method of the app.
+ * @throws InterruptedException 
     * 
     * @throws Exception
     */
-   private void logout() throws Exception
+   private void logout() throws InterruptedException
    {
       PolyClubsConsole.main(null);
    }

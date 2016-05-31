@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.logging.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.json.JSONArray;
@@ -23,8 +24,8 @@ public class User
    private String email;
    private String empl;
    private Schedule schedule;
-   private ArrayList<> clubs;
-   private ArrayList<> messages;
+   private ArrayList<Club> clubs;
+   private ArrayList<String> messages;
    private boolean hasMsg;
    private JSONObject jsonDB;
    private DatabaseManager databaseManager;
@@ -32,7 +33,7 @@ public class User
    private static final Logger logger = Logger.getLogger( User.class.getName() );
 
    public User(String name, String phoneNum, String empl, String email)
-         throws Exception
+         
    {
       this.name = name;
       this.phoneNum = phoneNum;
@@ -54,7 +55,7 @@ public class User
     */
    public void leaveClub(Club club)
    {
-      club.removeMember(this);
+      club.removeMember(name);
       clubs.remove(club);
    }
 
@@ -119,7 +120,7 @@ public class User
     */
    public void getClubEvents(Club club)
    {
-      ArrayList<> events = club.getEvents();
+      List<Event> events = club.getEvents();
 
       for (int iter = 0; iter < events.size(); iter++)
       {
@@ -148,7 +149,7 @@ public class User
    {
       jsonDB = databaseManager.getSingleDatabaseResults();
       JSONArray arr = jsonDB.getJSONArray("courses");
-      List<> courseList = new ArrayList<>();
+      List<String> courseList = new ArrayList<>();
 
       // iterate through JSONArray to get strings for each course
       for (int iter = 0; iter < arr.length(); iter++)
@@ -166,7 +167,7 @@ public class User
     * 
     * @throws JSONException
     */
-   public Schedule createSchedule(List<> courseList)
+   public Schedule createSchedule(List<String> courseList)
    {
       String dayList;
       int startH;

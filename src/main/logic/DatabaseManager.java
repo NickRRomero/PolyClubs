@@ -20,6 +20,7 @@ import java.util.logging.*;
 
 import org.bson.Document;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -73,6 +74,7 @@ public class DatabaseManager
     MongoDatabase db;
     
     private String studentDatabase = "StudentDatabase";
+    private String clubDatabase = "ClubDatabase";
     private String clubs = "clubs";
     private String clubName = "ClubName";
     private String email = "email";
@@ -271,8 +273,9 @@ public class DatabaseManager
     /**
      * Add an event to a Club's page
      * @param jsonobject Format - "Club Name or Description", "Information"
+     * @throws JSONException 
      */
-    public void addEventToClub(JSONObject jsonobject)
+    public void addEventToClub(JSONObject jsonobject) throws JSONException
     {
         initializeDatabaseConnection();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
@@ -286,8 +289,9 @@ public class DatabaseManager
     /**
      * Remove an event from a Club's page
      * @param jsonobject Format - "Club Name or Description", "Information"
+     * @throws JSONException 
      */
-    public void removeEventFromClub(String eventName)
+    public void removeEventFromClub(String eventName) throws JSONException
     {
         initializeDatabaseConnection();
         accessDatabase();
@@ -296,7 +300,7 @@ public class DatabaseManager
         String desc;
         JSONObject event = null;
         JSONObject clubJson = getSingleDatabaseResults();
-        JSONArray events = clubJson.getJSONArray(events);
+        JSONArray events = clubJson.getJSONArray(eventString);
         
         logger.log(Level.INFO, clubJson.toString());
         for (int i = 0; i < events.length(); i++)
@@ -317,7 +321,7 @@ public class DatabaseManager
         
         BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
         
-        BasicDBObject eventToRemove = new BasicDBObject(events, event);
+        BasicDBObject eventToRemove = new BasicDBObject(eventString, event);
         
         collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject(eventString, 
                 new BasicDBObject(description, 
@@ -329,8 +333,9 @@ public class DatabaseManager
      * Set the advisor of a database.
      * @param advisor string name of advisor to add to club
      * @param clubName string the club to add the advisor to
+     * @throws JSONException 
      */
-    public void setAdvisorOfClub(String advisorEmail, String clubName)
+    public void setAdvisorOfClub(String advisorEmail, String clubName) throws JSONException
     {
         JSONObject advisorProfile;
         String advisorPhoneNumber;
@@ -361,8 +366,9 @@ public class DatabaseManager
      * @param clubName string Name Of club to be added to the database
      * @param presidentEmail string President's email to be added to the database
      * @param desc string description of the club
+     * @throws JSONException 
      */
-    public void createNewClub(String clubName, String presidentEmail, String desc)
+    public void createNewClub(String clubName, String presidentEmail, String desc) throws JSONException
     {
         JSONObject userProfile;
         
@@ -398,13 +404,14 @@ public class DatabaseManager
      * Check if a student has admin privileges.
      * @param currentStudentUser name of a student. I.e. Nick Romero
      * @return true if the student was located in the admin database.
+     * @throws JSONException 
      */
-    public boolean checkIfAdmin(String currentStudentUser) throws InterruptedException
+    public boolean checkIfAdmin(String currentStudentUser) throws InterruptedException, JSONException
     {
         this.setDataBaseDestination("ClubAdministrators", "Main", false);
         initializeDatabaseConnection();
         
-        ArrayList<> admins = new ArrayList<>();
+        ArrayList<String> admins = new ArrayList<>();
         this.accessDatabase();
         
         JSONObject aprofile = this.getSingleDatabaseResults();

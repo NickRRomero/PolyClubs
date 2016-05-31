@@ -4,7 +4,6 @@ package main.logic;
 */
 import java.util.Scanner;
 import java.util.logging.*;
-import Logic.Event;
 
 public class EventController {
 
@@ -58,7 +57,7 @@ public class EventController {
 	
 	    s = new Scanner(System.in);
 	    myBoundary.showPrompt();
-	    if (s.next() == 'p') 
+	    if ("p".equals(s.next())) 
 	    {
 	    	printEventInfo();
 	    }
@@ -73,13 +72,6 @@ public class EventController {
 	    logger.log(Level.INFO, "Start time: "  +        myEvent.getStartTime().toString());
 	    logger.log(Level.INFO, "End time: "  +          myEvent.getEndTime().toString());
 	    logger.log(Level.INFO, "Event description: " +  myEvent.getDescrip());
-	    logger.log(Level.INFO, "Members going: ");
-	    for (int i = 0; i < myEvent.getGoing().size(); i++) {
-	       if (i % 5 == 0) {
-	          logger.log("\n");
-	       }
-	       logger.log(Level.INFO, myEvent.getGoing().get(i).getName());
-	    }
 	}
 
 

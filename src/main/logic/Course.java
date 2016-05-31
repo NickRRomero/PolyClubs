@@ -6,7 +6,7 @@ package main.logic;
 import java.util.ArrayList;
 
 public class Course {
-    private ArrayList<> days;
+    private ArrayList<String> days;
     private String name;
     private Time start;
     private Time end;

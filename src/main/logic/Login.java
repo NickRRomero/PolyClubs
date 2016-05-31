@@ -3,6 +3,8 @@ package main.logic;
 import static java.lang.Thread.sleep;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,7 +81,7 @@ public class Login
          JSONException
    {
       scanner = new Scanner(System.in);
-      logger.log(emailPrompt);
+      logger.log(Level.INFO, emailPrompt);
       studentEmail = scanner.next();
       logger.log(Level.INFO, "\n");
 
@@ -126,10 +128,10 @@ public class Login
        */
       for (int i = 0; i < 13; i++)
       {
-         logger.log('.');
+         logger.log(Level.INFO, ".");
          sleep(500L);
       }
-      logger.log(Level.INFO, '\n');
+      logger.log(Level.INFO, "\n");
 
       userProfile = databaseManager.getSingleDatabaseResults();
       /**
