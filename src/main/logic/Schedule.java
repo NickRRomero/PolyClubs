@@ -204,36 +204,21 @@ public class Schedule {
      * @param day abbreviation
      * @return day number
      */
-    public int dayOfWeek (String day) {
-    	int dayNum = -1;
-    	
-    	switch (day) {
-    		case "Su":
-    			dayNum = 0;
-    			break;
-    		case "M":
-    			dayNum = 1;
-    			break;
-    		case "T":
-    			dayNum = 2;
-    			break;
-    		case "W":
-    			dayNum = 3;
-    			break;
-    		case "R":
-    			dayNum = 4;
-    			break;
-    		case "F":
-    			dayNum = 5;
-    			break;
-    		case "Sa":
-    			dayNum = 6;
-    			break;
-    		default:
-    			break;
-    	}
-    	
-    	return dayNum;
+    public int dayOfWeek (String day) {	
+    	if ("Su".equals(day)) 
+    		return 0;
+    	else if ("M".equals(day))
+    		return 1;
+    	else if ("T".equals(day))
+    		return 2;
+    	else if ("W".equals(day))
+    		return 3;
+    	else if ("R".equals(day))
+    		return 4;
+    	else if ("F".equals(day))
+    		return 5;
+    	else
+    		return 6;
     }
     
     /**
@@ -434,7 +419,6 @@ public class Schedule {
     	List<String> names; // names of the courses/events in "events"
     	List<String> times; // times of the courses/events in "events"
     	
-    	int[] daypad = {9, 9, 9, 11, 10, 9, 10}; // padding data for each day
     	String dayOW; // day of week
     	int pad; // number of padded spaces for day of week
     	
@@ -442,8 +426,6 @@ public class Schedule {
     	int count = 0;
     	while (count < 7) {
     		dayOW = days[num];
-    		pad = daypad[num];
-
     		events = getDayEvents(dayOW, week[count]);
     		sorted = sortList(events);
     		names = getNames(sorted);
