@@ -8,7 +8,7 @@ import Logic.Event;
 
 public class EventController {
 
-	private static Event myEvent;
+	private Event myEvent;
 	private static EventController myControl;
 	private static EventBoundary myBoundary;
 	private static final Logger logger = Logger.getLogger( EventController.class.getName() );
