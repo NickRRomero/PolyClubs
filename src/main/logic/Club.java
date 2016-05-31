@@ -6,6 +6,9 @@ package main.logic;
  */
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.json.*;
 
 
@@ -15,8 +18,8 @@ public class Club
    private String descrip;
    private String admin;
    private String advisor; 
-   private ArrayList<> members;
-   private ArrayList<> clubEvents;
+   private ArrayList<String> members;
+   private ArrayList<Event> clubEvents;
    private DatabaseManager db;
    private static final Logger logger = Logger.getLogger( Club.class.getName() );
    private String description = "description";
@@ -25,8 +28,9 @@ public class Club
    /**
     * Initializes a Club object with information from the club's database entry
     * @param nm - name of the club
+ * @throws JSONException 
     */
-   public Club(String nm)
+   public Club(String nm) throws JSONException
    {
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
@@ -75,9 +79,10 @@ public class Club
     * Adds a new club to the club database
     * @param nm - name of the club
     * @param presEmail - Cal Poly email address of the club's president
+ * @throws JSONException 
     * @desc - description of the club
     */
-   public Club(String nm, String presEmail, String desc)
+   public Club(String nm, String presEmail, String desc) throws JSONException
    {
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
@@ -123,12 +128,12 @@ public class Club
       return admin;
    }
 
-   public List<> getMembers()
+   public List<String> getMembers()
    {
       return members;
    }
 
-   public List<> getEvents()
+   public List<Event> getEvents()
    {
       return clubEvents;
    }
@@ -175,7 +180,7 @@ public class Club
       clubEvents.add(event);
    }
 
-   public void removeEvent(Event event)
+   public void removeEvent(Event event) throws JSONException
    {
       // Create the JSON object for the event
       JSONObject obj = new JSONObject();
