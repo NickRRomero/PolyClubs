@@ -88,16 +88,19 @@ public class ClubPrompts
         
     }
     
-    private void actOnClubPromptInput(String choice) throws InterruptedException
+    private void actOnClubPromptInput(String choice) throws InterruptedException, JSONException
     {
+        Scanner s = new Scanner(System.in).useDelimiter("\n");
+        
         if (choice.equals(search))
         {
             clubSearch = ClubSearch.getInstance();
+            clubSearch.searchClub(s.next());
         }
         if (choice.equals(viewClub))
         {
             String clubChoice;
-            Scanner s = new Scanner(System.in).useDelimiter("\n");
+            
             logger.log(Level.INFO, "Please enter a club to search for.");
             clubChoice = s.next();
             Club club = new Club(clubChoice);
