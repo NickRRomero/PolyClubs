@@ -39,11 +39,7 @@ public class Logout
          {
             logout();
          }
-         // if the user types "exit", the app will close
-         else if ("exit".equals(input))
-         {
-            exit();
-         }
+         
          // if the user types neither, error message and return
          else
          {
@@ -64,12 +60,6 @@ public class Logout
       PolyClubsConsole.main(null);
    }
 
-   /**
-    * Exit the app by making an exit call to System.
-    */
-   private void exit()
-   {
-      System.exit(0);
-   }
+   
 
 }
