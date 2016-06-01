@@ -98,6 +98,7 @@ public class Schedule {
   public void hasConflict(Event event) {  	
     	boolean conflict = false;
     	int type = 0; // 1 for course, -1 for event
+    	boolean exit = false;
     	
     	// loop through each event/course in schedule
     	for (Object obj : sched) {
@@ -117,12 +118,15 @@ public class Schedule {
     		
     		if (conflict && type > 0) {
     			logger.log(Level.INFO, "CONFLICT with " + ((Course)obj).getName());
-    			break;
+    			exit = true;
     		}
     		else if (conflict && type < 0) {
     			logger.log(Level.INFO, "CONFLICT with " + getEventName((Event)obj));
-    			break;
+    			exit = true;
     		}
+    		
+    		if (exit)
+    			break;
     	}
     	
     	if (!conflict)
