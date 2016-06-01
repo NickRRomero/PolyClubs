@@ -204,21 +204,25 @@ public class Schedule {
      * @param day abbreviation
      * @return day number
      */
-    public int dayOfWeek (String day) {	
+    public int dayOfWeek (String day) {
+    	int dayNum = -1;
+    	
     	if ("Su".equals(day)) 
-    		return 0;
+    		dayNum = 0;
     	else if ("M".equals(day))
-    		return 1;
+    		dayNum = 1;
     	else if ("T".equals(day))
-    		return 2;
+    		dayNum = 2;
     	else if ("W".equals(day))
-    		return 3;
+    		dayNum = 3;
     	else if ("R".equals(day))
-    		return 4;
+    		dayNum = 4;
     	else if ("F".equals(day))
-    		return 5;
+    		dayNum = 5;
     	else
-    		return 6;
+    		dayNum = 6;
+    	
+    	return dayNum;
     }
     
     /**
