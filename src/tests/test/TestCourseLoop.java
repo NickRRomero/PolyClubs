@@ -1,7 +1,7 @@
 /*
  * Author: Kevin Costello
  */
-package Test;
+package tests.test;
 
 import static org.junit.Assert.*;
 
