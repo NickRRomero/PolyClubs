@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import Logic.User;
+import main.logic.*;
 
 public class TestUser
 {

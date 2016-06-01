@@ -1,6 +1,9 @@
 package tests.test;
 
 import junit.framework.TestCase;
+import main.logic.DatabaseManager;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -19,7 +22,7 @@ public class TestDatabaseManager extends TestCase
 
     
     @Test
-    public void testSetAdvisorOfClub()
+    public void testSetAdvisorOfClub() throws JSONException
     {
         DatabaseManager db = DatabaseManager.getInstance();        
         db.setAdvisorOfClub("mboyken@calpoly.edu", "Cats cats and more cats");

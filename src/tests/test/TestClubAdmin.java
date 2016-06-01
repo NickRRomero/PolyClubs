@@ -8,16 +8,13 @@ package tests.test;
 import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import Logic.Club;
-import Logic.ClubAdmin;
-import Logic.Date;
-import Logic.Event;
-import Logic.Time;
+import main.logic.*;
 
 public class TestClubAdmin
 {
@@ -54,7 +51,7 @@ public class TestClubAdmin
    public void testRemoveEvent() throws JSONException
    {
       Club club = Mockito.mock(Club.class);
-      ArrayList<Event> eventList;
+      List<Event> eventList;
 
       club.addEvent(event1);
       eventList = club.getEvents();
