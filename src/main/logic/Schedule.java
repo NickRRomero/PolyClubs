@@ -97,36 +97,28 @@ public class Schedule {
      */
   public void hasConflict(Event event) {  	
     	boolean conflict = false;
-    	int type = 0; // 1 for course, -1 for event
-    	boolean exit = false;
+    	String con = null;
     	
     	// loop through each event/course in schedule
     	for (Object obj : sched) {
     		
     		// if obj is course, determine if event and course are on same day
     		if (obj instanceof Course && ((Course)obj).conflicts(event.getDay())) {
-    			type = 1;
     			conflict = timeCheck(((Course)obj).getStart(), ((Course)obj).getEnd(), 
     		    		event.getStartTime(), event.getEndTime());
+    			con = ((Course)obj).getName();
     		}
     		// if obj is event, determine if events are on same date
     		else if (obj instanceof Event && event.getDate().equals(((Event)obj).getDate())) {
-    			type = -1;
 				conflict = timeCheck(((Event)obj).getStartTime(), ((Event)obj).getEndTime(), 
 	    			event.getStartTime(), event.getEndTime());
+				con = getEventName((Event)obj);
     		}
     		
-    		if (conflict && type > 0) {
-    			logger.log(Level.INFO, "CONFLICT with " + ((Course)obj).getName());
-    			exit = true;
-    		}
-    		else if (conflict && type < 0) {
-    			logger.log(Level.INFO, "CONFLICT with " + getEventName((Event)obj));
-    			exit = true;
-    		}
-    		
-    		if (exit)
+    		if (conflict) {
+    			logger.log(Level.INFO, "CONFLICT with " + con);
     			break;
+    		}
     	}
     	
     	if (!conflict)
