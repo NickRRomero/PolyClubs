@@ -249,4 +249,13 @@ public class User
    {
       return hasMsg;
    }
+   
+   /**
+    * Getter for schedule.
+    * @return The user's schedule.
+    */
+   public Schedule getSchedule()
+   {
+	   return schedule;
+   }
 }
