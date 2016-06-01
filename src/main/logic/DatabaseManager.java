@@ -296,11 +296,11 @@ public class DatabaseManager
         accessDatabase();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         String desc;
-        JSONObject event = null;
+        JSONObject event;
         JSONObject clubJson = getSingleDatabaseResults();
         JSONArray events = clubJson.getJSONArray(eventString);
         String eventTime = "";
-        String eventDesciption = "";
+        String eventDescription = "";
         
         logger.log(Level.INFO, clubJson.toString());
         for (int i = 0; i < events.length(); i++)
