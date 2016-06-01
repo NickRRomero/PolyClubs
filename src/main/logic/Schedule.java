@@ -205,7 +205,7 @@ public class Schedule {
      * @return day number
      */
     public int dayOfWeek (String day) {
-    	int dayNum = -1;
+    	int dayNum;
     	
     	if ("Su".equals(day)) 
     		dayNum = 0;
@@ -424,7 +424,6 @@ public class Schedule {
     	List<String> times; // times of the courses/events in "events"
     	
     	String dayOW; // day of week
-    	int pad; // number of padded spaces for day of week
     	
     	// print out calendar
     	int count = 0;
