@@ -95,46 +95,38 @@ public class Schedule {
      * @param event
      * @return if event conflicts with a scheduled course/event
      */
-    public boolean hasConflict(Event event) {
-    	// course and event to be set in loop
-    	Course c;
-    	Event e;
-    	
+  public void hasConflict(Event event) {  	
     	boolean conflict = false;
+    	int type = 0; // 1 for course, -1 for event
     	
     	// loop through each event/course in schedule
     	for (Object obj : sched) {
     		
     		// if obj is course, determine if event and course are on same day
-    		if (obj instanceof Course) {
-    			c = (Course) obj;
-    			
-    			// determine if event conflicts with course
-    			if (c.conflicts(event.getDay())) {
-    				conflict = timeCheck(c.getStart(), c.getEnd(), 
+    		if (obj instanceof Course && ((Course)obj).conflicts(event.getDay())) {
+    			type = 1;
+    			conflict = timeCheck(((Course)obj).getStart(), ((Course)obj).getEnd(), 
     		    		event.getStartTime(), event.getEndTime());
-    					
-    				logger.log(Level.INFO, c.getName());
-    			}
     		}
     		// if obj is event, determine if events are on same date
-    		else {
-    			e = (Event) obj;
-    			
-    			// if on same date, check if times are in conflict
-	    		if (event.getDate().equals(e.getDate())) {
-					conflict = timeCheck(e.getStartTime(), e.getEndTime(), 
-		    			event.getStartTime(), event.getEndTime());
-					
-					logger.log(Level.INFO, e.getDescrip());
-	    		}
+    		else if (obj instanceof Event && event.getDate().equals(((Event)obj).getDate())) {
+    			type = -1;
+				conflict = timeCheck(((Event)obj).getStartTime(), ((Event)obj).getEndTime(), 
+	    			event.getStartTime(), event.getEndTime());
     		}
     		
-    		if (conflict)
-				return true;
+    		if (conflict && type > 0) {
+    			logger.log(Level.INFO, "CONFLICT with " + ((Course)obj).getName());
+    			break;
+    		}
+    		else if (conflict && type < 0) {
+    			logger.log(Level.INFO, "CONFLICT with " + getEventName((Event)obj));
+    			break;
+    		}
     	}
     	
-    	return false;
+    	if (!conflict)
+    		logger.log(Level.INFO, "No Conflicts");
     }
     
     /**
