@@ -51,8 +51,9 @@ public class ClubSearch
    /**
     * prompt user to search or filter clubs
  * @throws JSONException 
+ * @throws InterruptedException 
     */
-   private void displayOpen() throws JSONException {
+   public void displayOpen() throws JSONException, InterruptedException {
 	   boolean done = false;
 	   
 	   do {
@@ -84,8 +85,9 @@ public class ClubSearch
    /**
     * display search prompt to user
  * @throws JSONException 
+ * @throws InterruptedException 
     */
-   private void displaySearch() throws JSONException {
+   private void displaySearch() throws JSONException, InterruptedException {
       logger.log(Level.INFO, "\nPlease enter the name of the club you would " +
        "like to search for or 'back' to return to initial prompt:");
       
@@ -103,10 +105,11 @@ public class ClubSearch
     * Search database for the name of the club input by user
     * @param club 
  * @throws JSONException 
+ * @throws InterruptedException 
     */
-   public void searchClub(String club) throws JSONException{
+   public void searchClub(String club) throws JSONException, InterruptedException{
       /**Database Manager Object used to access mlab.com*/
-      db.setDataBaseDestination("ClubDatabase", club, true);
+      db.setDataBaseDestination("ClubDatabase", club, false);
       db.accessDatabase();
 
       // club returned by search or null if no club found
@@ -129,15 +132,19 @@ public class ClubSearch
     * Ask user if they want to view a club page
     * @param club
  * @throws JSONException 
+ * @throws InterruptedException 
     */
-   private void viewPage(String club) throws JSONException {
+   private void viewPage(String club) throws JSONException, InterruptedException {
       logger.log(Level.INFO, "Would you like to view the " + 
        club + " clubpage? (y/n)");
       
       // if yes, go to club page
       // else return to display prompt
-      if("y".equalsIgnoreCase(in.nextLine())) 
-         ;// club page
+      if("y".equalsIgnoreCase(in.nextLine())) {
+    	  Club clubToView = new Club(club);
+    	  clubToView.printClubPromptsAndInfo(PolyClubsConsole.user instanceof ClubAdmin);
+      }
+         
       else 
          displaySearch(); 
    }
@@ -145,8 +152,9 @@ public class ClubSearch
    /**
     * Display filter prompt to user
  * @throws JSONException 
+ * @throws InterruptedException 
     */
-   private void displayFilter() throws JSONException {
+   private void displayFilter() throws JSONException, InterruptedException {
       logger.log(Level.INFO, "\nPlease enter the type of club you would " +
        "like to filter by or 'back' to return to initial prompt:");
       
@@ -164,8 +172,9 @@ public class ClubSearch
     * Filter clubs by category
     * @param filter
  * @throws JSONException 
+ * @throws InterruptedException 
     */
-   private void filterClub(String filter) throws JSONException {
+   private void filterClub(String filter) throws JSONException, InterruptedException {
 	   /**Database Manager Object used to access mlab.com*/
       db.setDataBaseDestination("ClubDatabase", null, false);
       db.accessDatabase();
@@ -199,8 +208,9 @@ public class ClubSearch
     * display filtered clubs to user
     * @param clubs
  * @throws JSONException 
+ * @throws InterruptedException 
     */
-   private void filter(ArrayList<JSONObject> clubs) throws JSONException {
+   private void filter(ArrayList<JSONObject> clubs) throws JSONException, InterruptedException {
 	  int index; 
 	  String back = "";
 	  boolean done;

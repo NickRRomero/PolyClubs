@@ -34,12 +34,12 @@ public class Club
    {
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
-      db.setDataBaseDestination(clubDatabase, nm, true);
+      db.setDataBaseDestination(clubDatabase, nm, false);
       db.accessDatabase();
       
       // Get the club's database entry
       JSONObject clubJson = db.getSingleDatabaseResults();
-      
+      System.out.println(clubJson.toString());
       // Initialize the instance variables
       name = nm;
       descrip = clubJson.getString(description);
@@ -92,7 +92,7 @@ public class Club
       db.createNewClub(nm, presEmail, desc);
             
       // Get the club's database entry
-      db.setDataBaseDestination(clubDatabase, nm, true);
+      db.setDataBaseDestination(clubDatabase, nm, false);
       db.accessDatabase();
       JSONObject clubJson = db.getSingleDatabaseResults();
 
