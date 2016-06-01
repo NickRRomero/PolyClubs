@@ -290,7 +290,7 @@ public class DatabaseManager
      * @param jsonobject Format - "Club Name or Description", "Information"
      * @throws JSONException 
      */
-    public void removeEventFromClub(String eventName) throws JSONException, NullPointerException
+    public void removeEventFromClub(String eventName) throws JSONException
     {
         initializeDatabaseConnection();
         accessDatabase();
@@ -300,6 +300,7 @@ public class DatabaseManager
         JSONObject clubJson = getSingleDatabaseResults();
         JSONArray events = clubJson.getJSONArray(eventString);
         String eventTime = "";
+        String eventDesciption = "";
         
         logger.log(Level.INFO, clubJson.toString());
         for (int i = 0; i < events.length(); i++)
@@ -316,13 +317,14 @@ public class DatabaseManager
                 break;
             }
             eventTime = event.getString(time);
+            eventDescription = event.getString(description);
         }
         
         BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
         
         collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject(eventString, 
                 new BasicDBObject(description, 
-                        event.getString(description)).append(time, 
+                        eventDescription).append(time, 
                                 eventTime))));
     }
     
