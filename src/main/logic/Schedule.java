@@ -95,12 +95,13 @@ public class Schedule {
      * @param event
      * @return if event conflicts with a scheduled course/event
      */
-    public boolean hasConflict(Event event) {
+   public boolean hasConflict(Event event) {
     	// course and event to be set in loop
     	Course c;
     	Event e;
     	
     	boolean conflict = false;
+    	int type = 0; // 1 for course, -1 for event
     	
     	// loop through each event/course in schedule
     	for (Object obj : sched) {
@@ -108,30 +109,32 @@ public class Schedule {
     		// if obj is course, determine if event and course are on same day
     		if (obj instanceof Course) {
     			c = (Course) obj;
+    			type = 1;
     			
     			// determine if event conflicts with course
-    			if (c.conflicts(event.getDay())) {
+    			if (c.conflicts(event.getDay())) 
     				conflict = timeCheck(c.getStart(), c.getEnd(), 
     		    		event.getStartTime(), event.getEndTime());
-    					
-    				logger.log(Level.INFO, c.getName());
-    			}
     		}
     		// if obj is event, determine if events are on same date
     		else {
     			e = (Event) obj;
+    			type = -1;
     			
     			// if on same date, check if times are in conflict
-	    		if (event.getDate().equals(e.getDate())) {
+	    		if (event.getDate().equals(e.getDate())) 
 					conflict = timeCheck(e.getStartTime(), e.getEndTime(), 
 		    			event.getStartTime(), event.getEndTime());
-					
-					logger.log(Level.INFO, e.getDescrip());
-	    		}
     		}
     		
-    		if (conflict)
-				return true;
+    		if (conflict && type > 0) {
+    			logger.log(Level.INFO, "CONFLICT with " + ((Course)obj).getName());
+			return true;
+    		}
+    		else if (conflict && type < 0) {
+    			logger.log(Level.INFO, "CONFLICT with " + getEventName((Event)obj));
+			return true;
+    		}
     	}
     	
     	return false;
