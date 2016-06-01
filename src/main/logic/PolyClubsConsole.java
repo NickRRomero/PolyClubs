@@ -24,7 +24,7 @@ public class PolyClubsConsole
     public static void main(String[] args) throws InterruptedException, JSONException
     {
        
-        System.err.close();
+        //System.err.close();
         Login login = new Login();
         ClubPrompts clubPrompts = new ClubPrompts();
         login.displayWelcomeScreen();
