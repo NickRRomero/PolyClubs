@@ -103,13 +103,13 @@ public class Club
 
       // Initalize the ArrayList of club members
       JSONArray mems = clubJson.getJSONArray("members");
-      members = new ArrayList<String>();   
+      members = new ArrayList<>();   
       for (int i = 0; i < mems.length(); i++)
       {
          members.add(mems.getString(i));
       }
 
-      clubEvents = new ArrayList<Event>();
+      clubEvents = new ArrayList<>();
    }
 
    // Club getters

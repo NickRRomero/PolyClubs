@@ -290,15 +290,17 @@ public class DatabaseManager
      * @param jsonobject Format - "Club Name or Description", "Information"
      * @throws JSONException 
      */
-    public void removeEventFromClub(String eventName) throws JSONException, NullPointerException
+    public void removeEventFromClub(String eventName) throws JSONException
     {
         initializeDatabaseConnection();
         accessDatabase();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         String desc;
-        JSONObject event = null;
+        JSONObject event;
         JSONObject clubJson = getSingleDatabaseResults();
         JSONArray events = clubJson.getJSONArray(eventString);
+        String eventTime = "";
+        String eventDescription = "";
         
         logger.log(Level.INFO, clubJson.toString());
         for (int i = 0; i < events.length(); i++)
@@ -314,15 +316,16 @@ public class DatabaseManager
                
                 break;
             }
-            
+            eventTime = event.getString(time);
+            eventDescription = event.getString(description);
         }
         
         BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
         
         collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject(eventString, 
                 new BasicDBObject(description, 
-                        event.getString(description)).append(time, 
-                                event.getString(time)))));
+                        eventDescription).append(time, 
+                                eventTime))));
     }
     
     /**
@@ -352,7 +355,7 @@ public class DatabaseManager
         
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         BasicDBObject newAdvisor = new BasicDBObject("name", advisorName).append("phoneNumber", advisorPhoneNumber)
-                .append(email, advisorEmail);
+                .append(email, newAdvisorEmail);
         
         collection.updateOne(eq(clubName, clubName), new Document("$set", new Document("Advisor", newAdvisor)));    
     }
