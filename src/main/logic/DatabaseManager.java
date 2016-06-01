@@ -299,6 +299,7 @@ public class DatabaseManager
         JSONObject event = null;
         JSONObject clubJson = getSingleDatabaseResults();
         JSONArray events = clubJson.getJSONArray(eventString);
+        String eventTime = "";
         
         logger.log(Level.INFO, clubJson.toString());
         for (int i = 0; i < events.length(); i++)
@@ -314,7 +315,7 @@ public class DatabaseManager
                
                 break;
             }
-            
+            eventTime = event.getString(time);
         }
         
         BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
@@ -322,7 +323,7 @@ public class DatabaseManager
         collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject(eventString, 
                 new BasicDBObject(description, 
                         event.getString(description)).append(time, 
-                                event.getString(time)))));
+                                eventTime))));
     }
     
     /**
@@ -352,7 +353,7 @@ public class DatabaseManager
         
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
         BasicDBObject newAdvisor = new BasicDBObject("name", advisorName).append("phoneNumber", advisorPhoneNumber)
-                .append(email, advisorEmail);
+                .append(email, newAdvisorEmail);
         
         collection.updateOne(eq(clubName, clubName), new Document("$set", new Document("Advisor", newAdvisor)));    
     }
