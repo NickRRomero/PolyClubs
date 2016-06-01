@@ -23,7 +23,6 @@ public class Logout
  * @throws InterruptedException 
  * @throws JSONException 
     * 
-    * @throws Exception
     */
    public void promptLogout() throws InterruptedException, JSONException
    {
