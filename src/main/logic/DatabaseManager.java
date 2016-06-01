@@ -15,7 +15,6 @@ import static com.mongodb.client.model.Updates.set;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
 import java.util.logging.*;
 
 import org.bson.Document;
@@ -141,7 +140,7 @@ public class DatabaseManager
         else if ("ClubDatabase".equals(databaseName)) 
         {
             
-            collectionToRetrieve = "clubs";
+            collectionToRetrieve = clubs;
             whichDocumentByName = whichObject;
             databaseURIToAccess = uriClubs;
         }
@@ -179,7 +178,7 @@ public class DatabaseManager
             /**
              * Determine which access mode to use.
              */
-            if ("clubs".equals(collectionToRetrieve))
+            if (clubs.equals(collectionToRetrieve))
             {
                 key = clubName;
             }
@@ -291,12 +290,11 @@ public class DatabaseManager
      * @param jsonobject Format - "Club Name or Description", "Information"
      * @throws JSONException 
      */
-    public void removeEventFromClub(String eventName) throws JSONException
+    public void removeEventFromClub(String eventName) throws JSONException, NullPointerException
     {
         initializeDatabaseConnection();
         accessDatabase();
         MongoCollection<Document> collection = db.getCollection(collectionToRetrieve);
-        BasicDBObject newEvent = new BasicDBObject(clubName, whichDocumentByName);
         String desc;
         JSONObject event = null;
         JSONObject clubJson = getSingleDatabaseResults();
@@ -321,8 +319,6 @@ public class DatabaseManager
         
         BasicDBObject club = new BasicDBObject(clubName, whichDocumentByName);
         
-        BasicDBObject eventToRemove = new BasicDBObject(eventString, event);
-        
         collection.updateOne(club, new BasicDBObject("$pull", new BasicDBObject(eventString, 
                 new BasicDBObject(description, 
                         event.getString(description)).append(time, 
@@ -340,6 +336,7 @@ public class DatabaseManager
         JSONObject advisorProfile;
         String advisorPhoneNumber;
         String advisorName;
+        String newAdvisorEmail;
         
         setDataBaseDestination("StudentDatabase", advisorEmail ,true);
         initializeDatabaseConnection();
@@ -348,7 +345,7 @@ public class DatabaseManager
         advisorProfile = getSingleDatabaseResults();
         advisorName = advisorProfile.getString("name");
         advisorPhoneNumber = advisorProfile.getString(phoneNumber);
-        advisorEmail = advisorProfile.getString(email);
+        newAdvisorEmail = advisorProfile.getString(email);
         
         setDataBaseDestination(clubDatabase, clubName, false);
         initializeDatabaseConnection();

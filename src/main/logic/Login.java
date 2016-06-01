@@ -22,17 +22,17 @@ public class Login
    protected String studentEmail = "";
 
    /** Student's password */
-   private String studentPassword = "";
+   private String studentKey = "";
 
    /** Console Prompt for the Student Email */
-   private static final String emailPrompt = "Enter your CalPoly Email "
+   private static final String EMAILPROMPT = "Enter your CalPoly Email "
          + "Address: example@calpoly.edu\n";
 
    /** Console Prompt for the Student password */
-   private static final String passwordPrompt = "Enter your CalPoly Password:\n";
+   private static final String KEYPROMPT = "Enter your CalPoly Password:\n";
 
    /** Error message for logging in */
-   private static final String errorLogin = "Incorrect email or password.\n";
+   private static final String ERRORLOGIN = "Incorrect email or password.\n";
 
    private boolean successfullLogin = false;
 
@@ -81,7 +81,7 @@ public class Login
          JSONException
    {
       scanner = new Scanner(System.in);
-      logger.log(Level.INFO, emailPrompt);
+      logger.log(Level.INFO, EMAILPROMPT);
       studentEmail = scanner.next();
       logger.log(Level.INFO, "\n");
 
@@ -90,12 +90,13 @@ public class Login
        */
       if ("EXIT".equals(studentEmail))
       {
-         System.exit(0);
+         Logout logout = new Logout();
+         logout.promptLogout();
       }
 
-      logger.log(Level.INFO, passwordPrompt);
-      studentPassword = scanner.next();
-      confirmStudentInformation(studentEmail, studentPassword);
+      logger.log(Level.INFO, KEYPROMPT);
+      studentKey= scanner.next();
+      confirmStudentInformation(studentEmail, studentKey);
    }
 
    /**
@@ -154,7 +155,7 @@ public class Login
       {
          repromptStudentLogin();
       }
-      studentPassword = "";
+      studentKey = "";
       successfullLogin = true;
    }
 
@@ -166,7 +167,7 @@ public class Login
    private void repromptStudentLogin() throws InterruptedException,
          JSONException
    {
-      logger.log(Level.INFO, errorLogin);
+      logger.log(Level.INFO, ERRORLOGIN);
       displayLoginRequests();
    }
 
