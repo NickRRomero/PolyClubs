@@ -100,7 +100,7 @@ public class ClubPrompts
         if (choice.equals(search))
         {
             clubSearch = ClubSearch.getInstance();
-            clubSearch.searchClub(s.next());
+            clubSearch.displayOpen();
         }
         if (choice.equals(viewClub))
         {
