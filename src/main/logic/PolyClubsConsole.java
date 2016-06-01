@@ -1,5 +1,6 @@
 package main.logic;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -18,8 +19,9 @@ public class PolyClubsConsole
     
     /**
      * @param args the command line arguments
+     * @throws JSONException 
      */
-    public static void main(String[] args) throws InterruptedException
+    public static void main(String[] args) throws InterruptedException, JSONException
     {
        
         
@@ -28,7 +30,8 @@ public class PolyClubsConsole
         login.displayWelcomeScreen();
         JSONObject objec = login.getStudentProfile();
         user = login.setupUser(objec);
-        clubPrompts.displayClubPrompt(user instanceof ClubAdmin);
+        clubPrompts.setAdmin(user instanceof ClubAdmin);
+        clubPrompts.displayClubPrompt();
         
         
     }

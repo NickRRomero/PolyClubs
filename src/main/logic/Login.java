@@ -175,7 +175,7 @@ public class Login
       return userProfile;
    }
 
-   public User setupUser(JSONObject userProfile) throws Exception
+   public User setupUser(JSONObject userProfile) throws JSONException, InterruptedException
    {
       String name;
       String phoneNum;

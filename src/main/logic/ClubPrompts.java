@@ -135,4 +135,9 @@ public class ClubPrompts
     	return isAdmin;
     }
     
+    public void setAdmin(boolean admin)
+    {
+    	isAdmin = admin;
+    }
+    
 }

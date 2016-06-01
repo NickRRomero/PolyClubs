@@ -10,6 +10,8 @@ package main.logic;
 import java.util.Scanner;
 import java.util.logging.*;
 
+import org.json.JSONException;
+
 public class Logout
 {
    private Scanner scan;
@@ -19,10 +21,11 @@ public class Logout
    /**
     * Method to log a user out.
  * @throws InterruptedException 
+ * @throws JSONException 
     * 
     * @throws Exception
     */
-   public void promptLogout() throws InterruptedException
+   public void promptLogout() throws InterruptedException, JSONException
    {
       scan = new Scanner(System.in);
       logger.log(Level.INFO, "Type \"logout\" to log out of the app.");
@@ -53,10 +56,11 @@ public class Logout
    /**
     * Log out of the app by calling the main method of the app.
  * @throws InterruptedException 
+ * @throws JSONException 
     * 
     * @throws Exception
     */
-   private void logout() throws InterruptedException
+   private void logout() throws InterruptedException, JSONException
    {
       PolyClubsConsole.main(null);
    }
