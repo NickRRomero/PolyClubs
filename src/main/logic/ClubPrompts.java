@@ -19,6 +19,9 @@ public class ClubPrompts
     /**System view club command*/
     private String viewClub = "View Club";
     
+    /**System view schedule command*/
+    private String viewSchedule = "View Schedule";
+    
     /**System exit command*/
     private String systemExit = "Exit";
     
@@ -29,6 +32,8 @@ public class ClubPrompts
     
     /**ClubSearch Instance*/
     private ClubSearch clubSearch;
+    
+    private User user;
     
     /**
      * Constructor for ClubPrompts
@@ -51,6 +56,7 @@ public class ClubPrompts
                 + "following options");
         logger.log(Level.INFO, "To Search For Clubs: Enter \"Club Search\"");
         logger.log(Level.INFO, "To Load a Club's Page: Enter \"View Club\"");
+        logger.log(Level.INFO, "To View Your Schedule: Enter \"View Schedule\"");
         
         logger.log(Level.INFO, "To Exit the application: Enter \"Exit\"");
         
@@ -82,7 +88,7 @@ public class ClubPrompts
          * Determine if an invalid option was entered as a prompt.
          */
         if (!choice.equals(search) && !choice.equals(viewClub) && 
-                !choice.equals(systemExit))
+                !choice.equals(systemExit) && !choice.equals(viewSchedule))
         {
             displayIncorrectOption();
         }
@@ -97,11 +103,13 @@ public class ClubPrompts
     {
         Scanner s = new Scanner(System.in).useDelimiter("\n");
         
+        //if user chooses to search
         if (choice.equals(search))
         {
             clubSearch = ClubSearch.getInstance();
             clubSearch.displayOpen();
         }
+        //if user chooses to view a club
         if (choice.equals(viewClub))
         {
             String clubChoice;
@@ -110,6 +118,11 @@ public class ClubPrompts
             clubChoice = s.next();
             Club club = new Club(clubChoice);
             club.printClubPromptsAndInfo(isAdmin);
+        }
+        //if user chooses to view their schedule
+        if (choice.equals(viewSchedule))
+        {
+        	user.getSchedule().displayWeek();
         }
         
         
@@ -138,6 +151,11 @@ public class ClubPrompts
     public void setAdmin(boolean admin)
     {
     	isAdmin = admin;
+    }
+    
+    public void setUser(User user)
+    {
+    	this.user = user;
     }
     
 }

@@ -25,10 +25,11 @@ public class PolyClubsConsole
     {
        
         Login login = new Login();
-        ClubPrompts clubPrompts = new ClubPrompts();
         login.displayWelcomeScreen();
+        ClubPrompts clubPrompts = new ClubPrompts();
         JSONObject objec = login.getStudentProfile();
         user = login.setupUser(objec);
+        clubPrompts.setUser(user);
         clubPrompts.setAdmin(user instanceof ClubAdmin);
         clubPrompts.displayClubPrompt();
         
