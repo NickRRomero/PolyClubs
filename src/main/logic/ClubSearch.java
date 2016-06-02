@@ -19,6 +19,8 @@ public class ClubSearch
    
    private final Scanner in;
    private String openPrompt;
+   private String cDatabase;
+   private String cName;
    private DatabaseManager db;
    private static ClubSearch clubSearch;
    private static final Logger logger = Logger.getLogger( ClubSearch.class.getName() );
@@ -33,6 +35,8 @@ public class ClubSearch
       
       openPrompt = "Would you like to search for a club, " +
   	    "filter by type of club, list clubs, or exit? (s/f/l/e)";
+      cDatabase = "ClubDatabase";
+      cName = "ClubName";
    }
    
    /**
@@ -115,7 +119,7 @@ public class ClubSearch
     */
    public void searchClub(String club) throws JSONException, InterruptedException{
       /**Database Manager Object used to access mlab.com*/
-      db.setDataBaseDestination("ClubDatabase", club, false);
+      db.setDataBaseDestination(cDatabase, club, false);
       db.accessDatabase();
 
       // club returned by search or null if no club found
@@ -124,7 +128,7 @@ public class ClubSearch
       // if club is in database, ask user if they would like to view club
       // else display message and return to search prompt
       if(clubName != null) {
-         String name = clubName.get("ClubName").toString();
+         String name = clubName.get(cName).toString();
          viewPage(name);
       }
       else {
@@ -182,7 +186,7 @@ public class ClubSearch
     */
    private void filterClub(String filter) throws JSONException, InterruptedException {
 	   /**Database Manager Object used to access mlab.com*/
-      db.setDataBaseDestination("ClubDatabase", null, true);
+      db.setDataBaseDestination(cDatabase, null, true);
       db.accessDatabase();
 
       MongoCollection<Document> col = db.getEntireDatabaseResults();
@@ -225,7 +229,7 @@ public class ClubSearch
 	  do {
 	      for (JSONObject c : clubs) {
 	    	  index = clubs.indexOf(c) + 1;
-	    	  logger.log(Level.INFO, index + ". " + c.get("ClubName").toString());
+	    	  logger.log(Level.INFO, index + ". " + c.get(cName).toString());
 	      }
 	
 	      index = -1;
@@ -262,7 +266,7 @@ public class ClubSearch
     */
    private void list() throws JSONException, InterruptedException {
 	   /**Database Manager Object used to access mlab.com*/
-      db.setDataBaseDestination("ClubDatabase", null, true);
+      db.setDataBaseDestination(cDatabase, null, true);
       db.accessDatabase();
       MongoCollection<Document> col = db.getEntireDatabaseResults();
       
@@ -276,7 +280,7 @@ public class ClubSearch
       // add names to list
       for (Document doc : iter) {
          JSONObject profile = new JSONObject(doc);
-         clubs.add(profile.get("ClubName").toString());
+         clubs.add(profile.get(cName).toString());
       }
             
       Collections.sort(clubs);
@@ -285,5 +289,10 @@ public class ClubSearch
     	  logger.log(Level.INFO, name);
       
       displayOpen();
+   }
+   
+   public static void main(String[] args) throws JSONException, InterruptedException {
+   		ClubSearch cs = ClubSearch.getInstance();
+   		cs.displayOpen();
    }
 }
