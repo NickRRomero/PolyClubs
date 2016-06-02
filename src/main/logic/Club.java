@@ -39,7 +39,7 @@ public class Club
       
       // Get the club's database entry
       JSONObject clubJson = db.getSingleDatabaseResults();
-      System.out.println(clubJson.toString());
+      logger.log(Level.INFO, clubJson.toString() + '\n');
       // Initialize the instance variables
       name = nm;
       descrip = clubJson.getString(description);
