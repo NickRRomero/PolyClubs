@@ -3,6 +3,7 @@ package main.logic;
 import com.mongodb.client.MongoCollection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.*;
 import org.bson.Document;
@@ -31,7 +32,7 @@ public class ClubSearch
       db = DatabaseManager.getInstance();
       
       openPrompt = "Would you like to search for a club, " +
-  	    "filter by type of club, or exit? (s/f/e)";
+  	    "filter by type of club, list clubs, or exit? (s/f/l/e)";
    }
    
    /**
@@ -69,6 +70,11 @@ public class ClubSearch
 		   else if ("f".equalsIgnoreCase(choice)) {
 			   done = true;
 			   displayFilter();
+		   }
+		   // list
+		   else if ("l".equalsIgnoreCase(choice)) {
+			   done = true;
+			   list();
 		   }
 		   // exit
 		   else if ("e".equalsIgnoreCase(choice)) {
@@ -171,12 +177,12 @@ public class ClubSearch
    /**
     * Filter clubs by category
     * @param filter
- * @throws JSONException 
- * @throws InterruptedException 
+    * @throws JSONException 
+    * @throws InterruptedException 
     */
    private void filterClub(String filter) throws JSONException, InterruptedException {
 	   /**Database Manager Object used to access mlab.com*/
-      db.setDataBaseDestination("ClubDatabase", null, false);
+      db.setDataBaseDestination("ClubDatabase", null, true);
       db.accessDatabase();
 
       MongoCollection<Document> col = db.getEntireDatabaseResults();
@@ -207,8 +213,8 @@ public class ClubSearch
    /**
     * display filtered clubs to user
     * @param clubs
- * @throws JSONException 
- * @throws InterruptedException 
+    * @throws JSONException 
+    * @throws InterruptedException 
     */
    private void filter(ArrayList<JSONObject> clubs) throws JSONException, InterruptedException {
 	  int index; 
@@ -246,5 +252,38 @@ public class ClubSearch
 	    	  logger.log(Level.INFO, "Invalid option.\n");
 	      }
       } while (!done);
+   }
+   
+   /**
+    * List clubs in alphabetical order
+    * @param filter
+    * @throws JSONException 
+    * @throws InterruptedException 
+    */
+   private void list() throws JSONException, InterruptedException {
+	   /**Database Manager Object used to access mlab.com*/
+      db.setDataBaseDestination("ClubDatabase", null, true);
+      db.accessDatabase();
+      MongoCollection<Document> col = db.getEntireDatabaseResults();
+      
+      // iterator to go through clubs in database
+      Iterable<Document> iter;
+      iter = col.find();
+      
+      // ArrayList of clubs names 
+      ArrayList<String> clubs = new ArrayList<>();
+      
+      // add names to list
+      for (Document doc : iter) {
+         JSONObject profile = new JSONObject(doc);
+         clubs.add(profile.get("ClubName").toString());
+      }
+            
+      Collections.sort(clubs);
+      
+      for (String name : clubs)
+    	  logger.log(Level.INFO, name);
+      
+      displayOpen();
    }
 }
