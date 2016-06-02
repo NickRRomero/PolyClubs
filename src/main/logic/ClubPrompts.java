@@ -157,5 +157,10 @@ public class ClubPrompts
     {
     	this.user = user;
     }
+
+	public User getUser() 
+	{
+		return this.user;
+	}
     
 }

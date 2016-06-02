@@ -5,13 +5,12 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * @author Holly
- * Test suite to run all tests that Holly is in charge of
+ * Nick Suite Test
+ * @author Nick Romero
+ *
  */
-
 @RunWith(Suite.class)
-//@SuiteClasses({ TestDate.class, TestEvent.class })
-public class HollyTests {
+@SuiteClasses({ TestClubPrompts.class, TestDatabaseManager.class })
+public class NickTests {
 
 }
-

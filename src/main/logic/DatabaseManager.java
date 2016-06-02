@@ -155,7 +155,7 @@ public class DatabaseManager
     /**
      * Access the database and query the selected information*
      */
-    protected void accessDatabase()
+    public void accessDatabase()
     {
         
         initializeDatabaseConnection();

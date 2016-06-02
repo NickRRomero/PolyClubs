@@ -21,15 +21,10 @@ public class TestDatabaseManager extends TestCase
     }
 
     
-    @Test
-    public void testSetAdvisorOfClub() throws JSONException
-    {
-        DatabaseManager db = DatabaseManager.getInstance();        
-        db.setAdvisorOfClub("mboyken@calpoly.edu", "Cats cats and more cats");
-    }
+   
     
     
-    /*
+    
     @Test
     public void testDatabaseManagerNewInstance()
     {
@@ -48,7 +43,7 @@ public class TestDatabaseManager extends TestCase
     }
     
     @Test
-    public void testCheckIfAdminIsAdmin() throws InterruptedException
+    public void testCheckIfAdminIsAdmin() throws InterruptedException, JSONException
     {
         System.out.println("testCheckIfAdminIsAdmin");
         DatabaseManager db = DatabaseManager.getInstance();
@@ -58,12 +53,12 @@ public class TestDatabaseManager extends TestCase
     }
     
     @Test
-    public void testCheckIfAdminIsNotAdmin() throws InterruptedException
+    public void testCheckIfAdminIsNotAdmin() throws InterruptedException, JSONException
     {
         System.out.println("testCheckIfAdminIsNotAdmin");
         DatabaseManager db = DatabaseManager.getInstance();
         boolean isNotAdmin;
-        isNotAdmin = db.checkIfAdmin("Davide Falessi");
+        isNotAdmin = db.checkIfAdmin("Kevin Costello");
         assertFalse(isNotAdmin);
     }
     
@@ -74,13 +69,21 @@ public class TestDatabaseManager extends TestCase
         DatabaseManager db = DatabaseManager.getInstance();
         
         
-        db.setDataBaseDestination("ClubAdministrators", "Main", true);
+        db.setDataBaseDestination("ClubAdministrators", "Main", false);
         db.accessDatabase();
         JSONObject aprofile = db.getSingleDatabaseResults();
         assertNotNull(aprofile);
     }
     
 /*
+ 	 @Test
+    public void testSetAdvisorOfClub() throws JSONException
+    {
+        DatabaseManager db = DatabaseManager.getInstance();  
+        
+        db.setAdvisorOfClub("mboyken@calpoly.edu", "Cats cats and more cats");
+    }
+    
     public void testChangeClubDescription()
     {
         DatabaseManager db = DatabaseManager.getInstance();
