@@ -125,6 +125,7 @@ public class ClubPrompts
         {
         	user.syncSchedule();
         	user.getSchedule().displayWeek();
+        	displayClubPrompt();
         }
         
         
