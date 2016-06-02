@@ -1,40 +1,40 @@
 package tests.test;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import main.logic.*;
 
+import static org.junit.Assert.*;
+
+/**
+ * @author Holly
+ * Unit tests for Date.java
+ */
 public class TestDate {
-    
     @Test
     public void testGetMonth() {
         Date date = new Date(5, 30);
-        int outMonth = date.getMonth();
-        assertEquals(5, outMonth, 0);
+        assertEquals(5, date.getMonth(), 0);
     }
     
     @Test
     public void testGetDay() {
         Date date = new Date(5, 30);
-        int outDay = date.getDay();
-        assertEquals(30, outDay, 0);
+        assertEquals(30, date.getDay(), 0);
     }
     
     @Test
     public void testSetDateEarlierMonth() {
         Date date = new Date(4, 21);
         date.setDate(3, 21);
-        int outMonth = date.getMonth();
-        assertEquals(3, outMonth, 0); 
+        assertEquals(3, date.getMonth(), 0); 
     }
     
     @Test
     public void testSetDateEarlierDay() {
         Date date = new Date(4, 21);
         date.setDate(4, 16);
-        int outDay = date.getDay();
-        assertEquals(16, outDay, 0); 
+        assertEquals(16, date.getDay(), 0); 
     }
     
     @Test
@@ -59,4 +59,5 @@ public class TestDate {
         assertEquals(false, result);
     }   
 }
+
 
