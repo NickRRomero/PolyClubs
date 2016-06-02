@@ -43,7 +43,7 @@ public class User
       messages = new ArrayList<>();
       hasMsg = false;
       databaseManager = DatabaseManager.getInstance();
-      databaseManager.setDataBaseDestination("StudentDatabase", name, true);
+      databaseManager.setDataBaseDestination("StudentDatabase", "nrromero@calpoly.edu", false);
       schedule = new Schedule();
    }
 
@@ -147,14 +147,20 @@ public class User
 
    public void syncSchedule() throws JSONException
    {
+	  databaseManager.setDataBaseDestination("StudentDatabase", email, false);
+	  databaseManager.accessDatabase();
       jsonDB = databaseManager.getSingleDatabaseResults();
-      JSONArray arr = jsonDB.getJSONArray("courses");
+      JSONObject arr = jsonDB.getJSONObject("courses");
       List<String> courseList = new ArrayList<>();
+      String temp;
+      int courseNum;
 
-      // iterate through JSONArray to get strings for each course
+      // iterate through JSONObject to get strings for each course
       for (int iter = 0; iter < arr.length(); iter++)
       {
-         courseList.add(arr.getString(iter));
+    	  courseNum = iter + 1;
+    	  temp = arr.getString("course" + (courseNum));
+         courseList.add(temp);
       }
 
       createSchedule(courseList);

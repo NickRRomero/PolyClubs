@@ -123,6 +123,7 @@ public class ClubPrompts
         //if user chooses to view their schedule
         if (choice.equals(viewSchedule))
         {
+        	user.syncSchedule();
         	user.getSchedule().displayWeek();
         }
         

@@ -190,7 +190,6 @@ public class Login
       empl = userProfile.get("EmplID").toString();
       email = userProfile.get("email").toString();
 
-      logger.log(Level.INFO, name + '\n' + phoneNum + '\n' + empl + '\n' + email);
       isClubAdmin = db.checkIfAdmin(name);
 
       /**
