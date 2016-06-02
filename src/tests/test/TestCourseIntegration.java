@@ -16,7 +16,7 @@ import main.logic.Schedule;
 public class TestCourseIntegration {
 
 	@Test
-	public void TestCourseScheduleIntegration() {
+	public void TestScheduleAddCourse() {
 		Time start;
 		Time end;
 		Course c;
@@ -33,11 +33,11 @@ public class TestCourseIntegration {
 		} catch (Exception e) {
 			fail();
 		}
-		assertTrue(true);
+		assertTrue(s.getCourses().contains(c));
 	}
 	
 	@Test
-	public void TestCourseXIntegration() {
+	public void TestScheduleRemoveCourseIntegration() {
 		Time start;
 		Time end;
 		Course c;
@@ -54,7 +54,7 @@ public class TestCourseIntegration {
 		} catch (Exception e) {
 			fail();
 		}
-		assertTrue(true);
+		assertFalse(s.getCourses().contains(c));
 	}
 	
 
