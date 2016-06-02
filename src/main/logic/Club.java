@@ -184,25 +184,30 @@ public class Club
       clubEvents.add(event);
    }
 
-   public void removeEvent(Event event) throws JSONException
+   public void removeEvent(String name) throws JSONException
    {
-      // Create the JSON object for the event
-      JSONObject obj = new JSONObject();
       String eventName;
-      eventName = (event.getDescrip()).split("\\|")[0];
-      obj.put(event.getDescrip(), event.getDate().toString() + " " +
-         event.getStartTime().toString() + "-" + event.getEndTime().toString() +
-         event.getDay());
-      removeEventFromDatabase(eventName);
+      Event event = null;
+      
+      for (int i = 0; i < clubEvents.size(); i++)
+      {
+    	  eventName = (clubEvents.get(i).getDescrip()).split("\\|")[0];
+    	  if (eventName.equals(name))
+    	  {
+    		  event = clubEvents.get(i);
+    		  break;
+    	  }
+      }
+      db.removeEventFromClub(name);
 
       // Remove the event from the local ArrayList
       clubEvents.remove(event);
    }
    
-   public void removeEventFromDatabase(String eventName) throws JSONException
+  /* public void removeEventFromDatabase(String eventName) throws JSONException
    {
       db.removeEventFromClub(eventName);
-   }
+   }*/
 
    // Club membership functions
    public void addMember(String userName)
@@ -293,8 +298,9 @@ public class Club
             logger.log(Level.INFO, "Remove Event From Club");
             logger.log(Level.INFO, "Set Club Advisor");
          }
+         logger.log(Level.INFO, "View Club Info");
          logger.log(Level.INFO, "Logout");
-         userChoice = userInput.next();
+         userChoice = userInput.next().trim();
 
          processUserChoice(userChoice);
       }
@@ -305,33 +311,36 @@ public class Club
    
    private void processUserChoice(String userChoice) throws JSONException
    {
-     Scanner input = new Scanner(System.in).useDelimiter("\n");
+     Scanner input = new Scanner(System.in).useDelimiter("\r\n");
      
      ClubAdmin clubAdmin = new ClubAdmin("", "", "", "");
      switch(userChoice)
      {
          case "Add Member":
              logger.log(Level.INFO, "Please enter the new member's name.");
-             addMember(input.next());
+             addMember(input.next().trim());
              break;
          case "Remove Member":
              logger.log(Level.INFO, "Please enter the name of the member to remove");
-             removeMember(input.next());
+             removeMember(input.next().trim());
              break;
          case "Add Event To Club":             
              addEvent(clubAdmin.createEvent(this));
              break;
          case "Remove Event From Club":
              logger.log(Level.INFO, "Please enter the name of the event to remove.");
-             removeEventFromDatabase(input.next());
+             removeEvent(input.next().trim());
              break;
          case "Set Club Advisor":
              logger.log(Level.INFO, "Please enter the Cal Poly email of the club advisor.");
-             setAdvisor(input.next());
+             setAdvisor(input.next().trim());
              break;
          case "Logout":
             logout();
             break;
+         case "View Club Info":
+        	 printClubInfo();
+        	 break;
          default:
             break;
      }

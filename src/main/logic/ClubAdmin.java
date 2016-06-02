@@ -20,6 +20,7 @@ public class ClubAdmin extends User
          
    {
       super(name, phoneNum, empl, email);
+      scan = new Scanner(System.in);
    }
 
    /**
@@ -45,7 +46,7 @@ public class ClubAdmin extends User
       Date date;
 
       logger.log(Level.INFO, "Enter the day of the week of the event.");
-      day = scan.next();
+      day = scan.nextLine();
       logger.log(Level.INFO, "Enter the month of the event as a number.");
       month = scan.nextInt();
       logger.log(Level.INFO, "Enter the day of the month of the event as a number.");
@@ -59,13 +60,13 @@ public class ClubAdmin extends User
       logger.log(Level.INFO, "Enter the end minute of the event.");
       endM = scan.nextInt();
       logger.log(Level.INFO, "Enter the name of the event.");
-      descr.concat(scan.next());
-      descr.concat("|");
+      descr += scan.next().trim();
+      descr += "|";
       logger.log(Level.INFO, "Enter the location of the event.");
-      descr.concat(scan.next());
-      descr.concat("|");
+      descr += scan.next().trim();
+      descr += "|";
       logger.log(Level.INFO, "Enter the description of the event.");
-      descr.concat(scan.next());
+      descr += scan.next().trim();
 
       date = new Date(month, dayMonth);
       startTime = new Time(startH, startM);
@@ -106,7 +107,7 @@ public class ClubAdmin extends User
     */
    public void removeEvent(Event event, Club club) throws JSONException
    {
-      club.removeEvent(event);
+      club.removeEvent(event.getDescrip().split("\\|")[0]);
    }
 
    /**

@@ -158,14 +158,6 @@ public class DatabaseManager
      */
     public void accessDatabase()
     {
-        System.out.println("Above");
-    	System.out.println(whichDocumentByName);
-    	System.out.println(collectionToRetrieve);
-
-    	System.out.println(databaseURIToAccess);
-    	System.out.println("Below");
-    	
-    	
         initializeDatabaseConnection();
         MongoCollection<Document> collection =  db.getCollection(collectionToRetrieve);
     
