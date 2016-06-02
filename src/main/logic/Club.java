@@ -80,7 +80,7 @@ public class Club
     * Adds a new club to the club database
     * @param nm - name of the club
     * @param presEmail - Cal Poly email address of the club's president
- * @throws JSONException 
+    * @throws JSONException 
     * @desc - description of the club
     */
    public Club(String nm, String presEmail, String desc) throws JSONException
