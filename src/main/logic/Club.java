@@ -35,7 +35,6 @@ public class Club
    {
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
-      System.out.println(nm);
       db.setDataBaseDestination(clubDatabase, nm, false);
       db.accessDatabase();
       
@@ -203,11 +202,7 @@ public class Club
       // Remove the event from the local ArrayList
       clubEvents.remove(event);
    }
-   
-  /* public void removeEventFromDatabase(String eventName) throws JSONException
-   {
-      db.removeEventFromClub(eventName);
-   }*/
+
 
    // Club membership functions
    public void addMember(String userName)
