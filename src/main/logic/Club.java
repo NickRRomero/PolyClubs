@@ -24,7 +24,8 @@ public class Club
    private static final Logger logger = Logger.getLogger( Club.class.getName() );
    private String description = "description";
    private String clubDatabase = "ClubDatabase";
- 
+   private String studentDatabase = "StudentDatabase";
+   
    /**
     * Initializes a Club object with information from the club's database entry
     * @param nm - name of the club
@@ -34,6 +35,7 @@ public class Club
    {
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
+      System.out.println(nm);
       db.setDataBaseDestination(clubDatabase, nm, false);
       db.accessDatabase();
       
@@ -86,7 +88,7 @@ public class Club
    {
       // Set database destination to the club database
       db = DatabaseManager.getInstance();
-      db.setDataBaseDestination(clubDatabase, presEmail, true);
+      db.setDataBaseDestination(studentDatabase, presEmail, true);
 
       // Create the club
       db.createNewClub(nm, presEmail, desc);
@@ -169,7 +171,8 @@ public class Club
       Time startT = event.getStartTime();
       Time endT = event.getEndTime();
       
-      obj.put(description, event.getDescrip()).append("time", eDate.getMonth() + " " +
+      obj.put(description, event.getDescrip());
+      obj.put("time", eDate.getMonth() + " " +
          eDate.getDay() + " " + startT.getHour() + " " + startT.getMinute() + " " +
          endT.getHour() + " " + endT.getMinute() + event.getDay());
 
@@ -185,9 +188,12 @@ public class Club
    {
       // Create the JSON object for the event
       JSONObject obj = new JSONObject();
+      String eventName;
+      eventName = (event.getDescrip()).split("\\|")[0];
       obj.put(event.getDescrip(), event.getDate().toString() + " " +
          event.getStartTime().toString() + "-" + event.getEndTime().toString() +
          event.getDay());
+      removeEventFromDatabase(eventName);
 
       // Remove the event from the local ArrayList
       clubEvents.remove(event);

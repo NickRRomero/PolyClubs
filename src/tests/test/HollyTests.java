@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 
 @RunWith(Suite.class)
-//@SuiteClasses({ TestDate.class, TestEvent.class })
+@SuiteClasses({ TestDate.class, TestEvent.class })
 public class HollyTests {
 
 }

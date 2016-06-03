@@ -10,6 +10,9 @@ package tests.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import main.logic.*;
@@ -48,60 +51,70 @@ public class TestUser
    /**
     * Test createSchedule loop for only one class.
     */
-   /*
-    * @Test public void testCreateScheduleOne() { ArrayList<String> classes =
-    * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
-    * 
-    * classes.add("MATH241 11:00-12:00 M_W_F"); schedule =
-    * user1.createSchedule(classes); courseList = schedule.getCourses();
-    * 
-    * assertEquals("MATH241", courseList.get(0).getName()); }
-    */
+    @Test public void testCreateScheduleOne()
+    {
+    	List<String> classes = new ArrayList<String>();
+    	List<Course> courseList;
+        Schedule schedule;
+        
+        classes.add("MATH241 11:00-12:00 M_W_F"); schedule =
+        user1.createSchedule(classes); courseList = schedule.getCourses();
+        assertEquals("MATH241", courseList.get(0).getName());
+    }
 
    /**
     * Test createSchedule loop for only two classes.
     */
-   /*
-    * @Test public void testCreateScheduleTwo() { ArrayList<String> classes =
-    * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
-    * 
-    * classes.add("MATH241 11:00-12:00 M_W_F");
-    * classes.add("CSC225 15:00-18:00 M_W_F"); schedule =
-    * user1.createSchedule(classes); courseList = schedule.getCourses();
-    * 
-    * assertEquals("CSC225", courseList.get(1).getName()); }
-    */
+   @Test
+   public void testCreateScheduleTwo()
+   {
+	   List<String> classes = new ArrayList<String>();
+	   List<Course> courseList;
+	   Schedule schedule;
+	   
+	   classes.add("MATH241 11:00-12:00 M_W_F");
+	   classes.add("CSC225 15:00-18:00 M_W_F");
+	   schedule =user1.createSchedule(classes);
+	   courseList = schedule.getCourses();
+	   assertEquals("CSC225", courseList.get(1).getName());
+	}
 
    /**
     * Test createSchedule loop for three classes.
     */
-   /*
-    * @Test public void testCreateScheduleThree() { ArrayList<String> classes =
-    * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
-    * 
-    * classes.add("MATH241 11:00-12:00 M_W_F");
-    * classes.add("CSC225 15:00-18:00 M_W_F");
-    * classes.add("CPE103 10:00-12:00 T_R"); schedule =
-    * user1.createSchedule(classes); courseList = schedule.getCourses();
-    * 
-    * assertEquals("CPE103", courseList.get(2).getName()); }
-    */
+   @Test
+   public void testCreateScheduleThree()
+   {
+	   List<String> classes = new ArrayList<String>();
+	   List<Course> courseList;
+	   Schedule schedule;
+	   
+	   classes.add("MATH241 11:00-12:00 M_W_F");
+	   classes.add("CSC225 15:00-18:00 M_W_F");
+	   classes.add("CPE103 10:00-12:00 T_R");
+	   schedule = user1.createSchedule(classes);
+	   courseList = schedule.getCourses();
+	   assertEquals("CPE103", courseList.get(2).getName());
+   }
 
    /**
     * Test createSchedule loop for four classes.
     */
-   /*
-    * @Test public void testCreateScheduleFour() { ArrayList<String> classes =
-    * new ArrayList<String>(); ArrayList<Course> courseList; Schedule schedule;
-    * 
-    * classes.add("MATH241 11:00-12:00 M_W_F");
-    * classes.add("CSC225 15:00-18:00 M_W_F");
-    * classes.add("CPE103 10:00-12:00 T_R");
-    * classes.add("ART101 14:30-16:30 T_R"); schedule =
-    * user1.createSchedule(classes); courseList = schedule.getCourses();
-    * 
-    * assertEquals("ART101", courseList.get(3).getName()); }
-    */
+   @Test
+   public void testCreateScheduleFour()
+   {
+	   List<String> classes = new ArrayList<String>();
+	   List<Course> courseList;
+	   Schedule schedule;
+	   
+	   classes.add("MATH241 11:00-12:00 M_W_F");
+	   classes.add("CSC225 15:00-18:00 M_W_F");
+	   classes.add("CPE103 10:00-12:00 T_R");
+	   classes.add("ART101 14:30-16:30 T_R");
+	   schedule = user1.createSchedule(classes);
+	   courseList = schedule.getCourses();
+	   assertEquals("ART101", courseList.get(3).getName());
+	}
 
    /**
     * Test addMsg to another User.

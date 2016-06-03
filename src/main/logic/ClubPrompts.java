@@ -116,7 +116,9 @@ public class ClubPrompts
             
             logger.log(Level.INFO, "Please enter a club to search for.");
             clubChoice = s.next();
-            Club club = new Club(clubChoice);
+            System.out.println(clubChoice);
+            
+            Club club = new Club(clubChoice.trim());
             club.printClubPromptsAndInfo(isAdmin);
         }
         //if user chooses to view their schedule

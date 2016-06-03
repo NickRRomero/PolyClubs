@@ -4,15 +4,12 @@ package tests.test;
  * Tests for ClubAdmin class.
  * @author mboyken
  */
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertFalse;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import main.logic.*;
 
@@ -36,9 +33,9 @@ public class TestClubAdmin
 
       admin = new ClubAdmin("Marii", "(270) 314-6742", "008602954",
             "mboyken@calpoly.edu");
-      club = new Club("SWE", admin.getEmail(), "Society of Women Engineers");
+      club = new Club("WISH", admin.getEmail(), "Women Involved in Software and Hardware");
       event1 = new Event("Tuesday", date, startTime, endTime,
-            "B-day Party. Garfield Arms. Marii's birthday party.");
+            "B-day Party.|Garfield Arms.|Marii's birthday party.");
       club.addEvent(event1);
    }
 
@@ -50,12 +47,13 @@ public class TestClubAdmin
    @Test
    public void testRemoveEvent() throws JSONException
    {
-      Club club = Mockito.mock(Club.class);
       List<Event> eventList;
 
       club.addEvent(event1);
       eventList = club.getEvents();
+      assertTrue(eventList.contains(event1));
       admin.removeEvent(event1, club);
-      assertFalse(eventList.contains(event1));
+      eventList = club.getEvents();
+      assertTrue(eventList.contains(event1));
    }
 }

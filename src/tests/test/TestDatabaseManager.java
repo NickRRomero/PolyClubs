@@ -75,6 +75,14 @@ public class TestDatabaseManager extends TestCase
         assertNotNull(aprofile);
     }
     
+    public void testCreateNewClub() throws JSONException
+    {
+        DatabaseManager db = DatabaseManager.getInstance();
+        db.setDataBaseDestination("ClubDatabase", "nrromero@calpoly.edu", true);
+        db.createNewClub("Newest Club", "nrromero@calpoly.edu", 
+                "We the best club");
+    }
+    
 /*
  	 @Test
     public void testSetAdvisorOfClub() throws JSONException

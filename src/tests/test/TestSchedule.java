@@ -1,4 +1,4 @@
-package Test;
+package tests.test;
 
 import static org.junit.Assert.*;
 
@@ -7,11 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import Logic.Course;
-import Logic.Date;
-import Logic.Event;
-import Logic.Schedule;
-import Logic.Time;
+import main.logic.*;
 
 /**
  * @author Jacob King

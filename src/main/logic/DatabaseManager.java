@@ -12,6 +12,7 @@ import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
 
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -140,7 +141,7 @@ public class DatabaseManager
         else if ("ClubDatabase".equals(databaseName)) 
         {
             
-            collectionToRetrieve = clubs;
+            collectionToRetrieve = "clubs";
             whichDocumentByName = whichObject;
             databaseURIToAccess = uriClubs;
         }
@@ -157,7 +158,14 @@ public class DatabaseManager
      */
     public void accessDatabase()
     {
-        
+        System.out.println("Above");
+    	System.out.println(whichDocumentByName);
+    	System.out.println(collectionToRetrieve);
+
+    	System.out.println(databaseURIToAccess);
+    	System.out.println("Below");
+    	
+    	
         initializeDatabaseConnection();
         MongoCollection<Document> collection =  db.getCollection(collectionToRetrieve);
     
@@ -282,7 +290,7 @@ public class DatabaseManager
         
         
         collection.updateOne(club, new BasicDBObject("$addToSet", new BasicDBObject(eventString,new BasicDBObject(description, jsonobject.getString(description))
-                        .append(time, jsonobject.getString(time)))));
+                        .append("time", jsonobject.getString("time")))));
     }
     
     /**
@@ -376,7 +384,7 @@ public class DatabaseManager
         mongoClient = new MongoClient(uri);
         db = mongoClient.getDatabase(uri.getDatabase());
         
-        this.setDataBaseDestination(studentDatabase, presidentEmail, true);
+        this.setDataBaseDestination(studentDatabase, presidentEmail, false);
         this.accessDatabase();
         userProfile = this.getSingleDatabaseResults();
         
@@ -386,7 +394,7 @@ public class DatabaseManager
         
         db.getCollection(clubs).insertOne(
                 new Document()
-                    .append(clubName, clubName)
+                    .append("ClubName", clubName)
                     .append("President", new Document()
                             .append("name", userProfile.get("name"))
                             .append(phoneNumber, userProfile.get(phoneNumber))
@@ -396,7 +404,9 @@ public class DatabaseManager
                             .append(phoneNumber, "")
                             .append(email, ""))
                     .append(description, desc)
-                    .append(members, Arrays.asList(userProfile.get("name"))));
+                    .append("type", "New")
+                    .append(members, Arrays.asList(userProfile.get("name")))
+                    .append("events", Arrays.asList()));
                     
     }
     
